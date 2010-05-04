@@ -1,4 +1,6 @@
 from django.conf.urls.defaults import *
+from django.views.generic.create_update import create_object
+from modulo_reclamacoes.models import Reclamacao
 
 # Uncomment the next two lines to enable the admin:
 # from django.contrib import admin
@@ -6,7 +8,7 @@ from django.conf.urls.defaults import *
 
 urlpatterns = patterns('',
     # Example:
-    (r'^pizzer/', include('Pizzer.modulo_reclamacoes.urls')),
+    (r'^teste/', create_object, {'model': Reclamacao}),
 
     # Uncomment the admin/doc line below and add 'django.contrib.admindocs'
     # to INSTALLED_APPS to enable admin documentation:
