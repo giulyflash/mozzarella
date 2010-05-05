@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block conteudo %}
+<table border=1>
+<tr>
+	<th>
+	Assunto
+	</th>
+</tr>
+{% for reclamacao in reclamacoes_list %}
+	<tr>
+		<td>
+		{{reclamacao.assunto}}
+		</td>
+	</tr>
+{% endfor %}
+</table>
+{% endblock %}
