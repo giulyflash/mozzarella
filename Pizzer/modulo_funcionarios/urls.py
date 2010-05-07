@@ -1,6 +1,7 @@
 from django.conf.urls.defaults import *
-from django.views.generic.simple import direct_to_template
-from django.views import static
+from django.views.generic.create_update import create_object
+from django.views.generic.list_detail import object_list
+from modulo_funcionarios.models import Funcionario
 
 # Uncomment the next two lines to enable the admin:
 # from django.contrib import admin
@@ -8,12 +9,7 @@ from django.views import static
 
 urlpatterns = patterns('',
     # Example:
-    (r'^pizzer/$', direct_to_template, {'template': 'index.html'}),
-    (r'^pizzer/', include('Pizzer.modulo_reclamacoes.urls')),
-	(r'^pizzer/', include('Pizzer.modulo_funcionarios.urls')),
-
-
-    (r'^pizzer/media/(?P<path>.*)$', static.serve, {'document_root': 'media'}),
+    (r'^funcionario/cria/', create_object, {'model': Funcionario, 'template_name': 'criacao_funcionario.html'}),
 
     # Uncomment the admin/doc line below and add 'django.contrib.admindocs'
     # to INSTALLED_APPS to enable admin documentation:
