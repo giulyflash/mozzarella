@@ -10,6 +10,7 @@ from modulo_funcionarios.models import Funcionario
 urlpatterns = patterns('',
     # Example:
     (r'^funcionario/cria/', create_object, {'model': Funcionario, 'template_name': 'criacao_funcionario.html'}),
+    (r'^funcionarios/', object_list, {'queryset': Funcionario.objects.all(), 'template_object_name': 'funcionarios', 'template_name': 'listagem_funcionarios.html'}),
 
     # Uncomment the admin/doc line below and add 'django.contrib.admindocs'
     # to INSTALLED_APPS to enable admin documentation:
