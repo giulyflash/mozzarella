@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block conteudo %}
+<table border=1>
+<tr>
+	<th>
+	Nome
+	</th>
+	<th>
+	Endereço
+	</th>
+	<th>
+	Telefone
+	</th>
+	<th>
+	CPF
+	</th>
+	<th>
+	RG
+	</th>
+	<th>
+	Salario
+	</th>
+</tr>
+{% for funcionario in funcionarios_list %}
+	<tr>
+		<td>
+		{{funcionario.nome}}
+		</td>
+		<td>
+		{{funcionario.endereco}}
+		</td>
+		<td>
+		{{funcionario.telefone}}
+		</td>
+		<td>
+		{{funcionario.cpf}}
+		</td>
+		<td>
+		{{funcionario.rg}}
+		</td>
+		<td>
+		{{funcionario.salario}}
+		</td>
+	</tr>
+{% endfor %}
+</table>
+{% endblock %}
