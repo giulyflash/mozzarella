@@ -3,19 +3,22 @@ from django.views.generic.create_update import create_object
 from django.views.generic.list_detail import object_list
 from modulo_funcionarios.models import Funcionario
 
-# Uncomment the next two lines to enable the admin:
-# from django.contrib import admin
-# admin.autodiscover()
+
+
+funcionario_info = {
+    "queryset" : Funcionario.objects.all(),
+    "template_object_name" : "funcionarios",
+    "template_name" : "listagem_funcionarios.html"
+}
+
+model_info = {
+    "model": Funcionario,
+    "template_name": "criacao_funcionario.html"
+}
 
 urlpatterns = patterns('',
-    # Example:
-    (r'^funcionario/cria/', create_object, {'model': Funcionario, 'template_name': 'criacao_funcionario.html'}),
-    (r'^funcionarios/', object_list, {'queryset': Funcionario.objects.all(), 'template_object_name': 'funcionarios', 'template_name': 'listagem_funcionarios.html'}),
-
-    # Uncomment the admin/doc line below and add 'django.contrib.admindocs'
-    # to INSTALLED_APPS to enable admin documentation:
-    # (r'^admin/doc/', include('django.contrib.admindocs.urls')),
-
-    # Uncomment the next line to enable the admin:
-    # (r'^admin/', include(admin.site.urls)),
+    # Generic Vies create:
+    (r'^funcionario/cria/', create_object, model_info),
+    (r'^funcionarios/', object_list, funcionario_info),
+    (r'^funcionarios/(w+)/', funcionarios_por_nome),
 )

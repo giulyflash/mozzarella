@@ -15,15 +15,15 @@ STATUS_ITEM_PEDIDO_CHOICES = (  # e.g. pizza pronta, bebida entregue
     ('P', 'Pronto'),
 )
 
+class Pedido(models.Model):
+    dono = models.ForeignKey(Cliente)
+    itens_cardapio = ManyToManyKey(ItemCardapio, through=StatusItemPedido)
+    status = models.CharField(max_length=10, choices=STATUS_PEDIDO_CHOICES)
+    data_horario = models.DateTimeField(auto_now=True)
+
 class StatusItemPedido(models.Model):
     pedido = models.ForeignKey(Pedido)
     item_cardapio = models.ForeignKey(ItemCardapio)
     status = models.CharField(choices=STATUS_ITEM_PEDIDO_CHOICES)
-
-class Pedido(models.Model):
-    dono = models.ForeignKey(Cliente)
-    itens_cardapio = ManyToManyKey(ItemCardapio, through=StatusItemPedido)
-    status = models.CharField(choices=STATUS_CHOICES)
-    data_horario = models.DateTimeField(auto_now=True)
 
 
