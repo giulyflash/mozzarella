@@ -13,6 +13,7 @@ urlpatterns = patterns('',
 	(r'^pizzer/', include('Pizzer.modulo_funcionarios.urls')),
 
 
+
     (r'^pizzer/media/(?P<path>.*)$', static.serve, {'document_root': 'media'}),
 
     # Uncomment the admin/doc line below and add 'django.contrib.admindocs'
