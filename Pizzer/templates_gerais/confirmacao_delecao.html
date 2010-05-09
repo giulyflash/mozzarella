@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block titulo %}
+Reclamação
+{% endblock %}
+{% block conteudo %}
+<h3>Você tem certeza que deseja deletar o registro <u>{{ object|upper }}</u>?</h3>
+<form action="" method="post">
+<br/>
+<input type="submit" value="Confirmar deleção">
+<a href="{{ model.get_absolute_url }}"><input type="button" value="Cancelar"></a>
+</form>
+{% endblock %}
