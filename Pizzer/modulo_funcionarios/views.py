@@ -1,6 +1,6 @@
 from django.http import Http404
 from django.views.generic import list_detail
-from modulo_funcionarios.model import Funcionario
+from modulo_funcionarios.models import Funcionario
 
 def funcionarios_por_nome(request, nome_funcionario):
 
