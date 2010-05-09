@@ -2,6 +2,7 @@ from django.conf.urls.defaults import *
 from django.views.generic.create_update import create_object
 from django.views.generic.list_detail import object_list
 from modulo_funcionarios.models import Funcionario
+from modulo_funcionarios.views import funcionarios_por_nome
 
 
 
