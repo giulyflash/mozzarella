@@ -1,17 +1,13 @@
 # -*- coding: utf-8 -*-
 
-from django.views.generic import list_detail
 from models import Reclamacao
+from django.db.models import Q
+
+from utils.views import lista_objetos
 
 def lista_reclamacoes(request):
-    if request.method == 'POST':
-        raise Exception('Essa view não pode ser acessada via POST')
-    assunto = request.GET.get('assunto')
-    if assunto:
-        queryset = Reclamacao.objects.filter(assunto__icontains=assunto);
-    else:
-        queryset = Reclamacao.objects.all();
-    return list_detail.object_list(request,
-        queryset=queryset,
-        template_name="listagem_reclamacoes.html",
-        template_object_name="reclamacoes")
+    assunto = request.GET.get('assunto')  # Obtenção dos parâmetros do request
+    texto = request.GET.get('texto')
+    consulta = Q(assunto__icontains=assunto) & Q(texto__icontains=texto)  # Busca pelo assunto especificado e/ou um trecho dentro do texto
+    universo = Q(resposta__isnull=True)  # Restringe-se a reclamações sem resposta
+    return lista_objetos(request, [assunto, texto], Reclamacao, 'listagem_reclamacoes.html', 'reclamacoes', consulta, universo)

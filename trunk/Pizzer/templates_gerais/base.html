@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="{{ LANGUAGE_CODE }}" xml:lang="{{ LANGUAGE_CODE }}" {% if LANGUAGE_BIDI %}dir="rtl"{% endif %}>
 <head>
 <title>{% block title %}Sistema Pizzer{% endblock %}</title>
-<link rel="stylesheet" type="text/css" href="{% block stylesheet %}{{ MEDIA_URL }}css/base.css{% endblock %}"/>
+<link rel="stylesheet" type="text/css" href="{% block stylesheet %}/pizzer/media/css/base.css{% endblock %}"/>
 {% block extrastyle %}{% endblock %}
 {% block extrahead %}{% endblock %}
 {% block blockbots %}<meta name="robots" content="NONE,NOARCHIVE" />{% endblock %}
@@ -67,9 +67,10 @@
         <div id="content-related">
         {% block sidebar %}
 	        <ul>
-		    	<li><a href="/pizzer/">Pagina inicial</a></li>
+	        <h3>Reclamações</h3>
 		    	<li><a href="/pizzer/reclamacao/cria/">Reclamar</a></li>
-		    	<li><a href="/pizzer/reclamacoes/">Reclamacoes</a></li>
+		    	<li><a href="/pizzer/reclamacoes/">Atender reclamações</a></li>
+	    	<h3>Funcionários</h3>
 				<li><a href="/pizzer/funcionario/cria/">Cadastrar funcionario</a></li>
 				<li><a href="/pizzer/funcionarios/">Listar funcionarios</a></li>
 		    </ul>
