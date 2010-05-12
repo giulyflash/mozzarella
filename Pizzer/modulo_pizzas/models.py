@@ -18,6 +18,9 @@ class Pizza(ItemCardapio):
     def __str__(self):
         return self.nome
 
+    def get_absolute_url(self):
+        return "/pizzer/"
+
 class PizzaForm(ModelForm):
     class meta:
         model = Pizza
