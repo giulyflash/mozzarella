@@ -71,6 +71,7 @@ TEMPLATE_DIRS = (
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
     'modulo_reclamacoes/templates', 'templates_gerais', 'modulo_funcionarios/templates',
+	'modulo_clientes/templates', 'modulo_pedidos/templates',
 	'modulo_clientes/templates', 'modulo_bebidas/templates',
 )
 
@@ -82,6 +83,8 @@ INSTALLED_APPS = (
     'modulo_reclamacoes',
     'modulo_clientes',
 	'modulo_funcionarios',
+    'modulo_pedidos',
+    'modulo_pizzas',
     'modulo_bebidas',
 )
 

@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from django.db import models
 from django.forms import ModelForm
+from modulo_clientes.models import Cliente
+from modulo_pizzas.models import ItemCardapio
 
 STATUS_PEDIDO_CHOICES = (  # e.g. todos itens atendidos
     ('NA', 'Todos itens prontos'),
@@ -17,13 +19,16 @@ STATUS_ITEM_PEDIDO_CHOICES = (  # e.g. pizza pronta, bebida entregue
 
 class Pedido(models.Model):
     dono = models.ForeignKey(Cliente)
-    itens_cardapio = ManyToManyKey(ItemCardapio, through=StatusItemPedido)
+    itens_cardapio = models.ManyToManyField(ItemCardapio, through='StatusItemPedido')
     status = models.CharField(max_length=10, choices=STATUS_PEDIDO_CHOICES)
     data_horario = models.DateTimeField(auto_now=True)
 
 class StatusItemPedido(models.Model):
     pedido = models.ForeignKey(Pedido)
     item_cardapio = models.ForeignKey(ItemCardapio)
-    status = models.CharField(choices=STATUS_ITEM_PEDIDO_CHOICES)
-
+    status = models.CharField(max_length=3, choices=STATUS_ITEM_PEDIDO_CHOICES)
+    
+    
+class StatusItemPedidoForm(ModelForm):
+    pass
 
