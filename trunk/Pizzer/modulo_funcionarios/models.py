@@ -19,6 +19,9 @@ class Pessoa(models.Model):
     endereco = models.CharField(max_length = 100)
     telefone = models.CharField(max_length = 15)
     
+    def __str__(self):  #quando o metodo str() da instancia de Funcionario e' chamado o objeto retorna o nome do funcionario
+        return self.nome
+    
     class Meta:
         abstract = True
 
@@ -28,9 +31,6 @@ class Funcionario(Pessoa):
     salario = models.DecimalField(max_digits = 10, decimal_places = 2)
     funcao = models.CharField(max_length = 10, choices = FUNCAO_CHOICES)
     periodo = models.CharField(max_length = 11, choices = PERIODO_CHOICES)
-
-    def __str__(self): #quando o metodo str() da instancia de Funcionario e' chamado o objeto retorna o nome do funcionario
-        return self.nome
 
     def get_absolute_url(self): #retorna o URL absoluto da instancia de Funcionario
         return "/pizzer/"
