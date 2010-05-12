@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block titulo %}
+Bebidas
+{% endblock %}
+{% block conteudo %}
+<form method="GET">
+	<p>
+	<label><i>Nome:</i></label>
+	<input name="nome" type="text">
+	</p>
+	<input type="submit" value="Filtrar"/>
+</form>
+<h4>{{ mensagem }}</h4>
+{% if bebidas_list %}
+	<table border=1>
+	<tr>
+		<th>
+		Nome
+		</th>
+		<th>
+		Quantidade
+		</th>
+	</tr>
+	{% for bebida in bebidas_list %}
+		<tr>
+			<td>
+			<a href="/pizzer/bebida/edita/{{bebida.id}}/">{{ bebida.nome }}</a>
+			</td>
+			<td>
+			{{ bebida.quantidade}}
+			</td>
+		</tr>
+	{% endfor %}
+	</table>
+{% endif %}
+{% endblock %}
