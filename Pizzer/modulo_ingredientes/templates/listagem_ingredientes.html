@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block titulo %}
+Clientes
+{% endblock %}
+{% block conteudo %}
+<form method="GET">
+	<p>
+	<label><i>Nome:</i></label>
+	<input name="nome" type="text">
+	</p>
+	<input type="submit" value="Filtrar"/>
+</form>
+<h4>{{ mensagem }}</h4>
+{% if ingredientes_list %}
+	<table border=1>
+	<tr>
+		<th>
+		Nome
+		</th>
+		<th>
+		Preço
+		</th>
+        <th>
+		Custo
+		</th>
+		<th>
+		Quantidade
+		</th>
+	</tr>
+	{% for ingrediente in ingredientes_list %}
+		<tr>
+			<td>
+			{{ ingrediente.nome }}
+			</td>
+			<td>
+			{{ ingrediente.preco }}
+			</td>
+            <td>
+			{{ ingrediente.custo }}
+			</td>
+			<td>
+			{{ ingrediente.quantidade }}
+			</td>
+		</tr>
+	{% endfor %}
+	</table>
+{% endif %}
+{% endblock %}
