@@ -5,5 +5,7 @@ from django.forms import ModelForm
 from modulo_funcionarios.models import Pessoa
 
 class Cliente(Pessoa):
-	pass
+    def get_absolute_url(self):
+        return '/pizzer/'
+        
     
