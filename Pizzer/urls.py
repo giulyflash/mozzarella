@@ -12,6 +12,7 @@ urlpatterns = patterns('',
     (r'^pizzer/$', direct_to_template, {'template': 'index.html'}),
     (r'^pizzer/', include('Pizzer.modulo_reclamacoes.urls')),
 	(r'^pizzer/', include('Pizzer.modulo_funcionarios.urls')),
+	(r'^pizzer/', include('Pizzer.modulo_clientes.urls')),
 
     (r'^pizzer/media/(?P<path>.*)$', static.serve, {'document_root': 'media'}),
 

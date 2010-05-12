@@ -18,8 +18,8 @@ class Pessoa(models.Model):
     nome = models.CharField(max_length = 50)
     endereco = models.CharField(max_length = 100)
     telefone = models.CharField(max_length = 15)
-	
-	class Meta:
+    
+    class Meta:
         abstract = True
 
 class Funcionario(Pessoa):
