@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block titulo %}
+Clientes
+{% endblock %}
+{% block conteudo %}
+<form method="GET">
+	<p>
+	<label><i>Nome:</i></label>
+	<input name="nome" type="text">
+	</p>
+	<input type="submit" value="Filtrar"/>
+</form>
+<h4>{{ mensagem }}</h4>
+{% if clientes_list %}
+	<table border=1>
+	<tr>
+		<th>
+		Nome
+		</th>
+		<th>
+		Endereço
+		</th>
+        <th>
+		Telefone
+		</th>
+	</tr>
+	{% for cliente in clientes_list %}
+		<tr>
+			<td>
+			<a href="/pizzer/cliente/edita/{{cliente.id}}/">{{ cliente.nome }}</a>
+			</td>
+			<td>
+			{{ cliente.endereco}}
+			</td>
+            <td>
+			{{ cliente.telefone}}
+			</td>
+		</tr>
+	{% endfor %}
+	</table>
+{% endif %}
+{% endblock %}

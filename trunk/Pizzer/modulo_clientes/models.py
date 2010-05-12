@@ -2,5 +2,8 @@
 from django.db import models
 from django.forms import ModelForm
 
-class Cliente(models.Model):
-    pass
+from modulo_funcionarios.models import Pessoa
+
+class Cliente(Pessoa):
+	pass
+    
