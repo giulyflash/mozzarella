@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block conteudo %}
+<form method="GET">
+	<input name="nome" type="text">
+	<input type="submit" value="filtrar"/>
+</form>
+<table border=1>
+<tr>
+	<th>
+	Nome
+	</th>
+</tr>
+{% for pizza in pizzas_list %}
+	<tr>
+		<td>
+		{{pizza.nome}}
+		</td>
+	</tr>
+{% endfor %}
+</table>
+{% endblock %}
