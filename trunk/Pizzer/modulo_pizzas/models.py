@@ -18,9 +18,6 @@ class Pizza(ItemCardapio):
     def __unicode__(self):
         return self.nome
 
-    def __str__(self):
-        return self.nome
-
     def get_absolute_url(self):
         return "/pizzer/"
 
