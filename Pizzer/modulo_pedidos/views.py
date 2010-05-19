@@ -6,7 +6,7 @@ from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
 
 from utils.views import lista_objetos
-from models import StatusItemPedido, Pedido, PedidoForm
+from models import StatusItemPedido, Pedido, PedidoForm, EditaPedidoForm
 
 def cria_pedido(request):
     if request.method == 'POST': # If the form has been submitted...
@@ -24,6 +24,19 @@ def cria_pedido(request):
     else:
         form = PedidoForm() # An unbound form
     return render_to_response('criacao_pedido.html', {'form': form})
+
+def edita_pedido(request, object_id):
+    pedido = Pedido.objects.get(pk=object_id)
+    if request.method == 'POST': # If the form has been submitted...
+        form = EditaPedidoForm(request.POST) # A form bound to the POST data
+        if form.is_valid(): # All validation rules pass
+            status = form.cleaned_data['status']
+            pedido.status = status
+            pedido.save()
+            return HttpResponseRedirect('/pizzer/pedidos/') # Redirect after POST
+    else:
+        form = EditaPedidoForm(instance=pedido) # An unbound form
+    return render_to_response('edicao_pedido.html', {'form': form})	
     
 def lista_pedidos(request):
     dono = request.GET.get('dono')  # Obtenção dos parâmetros do request
