@@ -26,19 +26,20 @@ class Pedido(models.Model):
     
     def get_absolute_url():
         return '/pizzer/pedidos/'
-    
+
+    def status_display(self):
+        return Pedido.get_status_display(self)
+        
 class PedidoForm(ModelForm):
-   
     class Meta:
         model = Pedido
-
 
 class StatusItemPedido(models.Model):
     pedido = models.ForeignKey(Pedido)
     item_cardapio = models.ForeignKey(ItemCardapio)
     status = models.CharField(max_length=3, choices=STATUS_ITEM_PEDIDO_CHOICES)
     
-    
-class StatusItemPedidoForm(ModelForm):
-    pass
+class EditaPedidoForm(ModelForm):
+    class Meta:
+        model = Pedido
 
