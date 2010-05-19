@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.db import models
 from django.forms import ModelForm
+from django import forms
 from modulo_clientes.models import Cliente
 from modulo_pizzas.models import ItemCardapio
 
@@ -22,6 +23,15 @@ class Pedido(models.Model):
     itens_cardapio = models.ManyToManyField(ItemCardapio, through='StatusItemPedido')
     status = models.CharField(max_length=10, choices=STATUS_PEDIDO_CHOICES)
     data_horario = models.DateTimeField(auto_now=True)
+    
+    def get_absolute_url():
+        return '/pizzer/pedidos/'
+    
+class PedidoForm(ModelForm):
+   
+    class Meta:
+        model = Pedido
+
 
 class StatusItemPedido(models.Model):
     pedido = models.ForeignKey(Pedido)
