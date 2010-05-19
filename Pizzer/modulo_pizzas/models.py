@@ -5,7 +5,7 @@ from modulo_clientes.models import Cliente
 from modulo_ingredientes.models import Ingrediente
 
 class ItemCardapio(models.Model):
-    nome = models.CharField(max_length=25, primary_key=True)
+    nome = models.CharField(max_length=25, unique = True, null = False)
 
     def __str__(self):
         return self.nome
