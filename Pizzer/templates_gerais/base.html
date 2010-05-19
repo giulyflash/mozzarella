@@ -61,7 +61,9 @@
         <div id="content-main">
         	<h1>{% block titulo %}{% endblock %}</h1>
         	<h2>{% block subtitulo %}{% endblock %}</h2>
-	        {% block conteudo %}
+        	{% block envoltorio %}
+	            {% block conteudo %}
+	            {% endblock %}
 	        {% endblock %}
 	    </div>
         <div id="content-related">
@@ -75,7 +77,7 @@
 		    	<li><a href="/pizzer/clientes/">Lista clientes</a></li>
 	    	<h3>Pedidos<h3>
 				<li><a href="/pizzer/pedido/cria/">Cadastrar pedido</a></li>
-				<li><a href="/pizzer/pedidos/">Listar pedidos</a></li>   
+				<li><a href="/pizzer/pedidos/">Listar pedidos</a></li>
             <h3>Funcionários</h3>
 				<li><a href="/pizzer/funcionario/cria/">Cadastrar funcionario</a></li>
 				<li><a href="/pizzer/funcionarios/">Listar funcionarios</a></li>
