@@ -86,6 +86,7 @@ INSTALLED_APPS = (
     'modulo_pedidos',
     'modulo_pizzas',
     'modulo_bebidas',
+    'modulo_ingredientes',
 )
 
 # Interliche
