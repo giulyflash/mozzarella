@@ -15,6 +15,8 @@ urlpatterns = patterns('',
 	(r'^pizzer/', include('Pizzer.modulo_pedidos.urls')),
     (r'^pizzer/', include('Pizzer.modulo_clientes.urls')),
     (r'^pizzer/', include('Pizzer.modulo_bebidas.urls')),
+    (r'^pizzer/', include('Pizzer.modulo_pizzas.urls')),
+    (r'^pizzer/', include('Pizzer.modulo_ingredientes.urls')),
 
     (r'^pizzer/media/(?P<path>.*)$', static.serve, {'document_root': 'media'}),
 
