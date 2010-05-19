@@ -1,8 +1,25 @@
 {% extends "base.html" %}
 
+{% block titulo %}
+Cadastro de nova pizza
+{% endblock %}
 {% block conteudo %}
 <form action="" method="post">
-{{ form.as_p }}
+    <div class="fieldWrapper">
+        {{ form.nome.errors }}
+        <label for="id_nome">Nome da pizza:</label>
+        {{ form.nome }}
+    </div><br>
+    <div class="fieldWrapper">
+        {{ form.personalizada.errors }}
+        <label for="id_personalizada">Pizza Personalizada?</label>
+        {{ form.personalizada }}
+    </div><br>
+    <div class="fieldWrapper">
+        {{ form.ingredientes.errors }}
+        <label for="id_nome">Ingredientes:</label>
+        {{ form.ingredientes }} Com a tecla CTRL pressionada, selecione os ingredientes desejados
+    </div><br>
 <input type="submit" value="Confirmar registro">
 </form>
 {% endblock %}

@@ -1,8 +1,50 @@
 {% extends "base.html" %}
 
+{% block titulo %}
+Cadastro de funcionário
+{% endblock %}
 {% block conteudo %}
 <form action="" method="post">
-{{ form.as_p }}
+    <div class="fieldWrapper">
+        {{ form.nome.errors }}
+        <label for="id_nome">Nome completo:</label><br>
+        {{ form.nome }}
+    </div><br>
+    <div class="fieldWrapper">
+        {{ form.endereco.errors }}
+        <label for="id_endereco">Endereço:</label><br>
+        {{ form.endereco }} <i>( Ex.: Av. São Miguel, 4673)</i>
+    </div><br>
+    <div class="fieldWrapper">
+        {{ form.telefone.errors }}
+        <label for="id_telefone">Telefone:</label><br>
+        {{ form.telefone }} <i>(Ex.: 2976-6544)</i>
+    </div><br>
+    <div class="fieldWrapper">
+        {{ form.cpf.errors }}
+        <label for="id_cpf">CPF:</label><br>
+        {{ form.cpf }} <i>(Ex.: 367185678/56)</i>
+    </div><br>
+    <div class="fieldWrapper">
+        {{ form.rg.errors }}
+        <label for="id_rg">RG:</label><br>
+        {{ form.rg }} <i>(Ex.: 4356677789-6)</i>
+    </div><br>
+    <div class="fieldWrapper">
+        {{ form.salario.errors }}
+        <label for="id_salario">Salário:</label><br>
+        {{ form.salario }} <i>R$ NNNN.DD</i>
+    </div><br>
+    <div class="fieldWrapper">
+        {{ form.funcao.errors }}
+        <label for="id_funcao">Função:</label><br>
+        {{ form.funcao }}
+    </div><br>
+    <div class="fieldWrapper">
+        {{ form.periodo.errors }}
+        <label for="id_periodo">Período:</label><br>
+        {{ form.periodo }}
+    </div><br>
 <input type="submit" value="Confirmar registro">
 </form>
 {% endblock %}

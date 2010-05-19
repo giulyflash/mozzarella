@@ -5,7 +5,21 @@ Cadastro de novo cliente
 {% endblock %}
 {% block conteudo %}
 <form action="" method="post">
-{{ form.as_p }}
+    <div class="fieldWrapper">
+        {{ form.nome.errors }}
+        <label for="id_nome">Nome completo:</label><br>
+        {{ form.nome }}
+    </div><br>
+    <div class="fieldWrapper">
+        {{ form.endereco.errors }}
+        <label for="id_endereco">Endereço:</label><br>
+        {{ form.endereco }} <i>( Ex.: Av. São Miguel, 4673)</i>
+    </div><br>
+    <div class="fieldWrapper">
+        {{ form.telefone.errors }}
+        <label for="id_telefone">Telefone:</label><br>
+        {{ form.telefone }} <i>(Ex.: 2976-6544)</i>
+    </div><br>
 <input type="submit" value="Confirmar registro">
 </form>
 {% endblock %}
