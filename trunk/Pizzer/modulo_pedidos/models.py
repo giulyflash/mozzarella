@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.db import models
 from django.forms import ModelForm
+from django.forms.widgets import Select
 from django import forms
 from modulo_clientes.models import Cliente
 from modulo_pizzas.models import ItemCardapio
@@ -37,9 +38,14 @@ class PedidoForm(ModelForm):
 class StatusItemPedido(models.Model):
     pedido = models.ForeignKey(Pedido)
     item_cardapio = models.ForeignKey(ItemCardapio)
-    status = models.CharField(max_length=3, choices=STATUS_ITEM_PEDIDO_CHOICES)
+    quantidade = models.IntegerField()
+    
+    def get_quantidade(self):
+        return quantidade
     
 class EditaPedidoForm(ModelForm):
+    dono = forms.ComboField(required=False, widget=Select(attrs={'readonly': True}))
+    
     class Meta:
         model = Pedido
-
+        exclude = ['itens_cardapio']

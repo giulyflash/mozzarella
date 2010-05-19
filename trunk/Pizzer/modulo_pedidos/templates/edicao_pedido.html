@@ -6,6 +6,26 @@ Edição de pedido
 {% block conteudo %}
 <form action="" method="post">
 {{ form.as_p }}
+
+<br/>
+<h3> Conteúdo do Pedido </h3>
+<br/>
+<table>
+<tr>
+<th>Item Pedido</th>
+<th>Quantidade</th>
+</tr>
+{% for item_pedido in itens_pedido %}
+<tr>
+<td> {{ item_pedido.nome }} </td>
+<td>  </td>
+</tr>
+</table>
+{% endfor %}
+
+<br/>
+<br/>
+<br/>
 <input type="submit" value="Confirmar edicao">
 </form>
 {% endblock %}
