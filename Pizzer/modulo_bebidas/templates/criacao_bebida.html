@@ -5,7 +5,16 @@ Cadastro de nova bebida
 {% endblock %}
 {% block conteudo %}
 <form action="" method="post">
-{{ form.as_p }}
+    <div class="fieldWrapper">
+        {{ form.nome.errors }}
+        <label for="id_nome">Nome da bebida:</label><br>
+        {{ form.nome }}
+    </div><br>
+    <div class="fieldWrapper">
+        {{ form.quantidade.errors }}
+        <label for="id_nome">Quantidade:</label><br>
+        {{ form.quantidade }} <i>Unidades</i>
+    </div><br>
 <input type="submit" value="Confirmar registro">
 </form>
 {% endblock %}
