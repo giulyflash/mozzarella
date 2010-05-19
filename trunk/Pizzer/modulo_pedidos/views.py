@@ -1,18 +1,32 @@
-#import datetime
-#from modulos_funcionario.models import Funcionario
-#from django.views.generic import list_detail
-#from django.shortcuts import get_object_or_404
+# -*- coding: utf-8 -*-
 
-#def author_detail(request, nome_funcionario):
-    # Look up the Author (and raise a 404 if she's not found)
-#    funcionario = get_object_or_404(Funcionario, nome=nome_funcionario)
+from models import Cliente
+from django.db.models import Q
+from django.shortcuts import render_to_response
+from django.http import HttpResponseRedirect
 
+from utils.views import lista_objetos
+from models import StatusItemPedido, Pedido, PedidoForm
 
-    # Show the detail page
-#    return list_detail.object_detail(
-#        request,
-#        queryset = Funcionario.objects.all(),
-#        nome = nome_funcionario,
-#    )
-
+def cria_pedido(request):
+    if request.method == 'POST': # If the form has been submitted...
+        form = PedidoForm(request.POST) # A form bound to the POST data
+        if form.is_valid(): # All validation rules pass
+            dono = form.cleaned_data['dono']
+            status = form.cleaned_data['status']
+            itens_cardapio = form.cleaned_data['itens_cardapio']
+            pedido = Pedido(dono=dono, status=status)
+            pedido.save()
+            for item_cardapio in itens_cardapio:
+                s = StatusItemPedido(item_cardapio=item_cardapio, pedido=pedido)
+                s.save()
+            return HttpResponseRedirect('/pizzer/pedidos/') # Redirect after POST
+    else:
+        form = PedidoForm() # An unbound form
+    return render_to_response('criacao_pedido.html', {'form': form})
+    
+def lista_pedidos(request):
+    dono = request.GET.get('dono')  # Obtenção dos parâmetros do request
+    consulta = Q(dono__nome__icontains=dono)
+    return lista_objetos(request, [dono], Pedido, 'listagem_pedidos.html', 'pedidos', consulta)
 

@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block titulo %}
+Pedidos
+{% endblock %}
+{% block conteudo %}
+<form method="GET">
+	<p>
+	<label><i>Nome:</i></label>
+	<input name="dono" type="text">
+</form>
+<h4>{{ mensagem }}</h4>
+{% if pedidos_list %}
+	<table border=1>
+	<tr>
+		<th>
+		Dono
+		</th>
+        <th>
+		Status
+		</th>
+	</tr>
+	{% for pedido in pedidos_list %}
+		<tr>
+			<td>
+			<a href="/pizzer/pedido/edita/{{pedido.id}}/">{{ pedido.dono }}</a>
+			</td>
+			<td>
+			{{ pedido.status}}
+			</td>
+		</tr>
+	{% endfor %}
+	</table>
+{% endif %}
+{% endblock %}
