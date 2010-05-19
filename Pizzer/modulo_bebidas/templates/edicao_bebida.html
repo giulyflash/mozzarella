@@ -6,7 +6,7 @@ Dados da bebida {{ object.nome }}
 {% block conteudo %}
 <form action="" method="post">
 {{ form.as_p }}
-<input type="submit" value="Marcar como resolvida">
-<a href="/pizzer/reclamacao/deleta/{{ object.id }}/"><input type="button" value="Deletar"></a>
+<input type="submit" value="Salvar Alterações">
+<a href="/pizzer/reclamacao/deleta/{{ object.nome }}/"><input type="button" value="Deletar"></a>
 </form>
 {% endblock %}
