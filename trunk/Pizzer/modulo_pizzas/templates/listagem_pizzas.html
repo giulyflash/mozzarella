@@ -10,11 +10,25 @@
 	<th>
 	Nome
 	</th>
+	<th>
+	Inventor
+	</th>
+	<th>
+	Ingredientes
+	</th>
 </tr>
 {% for pizza in pizzas_list %}
 	<tr>
 		<td>
 		{{pizza.nome}}
+		</td>
+		<td>
+		{{pizza.inventor}}
+		</td>
+		<td>
+		{% for ingrediente in pizza.ingredientes.all %}
+		{{ingrediente }}
+		{% endfor %}
 		</td>
 	</tr>
 {% endfor %}
