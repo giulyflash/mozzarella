@@ -1,12 +1,12 @@
 {% extends "base.html" %}
 
 {% block titulo %}
-Dados da bebida {{ object.nome }}
+Dados da bebida {{ object.id }}
 {% endblock %}
 {% block conteudo %}
 <form action="" method="post">
 {{ form.as_p }}
 <input type="submit" value="Salvar Alterações">
-<a href="/pizzer/reclamacao/deleta/{{ object.nome }}/"><input type="button" value="Deletar"></a>
+<input type="button" value="Deletar" onClick="location.href='/pizzer/bebida/deleta/{{ object.id }}/'"/>
 </form>
 {% endblock %}
