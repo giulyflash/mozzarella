@@ -7,6 +7,9 @@ from modulo_ingredientes.models import Ingrediente
 class ItemCardapio(models.Model):
     nome = models.CharField(max_length=25, primary_key=True)
 
+    def __str__(self):
+        return self.nome
+
 class Pizza(ItemCardapio):
     inventor = models.ForeignKey(Cliente, null=True, blank=True)
     personalizada = models.BooleanField()
