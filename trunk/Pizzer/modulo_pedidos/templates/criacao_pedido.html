@@ -6,6 +6,36 @@ Cadastro de novo pedido
 {% block conteudo %}
 <form action="" method="post">
 {{ form.as_p }}
+<br/>
+<br/>
+<table border="1" >
+<tr>
+    <th> Pizzas </th>
+    <th> Quantidade </th>
+</tr>
+{% for pizza in pizzas %}
+<tr>
+    <td> {{ pizza.nome }} </td>
+    <td> <input type="text" name="{{ pizza.nome }}_qtde" value="0"> </td>
+</tr>
+{% endfor %}
+</table>
+<br/>
+<br/>
+<table border="1" >
+<tr>
+    <th> Bebidas </th>
+    <th> Quantidade </th>
+</tr>
+{% for bebida in bebidas %}
+<tr>
+    <td> {{ bebida.nome }} </td>
+    <td> <input type="text" name="{{ bebida.nome }}_qtde" value="0"> </td>
+</tr>
+{% endfor %}
+</table>
+<br/>
+<br/>
 <input type="submit" value="Confirmar registro">
 </form>
 {% endblock %}

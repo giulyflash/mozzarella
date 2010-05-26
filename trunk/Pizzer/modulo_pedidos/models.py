@@ -31,17 +31,18 @@ class Pedido(models.Model):
     def status_display(self):
         return Pedido.get_status_display(self)
         
+    def __str__(self):
+        return 'Pedido' + str(self.id)
+        
 class PedidoForm(ModelForm):
     class Meta:
         model = Pedido
-
+        exclude = ['itens_cardapio']
+        
 class StatusItemPedido(models.Model):
     pedido = models.ForeignKey(Pedido)
     item_cardapio = models.ForeignKey(ItemCardapio)
     quantidade = models.IntegerField()
-    
-    def get_quantidade(self):
-        return quantidade
     
 class EditaPedidoForm(ModelForm):
     dono = forms.ComboField(required=False, widget=Select(attrs={'readonly': True}))
