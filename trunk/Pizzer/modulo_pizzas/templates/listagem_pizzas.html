@@ -20,7 +20,7 @@
 {% for pizza in pizzas_list %}
 	<tr>
 		<td>
-		{{pizza.nome}}
+		<a href="/pizzer/pizza/edita/{{pizza.id}}/">{{pizza.nome}}</a>
 		</td>
 		<td>
 		{{pizza.inventor}}
