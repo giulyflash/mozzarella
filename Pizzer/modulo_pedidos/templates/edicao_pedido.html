@@ -10,22 +10,21 @@ Edição de pedido
 <br/>
 <h3> Conteúdo do Pedido </h3>
 <br/>
-<table>
+<table border=1>
 <tr>
-<th>Item Pedido</th>
-<th>Quantidade</th>
+    <th>Bebida</th>
+    <th>Quantidade</th>
 </tr>
-{% for item_pedido in itens_pedido %}
+{% for bebida in bebidas %}
 <tr>
-<td> {{ item_pedido.nome }} </td>
-<td>  </td>
+    <td> {{ bebida.item_cardapio.nome }} </td>
+    <td> {{ bebida.quantidade }}</td>
 </tr>
-</table>
 {% endfor %}
-
+</table>
 <br/>
 <br/>
-<br/>
-<input type="submit" value="Confirmar edicao">
+<input type="submit" value="Confirmar edição">
+<input type="button" value="Deletar" onClick="location.href='/pizzer/pedido/deleta/{{ pedido.id }}/'"/>
 </form>
 {% endblock %}

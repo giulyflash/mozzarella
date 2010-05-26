@@ -7,27 +7,34 @@ from django.http import HttpResponseRedirect
 
 from utils.views import lista_objetos
 from models import StatusItemPedido, Pedido, PedidoForm, EditaPedidoForm
+from modulo_pizzas.models import Pizza, ItemCardapio
+from modulo_bebidas.models import Bebida
 
 def cria_pedido(request):
+    pizzas = Pizza.objects.all()
+    bebidas = Bebida.objects.all()
+    itens_cardapio = ItemCardapio.objects.all()
     if request.method == 'POST': # If the form has been submitted...
         form = PedidoForm(request.POST) # A form bound to the POST data
         if form.is_valid(): # All validation rules pass
             dono = form.cleaned_data['dono']
             status = form.cleaned_data['status']
-            itens_cardapio = form.cleaned_data['itens_cardapio']
             pedido = Pedido(dono=dono, status=status)
             pedido.save()
             for item_cardapio in itens_cardapio:
-                s = StatusItemPedido(item_cardapio=item_cardapio, pedido=pedido)
-                s.save()
+                quantidade = request.POST.get(item_cardapio.nome + '_qtde')
+                quantidade = int(quantidade)
+                if quantidade != 0:
+                    s = StatusItemPedido(pedido=pedido, item_cardapio=item_cardapio, quantidade=quantidade)
+                    s.save()
             return HttpResponseRedirect('/pizzer/pedidos/') # Redirect after POST
     else:
         form = PedidoForm() # An unbound form
-    return render_to_response('criacao_pedido.html', {'form': form})
+    return render_to_response('criacao_pedido.html', {'form': form, 'bebidas': bebidas, 'pizzas': pizzas})
 
 def edita_pedido(request, object_id):
     pedido = Pedido.objects.get(pk=object_id)
-    itens_pedido = pedido.itens_cardapio.all()
+    bebidas = StatusItemPedido.objects.filter(pedido=pedido)
     if request.method == 'POST': # If the form has been submitted...
         form = EditaPedidoForm(request.POST) # A form bound to the POST data
         if form.is_valid(): # All validation rules pass
@@ -37,7 +44,7 @@ def edita_pedido(request, object_id):
             return HttpResponseRedirect('/pizzer/pedidos/') # Redirect after POST
     else:
         form = EditaPedidoForm(instance=pedido) # An unbound form
-    return render_to_response('edicao_pedido.html', {'form': form, 'itens_pedido': itens_pedido})	
+    return render_to_response('edicao_pedido.html', {'form': form, 'bebidas': bebidas, 'pedido': pedido})	
     
 def lista_pedidos(request):
     dono = request.GET.get('dono')  # Obtenção dos parâmetros do request
