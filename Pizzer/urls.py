@@ -1,6 +1,10 @@
+# -*- coding: utf-8 -*-
+
 from django.conf.urls.defaults import *
 from django.views.generic.simple import direct_to_template, redirect_to
 from django.views import static
+
+from modulo_autenticacao.views import testa_autenticado
 
 # Uncomment the next two lines to enable the admin:
 # from django.contrib import admin
@@ -10,6 +14,8 @@ urlpatterns = patterns('',
     # Example:
     (r'^$', redirect_to, {'url': '/pizzer/'}),
     (r'^pizzer/$', direct_to_template, {'template': 'index.html'}),
+    #TODO força o usuário a autenticar ao entrar (r'^pizzer/$', testa_autenticado),
+    (r'^pizzer/', include('Pizzer.modulo_autenticacao.urls')),
     (r'^pizzer/', include('Pizzer.modulo_reclamacoes.urls')),
 	(r'^pizzer/', include('Pizzer.modulo_funcionarios.urls')),
 	(r'^pizzer/', include('Pizzer.modulo_pedidos.urls')),
