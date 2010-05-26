@@ -4,7 +4,6 @@ from modulo_bebidas.models import Bebida
 from views import *
 
 urlpatterns = patterns('',
-    # Example:
     (r'^bebida/cria/$', create_object, {'model': Bebida, 'template_name': 'criacao_bebida.html'}),
     (r'^bebida/edita/(?P<object_id>\d+)/$', update_object, {'model': Bebida, 'template_name': 'edicao_bebida.html'}),
     (r'^bebida/deleta/(?P<object_id>\d+)/$', delete_object, {'model': Bebida, 'template_name': 'confirmacao_delecao.html',
