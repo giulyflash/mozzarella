@@ -49,7 +49,11 @@
         {% block nav-global %}{% endblock %}
     </div>
     <!-- END Header -->
-    {% block breadcrumbs %}<div class="breadcrumbs"><a href="/">{% trans 'Home' %}</a>{% if title %} &rsaquo; {{ title }}{% endif %}</div>{% endblock %}
+    {% block breadcrumbs %}
+    <div class="breadcrumbs"><a href="/">{% trans 'Home' %}</a>{% if title %} &rsaquo; {{ title }}{% endif %}
+    |
+    <a href="/pizzer/usuario/logout/">Logout</a>
+    </div>{% endblock %}
     {% endif %}
 
         {% if messages %}
@@ -90,6 +94,9 @@
 			<h3>Ingredientes</h3>
 				<li><a href="/pizzer/ingrediente/cria/">Cadastrar ingrediente</a></li>
 				<li><a href="/pizzer/ingredientes/">Listar ingredientes</a></li>
+            <h3>Usuários</h3>
+				<li><a href="/pizzer/usuario/cria/">Cadastrar usuario</a></li>
+				<li><a href="/pizzer/usuarios/">Listar usuarios</a></li>
 		    </ul>
         {% endblock %}
         </div>

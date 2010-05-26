@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block titulo %}
+Usuários
+{% endblock %}
+{% block conteudo %}
+<form method="GET">
+	<p>
+	<label><i>Nome de usuário:</i></label>
+	<input name="username" type="text"/>
+	</p>
+	<input type="submit" value="Filtrar"/>
+</form>
+<h4>{{ mensagem }}</h4>
+{% if usuarios_list %}
+	<table border="1">
+	<tr>
+		<th>
+		Nome de usuário
+		</th>
+	</tr>
+	{% for usuario in usuarios_list %}
+		<tr>
+			<td>
+			<a href="/pizzer/usuario/edita/{{usuario.id}}/">{{ usuario.username }}</a>
+			</td>
+		</tr>
+	{% endfor %}
+	</table>
+{% endif %}
+{% endblock %}

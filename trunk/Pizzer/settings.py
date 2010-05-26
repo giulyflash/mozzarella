@@ -51,6 +51,8 @@ ADMIN_MEDIA_PREFIX = '/media/'
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = '+h)9eafr10%gyjmn_72ixsy$%f#*@x*_--&n$r1614)24+_-m3'
 
+LOGIN_URL = '/pizzer/usuario/login/'
+
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.load_template_source',
@@ -73,6 +75,7 @@ TEMPLATE_DIRS = (
     'modulo_reclamacoes/templates', 'templates_gerais', 'modulo_funcionarios/templates',
 	'modulo_clientes/templates', 'modulo_pedidos/templates',
 	'modulo_clientes/templates', 'modulo_bebidas/templates',
+    'modulo_autenticacao/templates',
 )
 
 INSTALLED_APPS = (
@@ -87,6 +90,7 @@ INSTALLED_APPS = (
     'modulo_pizzas',
     'modulo_bebidas',
     'modulo_ingredientes',
+    'modulo_autenticacao',
 )
 
 # Interliche

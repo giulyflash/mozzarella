@@ -1,0 +1,28 @@
+﻿{% extends "base.html" %}
+
+{% block titulo %}
+Login
+{% endblock %}
+
+{% block conteudo %}
+<br/>
+<b>{{ erro }}</b>
+<br/><br/>
+<form method="POST">
+    <p>
+    <label>Usuario: </label>
+    <input name="username" />
+    </p>
+    <p>
+    <label>Senha: </label>
+    <input type="password" name="password" />
+    </p>
+    <p>
+    <input type="submit" value="Login" />
+    </p>
+</form>
+{% endblock %}
+
+{% block sidebar %}
+<!-- Esse block serve para apagar a barra lateral -->
+{% endblock %}
