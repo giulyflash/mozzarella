@@ -11,13 +11,8 @@ Cadastro de nova pizza
         {{ form.nome }}
     </div><br>
     <div class="fieldWrapper">
-        {{ form.personalizada.errors }}
-        <label for="id_personalizada">Pizza Personalizada?</label>
-        {{ form.personalizada }}
-    </div><br>
-    <div class="fieldWrapper">
         {{ form.ingredientes.errors }}
-        <label for="id_nome">Ingredientes:</label>
+        <label for="id_ingredientes">Ingredientes:</label>
         {{ form.ingredientes }} Com a tecla CTRL pressionada, selecione os ingredientes desejados
     </div><br>
 <input type="submit" value="Confirmar registro">
