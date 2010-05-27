@@ -20,7 +20,7 @@ def lista_objetos(request, parametros, model, template_name, template_object_nam
         if queryset:
             mensagem = 'Exibindo todos os registros.'
         else:
-            mensagem = 'Não há registros para serem exibidos.'
+            mensagem = 'Não há registros a serem exibidos.'
     else:
         if universo:
             queryset = model.objects.filter(consulta & universo);
@@ -41,7 +41,7 @@ def lista_objetos(request, parametros, model, template_name, template_object_nam
 
 
     if not queryset:
-        mensagem = 'Não há registros para serem exibidos.'
+        mensagem = 'Não há registros a serem exibidos.'
     else:
         mensagem = 'Exibindo todos os registros.'
     if queryset:

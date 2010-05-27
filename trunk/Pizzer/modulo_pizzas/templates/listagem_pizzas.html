@@ -1,7 +1,11 @@
 {% extends "base.html" %}
 
+{% block titulo %}
+Pizzas
+{% endblock %}
 {% block conteudo %}
 <form method="GET">
+	<label><i>Nome da Pizza:</i></label>
 	<input name="nome" type="text">
 	<input type="submit" value="filtrar"/>
 </form>
