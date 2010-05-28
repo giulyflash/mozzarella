@@ -1,5 +1,5 @@
 from django.conf.urls.defaults import *
-from django.views.generic.create_update import create_object, update_object, delete_object
+from django.views.generic.create_update import create_object, delete_object
 from modulo_reclamacoes.models import Reclamacao, ReclamacaoFormCliente, ReclamacaoFormGerente
 from views import *
 
@@ -10,7 +10,7 @@ from views import *
 urlpatterns = patterns('',
     # Example:
     (r'^reclamacao/cria/$', create_object, {'form_class': ReclamacaoFormCliente, 'template_name': 'criacao_reclamacao.html'}),
-    (r'^reclamacao/resolve/(?P<object_id>\d+)/$', update_object, {'form_class': ReclamacaoFormGerente, 'template_name': 'resolucao_reclamacao.html'}),
+    (r'^reclamacao/resolve/(?P<object_id>\d+)/$', resolve_reclamacao),
     (r'^reclamacao/deleta/(?P<object_id>\d+)/$', delete_object, {'model': Reclamacao, 'template_name': 'confirmacao_delecao.html',
                                                                  'post_delete_redirect': '/pizzer/reclamacoes/', 'extra_context': {'model': Reclamacao}}),
     (r'^reclamacoes/$', lista_reclamacoes)
