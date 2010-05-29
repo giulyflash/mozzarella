@@ -14,7 +14,7 @@ class Reclamacao(models.Model):  # Note que Pessoa herda da classe Model, que es
         permissions = (
            ('pode_criar_reclamacao', 'Pode criar reclamacao'),
             ('pode_ver_reclamacoes', 'Pode ver reclamacoes'),
-            ('pode_editar_reclamacao', 'Pode editar reclamacao'),
+            ('pode_resolver_reclamacao', 'Pode resolver reclamacao'),
         )
 
     def __str__(self):

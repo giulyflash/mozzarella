@@ -25,8 +25,8 @@ class Pedido(models.Model):
 
     class Meta:
         permissions = (
-           ('pode_criar_pedido', 'Pode criar pedidos'),
-            ('pode_ver_pedidos', 'Pode ver pedidos'),
+           ('pode_criar_pedido', 'Pode criar pedido'),
+            ('pode_ver_todos_os_pedidos', 'Pode ver todos os pedidos'),
             ('pode_editar_pedido', 'Pode editar pedido'),
         )
 

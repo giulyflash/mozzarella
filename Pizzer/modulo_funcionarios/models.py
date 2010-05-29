@@ -45,7 +45,7 @@ class Funcionario(Pessoa):
         permissions = (
            ('pode_criar_funcionario', 'Pode criar funcionario'),
             ('pode_ver_funcionarios', 'Pode ver funcionarios'),
-            ('pode_editar_funcionario', 'Pode editar funcionario'),
+            ('pode_editar_qualquer_funcionario', 'Pode editar qualquer funcionario'),
         )
 
     def get_absolute_url(self): #retorna o URL absoluto da instancia de Funcionario
