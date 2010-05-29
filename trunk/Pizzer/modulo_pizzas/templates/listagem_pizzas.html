@@ -21,6 +21,9 @@ Pizzas
 	<th>
 	Ingredientes
 	</th>
+	<th>
+	Preço (R$)
+	</th>
 </tr>
 {% for pizza in pizzas_list %}
 	<tr>
@@ -32,6 +35,9 @@ Pizzas
 		</td>
 		<td>
 		{{ pizza.ingredientes.all|join:", " }}
+		</td>
+		<td>
+		{{ pizza.preco|floatformat:2 }}
 		</td>
 	</tr>
 {% endfor %}

@@ -13,8 +13,13 @@ Cadastro de nova pizza
     <div class="fieldWrapper">
         {{ form.ingredientes.errors }}
         <label for="id_ingredientes">Ingredientes:</label>
-        {{ form.ingredientes }} Com a tecla CTRL pressionada, selecione os ingredientes desejados
-    </div><br>
+        {{ form.ingredientes }} <br><br>Com a tecla CTRL pressionada, selecione os ingredientes desejados.
+    </div><br><br>
+    <div class="fieldWrapper">
+        {{ form.preco.errors }}
+        <label for="id_preco">Preço:</label>
+        {{ form.preco }} <i>R$ NN.DD</i>
+    </div><br><br>
 <input type="submit" value="Confirmar registro">
 </form>
 {% endblock %}

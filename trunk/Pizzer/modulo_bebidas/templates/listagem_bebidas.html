@@ -17,6 +17,9 @@ Bebidas
 		Nome
 		</th>
 		<th>
+		Preço (R$)
+		</th>
+		<th>
 		Quantidade
 		</th>
 	</tr>
@@ -26,7 +29,10 @@ Bebidas
 			<a href="/pizzer/bebida/edita/{{bebida.id}}/">{{ bebida.nome }}</a>
 			</td>
 			<td>
-			{{ bebida.quantidade}}
+			{{ bebida.preco|floatformat:2 }}
+			</td>
+			<td>
+			{{ bebida.quantidade }}
 			</td>
 		</tr>
 	{% endfor %}

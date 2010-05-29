@@ -10,11 +10,15 @@ Cadastro de novo pedido
 <table border="1" >
 <tr>
     <th> Pizzas </th>
+    <th> Ingredientes </th>
+	<th> Preço (R$) </th>
     <th> Quantidade </th>
 </tr>
 {% for pizza in pizzas %}
 <tr>
     <td> {{ pizza.nome }} </td>
+    <td> {{ pizza.ingredientes.all|join:", " }} </td>
+    <td> {{ pizza.preco|floatformat:2 }} </td>
     <td> <input type="text" name="{{ pizza.nome }}_qtde" value="0"> </td>
 </tr>
 {% endfor %}
@@ -24,11 +28,13 @@ Cadastro de novo pedido
 <table border="1" >
 <tr>
     <th> Bebidas </th>
+    <th> Preço (R$) </th>
     <th> Quantidade </th>
 </tr>
 {% for bebida in bebidas %}
 <tr>
     <td> {{ bebida.nome }} </td>
+    <td> {{ bebida.preco|floatformat:2 }} </td>
     <td> <input type="text" name="{{ bebida.nome }}_qtde" value="0"> </td>
 </tr>
 {% endfor %}

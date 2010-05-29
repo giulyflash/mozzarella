@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from datetime import datetime
 
 from models import Cliente
 from django.db.models import Q
@@ -6,8 +7,8 @@ from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
 
 from utils.views import lista_objetos
-from models import StatusItemPedido, Pedido, PedidoForm, EditaPedidoForm
-from modulo_pizzas.models import Pizza, ItemCardapio
+from models import Cliente, ItemCardapio, StatusItemPedido, Pedido, PedidoForm, EditaPedidoForm
+from modulo_pizzas.models import Pizza
 from modulo_bebidas.models import Bebida
 
 def cria_pedido(request):
@@ -51,6 +52,7 @@ def cria_pedido(request):
 
 def edita_pedido(request, object_id):
     pedido = Pedido.objects.get(pk=object_id)
+    data_horario = pedido.data_horario.strftime("%d/%m/%Y - %H:%M")
     itens_pedidos = StatusItemPedido.objects.filter(pedido=pedido)
     bebidas = []
     pizzas = []
@@ -71,7 +73,8 @@ def edita_pedido(request, object_id):
             return HttpResponseRedirect('/pizzer/pedidos/') # Redirect after POST
     else:
         form = EditaPedidoForm(instance=pedido) # An unbound form
-    return render_to_response('edicao_pedido.html', {'form': form, 'bebidas': bebidas, 'pizzas': pizzas, 'pedido': pedido})
+    return render_to_response('edicao_pedido.html', {'form': form, 'bebidas': bebidas, 'pizzas': pizzas, 'pedido': pedido,
+                                                     'data_horario': data_horario})
 
 def lista_pedidos(request):
     cliente = request.GET.get('cliente')  # Obtenção dos parâmetros do request
