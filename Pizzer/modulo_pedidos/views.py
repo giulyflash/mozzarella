@@ -16,7 +16,7 @@ def cria_pedido(request):
         form = PedidoForm(request.POST) # A form bound to the POST data
         if form.is_valid(): # All validation rules pass
             cliente = form.cleaned_data['cliente']
-            status = form.cleaned_data['status']
+            status = 'A'
             pedido = Pedido(cliente=cliente, status=status)
             pedido.save()
             for pizza in pizzas:
@@ -30,11 +30,19 @@ def cria_pedido(request):
                 quantidade = request.POST.get(bebida.nome + '_qtde')
                 quantidade = int(quantidade)
                 if quantidade != 0:
-                    s = StatusItemPedido(pedido=pedido, item_cardapio=bebida, quantidade=quantidade,
-                                         tipo_de_item=2)
-                    s.save()
-                    bebida.quantidade -= quantidade
-                    bebida.save()
+                    if bebida.quantidade - quantidade < 0:
+                        pedido.delete()
+                        return render_to_response('erro_estoque.html', {'bebida': bebida})
+                    else:
+                        s = StatusItemPedido(pedido=pedido, item_cardapio=bebida, quantidade=quantidade,
+                                             tipo_de_item=2)
+                        s.save()
+                        bebida.quantidade -= quantidade
+                        bebida.save()
+            itens_pedidos = StatusItemPedido.objects.filter(pedido=pedido)
+            if len(itens_pedidos) == 0:
+                pedido.delete()
+                return HttpResponseRedirect('/pizzer/pedido/cria/vazio')
             return HttpResponseRedirect('/pizzer/pedidos/') # Redirect after POST
     else:
         form = PedidoForm() # An unbound form
@@ -66,4 +74,10 @@ def lista_pedidos(request):
     cliente = request.GET.get('cliente')  # Obtenção dos parâmetros do request
     consulta = Q(cliente__nome__icontains=cliente)
     return lista_objetos(request, [cliente], Pedido, 'listagem_pedidos.html', 'pedidos', consulta)
+
+def erro_vazio(request):
+    return render_to_response('erro_vazio.html')
+
+def erro_estoque(request):
+    return
 

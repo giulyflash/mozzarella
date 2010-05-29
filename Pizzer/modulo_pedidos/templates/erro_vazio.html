@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block titulo %}
+ERRO
+{% endblock %}
+
+{% block conteudo %}
+<h3> Um pedido não pode ser vazio. </h3>
+<br/>
+<form action="" method="post">
+<input type="button" value="Retornar"onClick="window.location.href='/pizzer/pedido/cria'"/>
+</form>
+{% endblock %}
