@@ -5,41 +5,49 @@ Edição de pedido
 {% endblock %}
 {% block conteudo %}
 <form action="" method="post">
-<p>Cliente: {{ pedido.cliente }}</p>
-{{ form.as_p }}
-<p>Data e Horário do Pedido: {{ data_horario }}</p>
-<br/>
-<h3> Conteúdo do Pedido </h3>
-<br/>
-<table border="1">
-<tr>
-    <th>Pizzas</th>
-    <th>Quantidade</th>
-</tr>
-{% for pizza in pizzas %}
-<tr>
-    <td> {{ pizza.item_cardapio.nome }} </td>
-    <td> {{ pizza.quantidade }}</td>
-</tr>
-{% endfor %}
-</table>
-<br/>
-<br/>
-<table border="1">
-<tr>
-    <th>Bebidas</th>
-    <th>Quantidade</th>
-</tr>
-{% for bebida in bebidas %}
-<tr>
-    <td> {{ bebida.item_cardapio.nome }} </td>
-    <td> {{ bebida.quantidade }}</td>
-</tr>
-{% endfor %}
-</table>
-<br/>
-<br/>
-<input type="submit" value="Confirmar alterações">
-<input type="button" value="Remover pedido" onClick="location.href='/pizzer/pedido/deleta/{{ pedido.id }}/'"/>
+	<p><b>Cliente:</b> {{ pedido.cliente }}</p>
+	<p><b>Entrada do Pedido:</b> {{ pedido.data_horario|date:"d/m/y - H:i" }}</p>
+	<div class="fieldWrapper">
+    	<b>Status do Pedido:</b> {{ form.status }}
+	</div><br/>
+
+	<h3> Conteúdo do Pedido </h3><br/>
+
+	<table border="1">
+		<tr>
+    		<th>Pizzas</th>
+    		<th>Quantidade</th>
+		</tr>
+		{% for pizza in pizzas %}
+		<tr>
+    		<td> {{ pizza.item_cardapio.nome }} </td>
+    		<td> {{ pizza.quantidade }}</td>
+		</tr>
+		{% endfor %}
+	</table><br/><br/>
+
+	<table border="1">
+		<tr>
+    		<th>Bebidas</th>
+    		<th>Quantidade</th>
+		</tr>
+		{% for bebida in bebidas %}
+		<tr>
+    		<td> {{ bebida.item_cardapio.nome }} </td>
+    		<td> {{ bebida.quantidade }}</td>
+		</tr>
+		{% endfor %}
+	</table><br/><br/>
+
+	<h3> Valor Total do Pedido: R${{ total|floatformat:2 }}</h3><br/><br/>
+
+    <div class="fieldWrapper">
+        <b>Entregador:</b> {{ form.entregador }}
+    </div><br/>
+
+    <p> <b>Troco a ser Entregue:</b> R${{ troco|floatformat:2 }}</p><br/><br/>
+
+	<input type="submit" value="Confirmar alterações">
+	<input type="button" value="Remover pedido" onClick="location.href='/pizzer/pedido/deleta/{{ pedido.id }}/'"/>
 </form>
 {% endblock %}

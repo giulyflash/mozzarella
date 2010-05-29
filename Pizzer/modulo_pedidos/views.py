@@ -1,13 +1,11 @@
 # -*- coding: utf-8 -*-
-from datetime import datetime
-
 from models import Cliente
 from django.db.models import Q
 from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
 
 from utils.views import lista_objetos
-from models import Cliente, ItemCardapio, StatusItemPedido, Pedido, PedidoForm, EditaPedidoForm
+from models import Cliente, ItemCardapio, StatusItemPedido, Pedido, PedidoForm, EditaPedidoForm, PagamentoForm
 from modulo_pizzas.models import Pizza
 from modulo_bebidas.models import Bebida
 
@@ -18,8 +16,7 @@ def cria_pedido(request):
         form = PedidoForm(request.POST) # A form bound to the POST data
         if form.is_valid(): # All validation rules pass
             cliente = form.cleaned_data['cliente']
-            status = 'A'
-            pedido = Pedido(cliente=cliente, status=status)
+            pedido = Pedido(cliente=cliente, status='A', pagamento=0)
             pedido.save()
             for pizza in pizzas:
                 quantidade = request.POST.get(pizza.nome + '_qtde')
@@ -45,15 +42,18 @@ def cria_pedido(request):
             if len(itens_pedidos) == 0:
                 pedido.delete()
                 return HttpResponseRedirect('/pizzer/pedido/cria/vazio')
-            return HttpResponseRedirect('/pizzer/pedidos/') # Redirect after POST
+            return HttpResponseRedirect('/pizzer/pedido/cria/pagamento/' + str(pedido.id) + '/') # Redirect after POST
     else:
         form = PedidoForm() # An unbound form
     return render_to_response('criacao_pedido.html', {'form': form, 'bebidas': bebidas, 'pizzas': pizzas})
 
 def edita_pedido(request, object_id):
     pedido = Pedido.objects.get(pk=object_id)
-    data_horario = pedido.data_horario.strftime("%d/%m/%Y - %H:%M")
     itens_pedidos = StatusItemPedido.objects.filter(pedido=pedido)
+    total = 0
+    for item_pedido in itens_pedidos:
+        total += (item_pedido.item_cardapio.preco * item_pedido.quantidade)
+    troco = pedido.pagamento - total
     bebidas = []
     pizzas = []
     for item_pedido in itens_pedidos:
@@ -74,16 +74,40 @@ def edita_pedido(request, object_id):
     else:
         form = EditaPedidoForm(instance=pedido) # An unbound form
     return render_to_response('edicao_pedido.html', {'form': form, 'bebidas': bebidas, 'pizzas': pizzas, 'pedido': pedido,
-                                                     'data_horario': data_horario})
+                                                     'total': total, 'troco': troco})
 
 def lista_pedidos(request):
     cliente = request.GET.get('cliente')  # Obtenção dos parâmetros do request
     consulta = Q(cliente__nome__icontains=cliente)
     return lista_objetos(request, [cliente], Pedido, 'listagem_pedidos.html', 'pedidos', consulta)
 
+def pagamento(request, object_id):
+    pedido = Pedido.objects.get(pk=object_id)
+    itens_pedidos = StatusItemPedido.objects.filter(pedido=pedido)
+    total = 0
+    for item_pedido in itens_pedidos:
+        total += (item_pedido.item_cardapio.preco * item_pedido.quantidade)
+    if request.method == 'POST': # If the form has been submitted...
+        form = PagamentoForm(request.POST) # A form bound to the POST data
+        if form.is_valid(): # All validation rules pass
+            pagamento = form.cleaned_data['pagamento']
+            if pagamento >= total:
+                pedido.pagamento = pagamento
+                pedido.save()
+                return HttpResponseRedirect('/pizzer/pedidos/') # Redirect after POST
+            else:
+                pedido.delete()
+                return HttpResponseRedirect('/pizzer/pedido/cria/pagamento/erro/')
+    else:
+        form = EditaPedidoForm(instance=pedido)
+    return render_to_response('pagamento.html', {'form':form, 'pedido':pedido, 'total': total})
+
 def erro_vazio(request):
     return render_to_response('erro_vazio.html')
 
 def erro_estoque(request):
     return render_to_response('erro_estoque.html')
+
+def erro_pagamento(request):
+    return render_to_response('erro_pagamento.html')
 

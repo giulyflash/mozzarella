@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block titulo %}
+Pagamento
+{% endblock %}
+
+{% block conteudo %}
+<form action="" method="post">
+	<h3> O pedido totaliza R${{ total|floatformat:2 }} </h3>
+	<br/>
+	É desejado troco para que quantia?
+	<br/><br/>
+	<div class="fieldWrapper">
+        {{ form.pagamento.errors }}
+        {{ form.pagamento }} <i>R$ NN.DD</i>
+    </div><br>
+<input type="submit" value="Confirmar">
+</form>
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block titulo %}
+ERRO
+{% endblock %}
+
+{% block conteudo %}
+<h3> A quantia a ser entregue deve ser maior ou igual ao valor do pedido. </h3>
+<br/>
+<form action="" method="post">
+<input type="button" value="Retornar"onClick="window.location.href='/pizzer/pedido/cria'"/>
+</form>
+{% endblock %}

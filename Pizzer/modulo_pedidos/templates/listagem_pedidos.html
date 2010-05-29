@@ -19,6 +19,9 @@ Pedidos
         <th>
 		Status do Pedido
 		</th>
+		<th>
+		Horário do Pedido
+		</th>
 	</tr>
 	{% for pedido in pedidos_list %}
 		<tr>
@@ -27,6 +30,9 @@ Pedidos
 			</td>
 			<td>
 			{{ pedido.status_display }}
+			</td>
+			<td>
+			{{ pedido.data_horario|date:"H:i" }}
 			</td>
 		</tr>
 	{% endfor %}
