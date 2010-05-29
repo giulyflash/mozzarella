@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 
-from models import Cliente
 from django.db.models import Q
+from django.shortcuts import render_to_response
 
+from models import Cliente, ClienteForm
+from modulo_autenticacao.models import UserCreateForm
 from utils.views import lista_objetos
 
 def lista_clientes(request):
