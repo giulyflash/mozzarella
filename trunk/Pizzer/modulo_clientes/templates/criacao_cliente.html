@@ -5,6 +5,7 @@ Cadastro de novo cliente
 {% endblock %}
 {% block conteudo %}
 <form action="" method="post">
+	<h2>Dados pessoais</h2>
     <div class="fieldWrapper">
         {{ form_cliente.nome.errors }}
         <label for="id_nome">Nome completo:</label><br>
@@ -21,11 +22,8 @@ Cadastro de novo cliente
         {{ form_cliente.telefone }} <i>(Ex.: 2976-6544)</i>
     </div><br>
     <hr/>
-    <div class="fieldWrapper">
-        {{ form_usuario.username.errors }}
-        <label for="id_telefone">Nome de usuario:</label><br>
-        {{ form_usuario.username }}
-    </div><br>
+    <h2>Conta de usuário</h2>
+    {% include form_criacao_usuario.html %}
 <input type="submit" value="Confirmar registro">
 </form>
 {% endblock %}
