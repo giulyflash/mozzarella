@@ -1,0 +1,1 @@
+[{"pk": 1, "model": "modulo_clientes.cliente", "fields": {"endereco": "R. Teodoro Sampaio, 619", "telefone": "3561-6157", "nome": "Carlos da Silva"}}, {"pk": 2, "model": "modulo_clientes.cliente", "fields": {"endereco": "R. Inglaterra, 325", "telefone": "3229-6362", "nome": "Pedro Gomes Ferreira"}}]
