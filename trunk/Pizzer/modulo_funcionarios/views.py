@@ -52,7 +52,6 @@ def edita_funcionario(request, object_id):
             nome = form.cleaned_data['nome']
             endereco = form.cleaned_data['endereco']
             telefone = form.cleaned_data['telefone']
-            cpf = form.cleaned_data['cpf']
             rg = form.cleaned_data['rg']
             salario = form.cleaned_data['salario']
             periodo = form.cleaned_data['periodo']
@@ -67,4 +66,4 @@ def edita_funcionario(request, object_id):
             return HttpResponseRedirect('/pizzer/funcionarios/')
     else:
         form = FuncionarioEditaForm(instance=funcionario)
-    return render_to_response('edicao_funcionario.html', {'form': form})
+    return render_to_response('edicao_funcionario.html', {'form': form, 'object': funcionario})
