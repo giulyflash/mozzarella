@@ -7,6 +7,13 @@ class Ingrediente(models.Model):
     preco = models.DecimalField(max_digits=4, decimal_places=2)
     quantidade = models.IntegerField()
 
+    class Meta:
+        permissions = (
+           ('pode_criar_ingrediente', 'Pode criar ingrediente'),
+            ('pode_ver_ingredientes', 'Pode ver ingredientes'),
+            ('pode_editar_ingrediente', 'Pode editar ingrediente'),
+        )
+
     def __str__(self):
         return self.nome
 
