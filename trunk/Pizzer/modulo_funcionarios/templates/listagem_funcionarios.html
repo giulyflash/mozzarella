@@ -31,7 +31,7 @@
 {% for funcionario in funcionarios_list %}
 	<tr>
 		<td>
-		{{funcionario.nome}}
+		<a href="/pizzer/funcionario/edita/{{funcionario.id}}/">{{ funcionario.nome }}</a>
 		</td>
 		<td>
 		{{funcionario.endereco}}
