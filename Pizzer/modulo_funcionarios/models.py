@@ -50,6 +50,7 @@ class FuncionarioForm(forms.ModelForm):
 
 class FuncionarioEditaForm(forms.ModelForm):
     funcao = forms.ComboField(required=False)
+    cpf = forms.CharField(required=False)
     class Meta:
         model = Funcionario
 
