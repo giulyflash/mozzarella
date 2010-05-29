@@ -18,10 +18,7 @@ Ingredientes
 		Nome
 		</th>
 		<th>
-		Preço
-		</th>
-        <th>
-		Custo
+		Preço (R$)
 		</th>
 		<th>
 		Quantidade
@@ -33,10 +30,7 @@ Ingredientes
 			<a href="/pizzer/ingrediente/edita/{{ingrediente.id}}/">{{ ingrediente.nome }}</a>
 			</td>
 			<td>
-			{{ ingrediente.preco }}
-			</td>
-            <td>
-			{{ ingrediente.custo }}
+			{{ ingrediente.preco|floatformat:2 }}
 			</td>
 			<td>
 			{{ ingrediente.quantidade }}

@@ -17,7 +17,7 @@ urlpatterns = patterns('',
                                                              'extra_context': {'model': Pedido}}),
     (r'^pedidos/$', lista_pedidos),
     (r'^pedido/cria/vazio/$', erro_vazio),
-    (r'pedido/cria/estoque/$', erro_estoque)
+    (r'^pedido/cria/estoque/$', erro_estoque),
 
     # Uncomment the admin/doc line below and add 'django.contrib.admindocs'
     # to INSTALLED_APPS to enable admin documentation:

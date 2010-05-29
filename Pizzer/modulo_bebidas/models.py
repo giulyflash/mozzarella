@@ -5,6 +5,7 @@ from modulo_pizzas.models import ItemCardapio
 
 class Bebida(ItemCardapio):
     quantidade = models.IntegerField()
+
     def get_absolute_url(self):
         return '/pizzer/'
 

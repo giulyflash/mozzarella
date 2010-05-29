@@ -15,6 +15,11 @@ Cadastro de nova bebida
         <label for="id_quantidade">Quantidade:</label><br>
         {{ form.quantidade }} <i>Unidades</i>
     </div><br>
+    <div class="fieldWrapper">
+        {{ form.preco.errors }}
+        <label for="id_preco">Preço:</label><br>
+        {{ form.preco }} <i>R$ NN.DD</i>
+    </div><br>
 <input type="submit" value="Confirmar registro">
 </form>
 {% endblock %}
