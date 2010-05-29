@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 from django import forms
 from django.forms.widgets import PasswordInput
 

@@ -41,6 +41,13 @@ class Funcionario(Pessoa):
     funcao = models.CharField(max_length=10, choices=FUNCAO_CHOICES)
     periodo = models.CharField(max_length=11, choices=PERIODO_CHOICES)
 
+    class Meta:
+        permissions = (
+           ('pode_criar_funcionario', 'Pode criar funcionario'),
+            ('pode_ver_funcionarios', 'Pode ver funcionarios'),
+            ('pode_editar_funcionario', 'Pode editar funcionario'),
+        )
+
     def get_absolute_url(self): #retorna o URL absoluto da instancia de Funcionario
         return "/pizzer/"
 

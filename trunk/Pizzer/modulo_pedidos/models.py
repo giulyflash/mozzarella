@@ -22,6 +22,13 @@ class Pedido(models.Model):
     entregador = models.ForeignKey(Funcionario, blank=True, null=True)
     data_horario = models.DateTimeField(auto_now_add=True)
 
+    class Meta:
+        permissions = (
+           ('pode_criar_pedido', 'Pode criar pedidos'),
+            ('pode_ver_pedidos', 'Pode ver pedidos'),
+            ('pode_editar_pedido', 'Pode editar pedido'),
+        )
+
     def get_absolute_url():
         return '/pizzer/pedidos/'
 

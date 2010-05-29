@@ -10,6 +10,13 @@ class Reclamacao(models.Model):  # Note que Pessoa herda da classe Model, que es
     assunto = models.CharField(max_length=60)
     texto = models.TextField()
 
+    class Meta:
+        permissions = (
+           ('pode_criar_reclamacao', 'Pode criar reclamacao'),
+            ('pode_ver_reclamacoes', 'Pode ver reclamacoes'),
+            ('pode_editar_reclamacao', 'Pode editar reclamacao'),
+        )
+
     def __str__(self):
         return self.assunto
 

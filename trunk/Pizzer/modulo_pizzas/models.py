@@ -16,6 +16,13 @@ class Pizza(ItemCardapio):
     personalizada = models.BooleanField()
     ingredientes = models.ManyToManyField(Ingrediente)
 
+    class Meta:
+        permissions = (
+           ('pode_criar_pizza', 'Pode criar pizza'),
+            ('pode_ver_pizzas', 'Pode ver pizzas'),
+            ('pode_editar_pizza', 'Pode editar pizza'),
+        )
+
     def __unicode__(self):
         return self.nome
 

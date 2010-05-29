@@ -14,7 +14,7 @@ urlpatterns = patterns('',
     # Example:
     (r'^$', redirect_to, {'url': '/pizzer/'}),
     (r'^pizzer/$', direct_to_template, {'template': 'index.html'}),
-    #TODO força o usuário a autenticar ao entrar (r'^pizzer/$', testa_autenticado),
+    #TODO forï¿½a o usuï¿½rio a autenticar ao entrar (r'^pizzer/$', testa_autenticado),
     (r'^pizzer/', include('Pizzer.modulo_autenticacao.urls')),
     (r'^pizzer/', include('Pizzer.modulo_reclamacoes.urls')),
 	(r'^pizzer/', include('Pizzer.modulo_funcionarios.urls')),
