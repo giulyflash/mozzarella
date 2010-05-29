@@ -31,7 +31,7 @@ class Pedido(models.Model):
 class PedidoForm(ModelForm):
     class Meta:
         model = Pedido
-        exclude = ['itens_cardapio']
+        exclude = ['itens_cardapio', 'status']
 
 class StatusItemPedido(models.Model):
     pedido = models.ForeignKey(Pedido)
