@@ -1,16 +1,15 @@
 {% extends "base.html" %}
 
 {% block titulo %}
-Clientes
+Ingredientes
 {% endblock %}
 {% block conteudo %}
 <form method="GET">
-	<p>
 	<label><i>Nome:</i></label>
 	<input name="nome" type="text">
-	</p>
 	<input type="submit" value="Filtrar"/>
 </form>
+</br>
 <h4>{{ mensagem }}</h4>
 {% if ingredientes_list %}
 	<table border=1>

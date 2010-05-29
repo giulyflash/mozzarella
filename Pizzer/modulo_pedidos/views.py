@@ -82,5 +82,5 @@ def erro_vazio(request):
     return render_to_response('erro_vazio.html')
 
 def erro_estoque(request):
-    return
+    return render_to_response('erro_estoque.html')
 

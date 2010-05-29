@@ -3,7 +3,7 @@ from django.db import models
 from django.forms import ModelForm
 
 class Ingrediente(models.Model):
-    nome = models.CharField(max_length=25, primary_key=True)
+    nome = models.CharField(max_length=25, unique=True)
     preco = models.DecimalField(max_digits=3, decimal_places=2)
     custo = models.DecimalField(max_digits=3, decimal_places=2)
     quantidade = models.IntegerField()
