@@ -6,7 +6,7 @@ Dados do cliente {{ object.nome }}
 {% block conteudo %}
 <form action="" method="post">
 {{ form.as_p }}
-<input type="submit" value="Salvar Alterações">
-<input type="button" value="Deletar" onClick="location.href='/pizzer/bebida/deleta/{{ object.id }}/'"/>
+<input type="submit" value="Salvar alterações">
+<input type="button" value="Deletar" onClick="location.href='/pizzer/cliente/deleta/{{ object.id }}/'"/>
 </form>
 {% endblock %}

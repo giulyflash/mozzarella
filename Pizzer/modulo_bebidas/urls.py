@@ -1,5 +1,8 @@
+# -*- coding: utf-8 -*-
+
 from django.conf.urls.defaults import *
 from django.views.generic.create_update import create_object, update_object, delete_object
+
 from modulo_bebidas.models import Bebida
 from views import *
 

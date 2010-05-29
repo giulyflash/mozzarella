@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+
 from models import Cliente
 from django.db.models import Q
 from django.shortcuts import render_to_response

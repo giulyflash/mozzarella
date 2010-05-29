@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block titulo %}
+Dados do funcionário {{ object.nome }}
+{% endblock %}
+{% block conteudo %}
+<form action="" method="post">
+{{ form.as_p }}
+<input type="submit" value="Salvar alterações">
+<input type="button" value="Deletar" onClick="location.href='/pizzer/funcionario/deleta/{{ object.id }}/'"/>
+</form>
+{% endblock %}

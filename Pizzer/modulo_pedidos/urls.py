@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from django.conf.urls.defaults import *
 from django.views.generic.create_update import delete_object
 from modulo_pedidos.models import Pedido
