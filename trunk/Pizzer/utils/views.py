@@ -2,6 +2,61 @@
 
 from django.views.generic import list_detail
 from django.shortcuts import render_to_response
+from django.http import HttpResponse
+from django.contrib.auth.models import Permission, Group
+
+def cria_grupos_usuarios(request):
+    for nome_grupo in ('cliente', 'gerente', 'pizzaiolo', 'atendente', 'motoqueiro'):
+        try:
+            Group.objects.get(name=nome_grupo).delete()
+        except Exception:
+            pass
+
+    cliente = Group(name='cliente')
+    cliente.save()
+    gerente = Group(name='gerente')
+    gerente.save()
+    pizzaiolo = Group(name='pizzaiolo')
+    pizzaiolo.save()
+    atendente = Group(name='atendente')
+    atendente.save()
+    motoqueiro = Group(name='motoqueiro')
+    motoqueiro.save()
+    cliente.Permission = [Permission.objects.get(name='Pode criar reclamacao'),
+                           Permission.objects.get(name='Pode criar cliente'),
+                           Permission.objects.get(name='Pode criar pedido'),
+                           Permission.objects.get(name='Pode criar pizza'),
+                           Permission.objects.get(name='Pode ver pizzas'),
+                           Permission.objects.get(name='Pode ver bebidas')]
+    gerente.Permission = [Permission.objects.get(name='Pode ver reclamacoes'),
+                           Permission.objects.get(name='Pode resolver reclamacao'),
+                           Permission.objects.get(name='Pode criar funcionario'),
+                           Permission.objects.get(name='Pode ver funcionarios'),
+                           Permission.objects.get(name='Pode editar qualquer funcionario'),
+                           Permission.objects.get(name='Pode ver todos os pedidos'),
+                           Permission.objects.get(name='Pode criar pizza'),
+                           Permission.objects.get(name='Pode ver pizzas'),
+                           Permission.objects.get(name='Pode editar pizza'),
+                           Permission.objects.get(name='Pode criar bebida'),
+                           Permission.objects.get(name='Pode ver bebidas'),
+                           Permission.objects.get(name='Pode editar bebida'),
+                           Permission.objects.get(name='Pode criar ingrediente'),
+                           Permission.objects.get(name='Pode ver ingredientes'),
+                           Permission.objects.get(name='Pode editar ingrediente'),]
+    atendente.Permission = [Permission.objects.get(name='Pode criar cliente'),
+                             Permission.objects.get(name='Pode ver todos os clientes'),
+                             Permission.objects.get(name='Pode editar qualquer cliente'),
+                             Permission.objects.get(name='Pode criar pedido'),
+                             Permission.objects.get(name='Pode ver todos os pedidos'),
+                             Permission.objects.get(name='Pode criar pizza'),
+                             Permission.objects.get(name='Pode ver pizzas'),
+                             Permission.objects.get(name='Pode ver bebidas')]
+    pizzaiolo.Permission = [Permission.objects.get(name='Pode ver todos os pedidos'),
+                             Permission.objects.get(name='Pode ver ingredientes'),]
+    motoqueiro.Permission = [Permission.objects.get(name='Pode ver todos os pedidos'),
+                              Permission.objects.get(name='Pode ver detalhes de cliente com pedido'),]
+
+    return HttpResponse('Grupos criados com sucesso')
 
 def lista_objetos(request, parametros, model, template_name, template_object_name, consulta, universo=None):
     mensagem = ''
