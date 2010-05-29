@@ -15,6 +15,8 @@ urlpatterns = patterns('',
     (r'^usuario/logout/$', faz_logout),
     (r'^usuario/cria/$', cria_usuario),
     (r'^usuario/edita/(?P<object_id>\d+)/$', edita_usuario),
+    (r'^usuario/senha/cliente/(?P<object_id>\d+)/$', muda_senha_cliente),
+    (r'^usuario/senha/funcionario/(?P<object_id>\d+)/$', muda_senha_funcionario),
     (r'^usuario/deleta/(?P<object_id>\d+)/$', delete_object, {'model': User, 'template_name': 'confirmacao_delecao.html',
                                                                  'post_delete_redirect': '/pizzer/usuarios/', 'extra_context': {'model': User}}),
     (r'^usuarios/$', lista_usuarios)

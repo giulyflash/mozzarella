@@ -5,46 +5,65 @@ Cadastro de funcionário
 {% endblock %}
 {% block conteudo %}
 <form action="" method="post">
+	<h2>Dados pessoais</h2>
     <div class="fieldWrapper">
-        {{ form.nome.errors }}
+        {{ form_funcionario.nome.errors }}
         <label for="id_nome">Nome completo:</label><br>
-        {{ form.nome }}
+        {{ form_funcionario.nome }}
     </div><br>
     <div class="fieldWrapper">
-        {{ form.endereco.errors }}
+        {{ form_funcionario.endereco.errors }}
         <label for="id_endereco">Endereço:</label><br>
-        {{ form.endereco }} <i>( Ex.: Av. São Miguel, 4673)</i>
+        {{ form_funcionario.endereco }} <i>( Ex.: Av. São Miguel, 4673)</i>
     </div><br>
     <div class="fieldWrapper">
-        {{ form.telefone.errors }}
+        {{ form_funcionario.telefone.errors }}
         <label for="id_telefone">Telefone:</label><br>
-        {{ form.telefone }} <i>(Ex.: 2976-6544)</i>
+        {{ form_funcionario.telefone }} <i>(Ex.: 2976-6544)</i>
     </div><br>
     <div class="fieldWrapper">
-        {{ form.cpf.errors }}
+        {{ form_funcionario.cpf.errors }}
         <label for="id_cpf">CPF:</label><br>
-        {{ form.cpf }} <i>(Ex.: 367185678/56)</i>
+        {{ form_funcionario.cpf }} <i>(Ex.: 367185678/56)</i>
     </div><br>
     <div class="fieldWrapper">
-        {{ form.rg.errors }}
+        {{ form_funcionario.rg.errors }}
         <label for="id_rg">RG:</label><br>
-        {{ form.rg }} <i>(Ex.: 4356677789-6)</i>
+        {{ form_funcionario.rg }} <i>(Ex.: 4356677789-6)</i>
     </div><br>
     <div class="fieldWrapper">
-        {{ form.salario.errors }}
+        {{ form_funcionario.salario.errors }}
         <label for="id_salario">Salário:</label><br>
-        {{ form.salario }} <i>R$ NNNN.DD</i>
+        {{ form_funcionario.salario }} <i>R$ NNNN.DD</i>
     </div><br>
     <div class="fieldWrapper">
-        {{ form.funcao.errors }}
+        {{ form_funcionario.funcao.errors }}
         <label for="id_funcao">Função:</label><br>
-        {{ form.funcao }}
+        {{ form_funcionario.funcao }}
     </div><br>
     <div class="fieldWrapper">
-        {{ form.periodo.errors }}
+        {{ form_funcionario.periodo.errors }}
         <label for="id_periodo">Período:</label><br>
-        {{ form.periodo }}
+        {{ form_funcionario.periodo }}
     </div><br>
-<input type="submit" value="Confirmar registro">
+    <hr/>
+    <h2>Conta de usuário</h2>
+    {{ form_usuario.non_field_errors }}
+    <div class="fieldWrapper">
+        {{ form_usuario.username.errors }}
+        <label for="id_username">Nome de usuario:</label><br>
+        {{ form_usuario.username }}
+    </div><br>
+    <div class="fieldWrapper">
+        {{ form_usuario.password.errors }}
+        <label for="id_password">Senha:</label><br>
+        {{ form_usuario.password }}
+    </div><br>
+    <div class="fieldWrapper">
+        {{ form_usuario.password_r.errors }}
+        <label for="id_password_r">Repita a senha:</label><br>
+        {{ form_usuario.password_r }}
+    </div><br>
+	<input type="submit" value="Confirmar registro">
 </form>
 {% endblock %}

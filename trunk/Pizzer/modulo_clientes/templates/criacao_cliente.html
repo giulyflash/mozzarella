@@ -7,7 +7,6 @@ Cadastro de novo cliente
 <form action="" method="post">
 	<h2>Dados pessoais</h2>
     <div class="fieldWrapper">
-        {{ form_cliente.nome.errors }}
         <label for="id_nome">Nome completo:</label><br>
         {{ form_cliente.nome }}
     </div><br>
@@ -23,7 +22,22 @@ Cadastro de novo cliente
     </div><br>
     <hr/>
     <h2>Conta de usuário</h2>
-    {% include form_criacao_usuario.html %}
+    {{ form_usuario.non_field_errors }}
+    <div class="fieldWrapper">
+        {{ form_usuario.username.errors }}
+        <label for="id_username">Nome de usuario:</label><br>
+        {{ form_usuario.username }}
+    </div><br>
+    <div class="fieldWrapper">
+        {{ form_usuario.password.errors }}
+        <label for="id_password">Senha:</label><br>
+        {{ form_usuario.password }}
+    </div><br>
+    <div class="fieldWrapper">
+        {{ form_usuario.password_r.errors }}
+        <label for="id_password_r">Repita a senha:</label><br>
+        {{ form_usuario.password_r }}
+    </div><br>
 <input type="submit" value="Confirmar registro">
 </form>
 {% endblock %}

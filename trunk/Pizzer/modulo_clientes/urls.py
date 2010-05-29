@@ -12,7 +12,7 @@ from views import *
 urlpatterns = patterns('',
     # Example:
     (r'^cliente/cria/$', cria_cliente),
-    (r'^cliente/edita/(?P<object_id>\d+)/$', update_object, {'model': Cliente, 'template_name': 'edita_cliente.html'}),
+    (r'^cliente/edita/(?P<object_id>\d+)/$', update_object, {'form_class': ClienteForm, 'template_name': 'edita_cliente.html'}),
     (r'^cliente/deleta/(?P<object_id>\d+)/$', delete_object, {'model': Cliente, 'template_name': 'confirmacao_delecao.html',
                                                                  'post_delete_redirect': '/pizzer/clientes/', 'extra_context': {'model': Cliente}}),
     (r'^clientes/$', lista_clientes)

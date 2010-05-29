@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.db import models
-from django.forms import ModelForm
+from django import forms
 from django.contrib.auth.models import User
 
 FUNCAO_CHOICES = (
@@ -17,7 +17,7 @@ PERIODO_CHOICES = (
 )
 
 class Pessoa(models.Model):
-    usuario = models.ForeignKey(User)
+    usuario = models.ForeignKey(User, blank=True)
     nome = models.CharField(max_length=50)
     endereco = models.CharField(max_length=100)
     telefone = models.CharField(max_length=15)
@@ -27,6 +27,9 @@ class Pessoa(models.Model):
 
     def __unicode__(self):
         return self.nome
+
+    def delete(self):
+        self.usuario.delete()  # Ao deletar o usuário, o cliente é deletado, pois tem uma ForeignKey apontando para o usuário.
 
     class Meta:
         abstract = True
@@ -41,6 +44,12 @@ class Funcionario(Pessoa):
     def get_absolute_url(self): #retorna o URL absoluto da instancia de Funcionario
         return "/pizzer/"
 
-class FuncionarioForm(ModelForm):
+class FuncionarioForm(forms.ModelForm):
     class Meta:
         model = Funcionario
+
+class FuncionarioEditaForm(forms.ModelForm):
+    funcao = forms.ComboField(required=False)
+    class Meta:
+        model = Funcionario
+
