@@ -9,6 +9,7 @@ Pizzas
 	<input name="nome" type="text">
 	<input type="submit" value="filtrar"/>
 </form>
+<h4>{{ mensagem }}</h4>
 <table border=1>
 <tr>
 	<th>
@@ -30,9 +31,7 @@ Pizzas
 		{{pizza.inventor}}
 		</td>
 		<td>
-		{% for ingrediente in pizza.ingredientes.all %}
-		{{ingrediente }}
-		{% endfor %}
+		{{ pizza.ingredientes.all|join:", " }}
 		</td>
 	</tr>
 {% endfor %}
