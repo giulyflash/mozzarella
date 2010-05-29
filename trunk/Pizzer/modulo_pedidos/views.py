@@ -64,6 +64,8 @@ def edita_pedido(request, object_id):
         if form.is_valid(): # All validation rules pass
             status = form.cleaned_data['status']
             pedido.status = status
+            entregador = form.cleaned_data['entregador']
+            pedido.entregador = entregador
             pedido.save()
             return HttpResponseRedirect('/pizzer/pedidos/') # Redirect after POST
     else:
