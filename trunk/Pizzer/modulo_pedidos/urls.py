@@ -18,7 +18,8 @@ urlpatterns = patterns('',
     (r'^pedidos/$', lista_pedidos),
     (r'^pedido/cria/vazio/$', erro_vazio),
     (r'^pedido/cria/estoque/$', erro_estoque),
-
+    (r'^pedido/cria/pagamento/(?P<object_id>\d+)/$', pagamento),
+    (r'^pedido/cria/pagamento/erro/$', erro_pagamento)
     # Uncomment the admin/doc line below and add 'django.contrib.admindocs'
     # to INSTALLED_APPS to enable admin documentation:
     # (r'^admin/doc/', include('django.contrib.admindocs.urls')),

@@ -1,0 +1,1 @@
+[{"pk": 1, "model": "modulo_funcionarios.funcionario", "fields": {"nome": "Felipe de Souza Leon", "periodo": "N+T", "salario": "750", "usuario": 3, "funcao": "Entregador", "cpf": "360897129/54", "rg": "36815193-7", "telefone": "3081-215", "endereco": "Rua Peixoto Gomide, 1901"}}]

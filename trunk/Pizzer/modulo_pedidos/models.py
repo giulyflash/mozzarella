@@ -16,11 +16,12 @@ STATUS_PEDIDO_CHOICES = (
 )
 
 class Pedido(models.Model):
-    cliente = models.ForeignKey(Cliente, blank=True, null=True)
+    cliente = models.ForeignKey(Cliente)
     itens_cardapio = models.ManyToManyField(ItemCardapio, through='StatusItemPedido')
     status = models.CharField(max_length=10, choices=STATUS_PEDIDO_CHOICES)
     entregador = models.ForeignKey(Funcionario, blank=True, null=True)
     data_horario = models.DateTimeField(auto_now_add=True)
+    pagamento = models.DecimalField(max_digits=5, decimal_places=2)
 
     class Meta:
         permissions = (
@@ -47,7 +48,7 @@ class StatusItemPedido(models.Model):
 class PedidoForm(ModelForm):
     class Meta:
         model = Pedido
-        exclude = ['itens_cardapio', 'status', 'entregador']
+        exclude = ['itens_cardapio', 'status', 'entregador', 'pagamento']
 
 class EditaPedidoForm(ModelForm):
     entregador = forms.ModelChoiceField(queryset=Funcionario.objects.filter(funcao='Entregador'), required=False)
@@ -55,3 +56,8 @@ class EditaPedidoForm(ModelForm):
     class Meta:
         model = Pedido
         exclude = ['cliente', 'itens_cardapio']
+
+class PagamentoForm(ModelForm):
+    class Meta:
+        model = Pedido
+        exclude = ['cliente', 'itens_cardapio', 'status', 'entregador']
