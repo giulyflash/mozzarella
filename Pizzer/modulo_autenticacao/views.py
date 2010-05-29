@@ -6,7 +6,7 @@ from django.shortcuts import render_to_response
 from django.http import HttpResponse, HttpResponseRedirect
 from django.db.models import Q
 from utils.views import lista_objetos
-from models import UserCreateForm, UserEditForm
+from models import UserCreateForm, UserEditForm, UserChangePassForm
 
 def testa_autenticado(request):
     if request.user.is_authenticated():
@@ -36,12 +36,12 @@ def faz_logout(request):
     logout(request)
     return HttpResponseRedirect('/pizzer/usuario/login/')
 
-        
+
 def lista_usuarios(request):
-    username = request.GET.get('username')  # Obtenção dos parâmetros do request
+    username = request.GET.get('username')  # Obtenï¿½ï¿½o dos parï¿½metros do request
     consulta = Q(nome__icontains=username)
     return lista_objetos(request, [username], User, 'listagem_usuarios.html', 'usuarios', consulta)
-    
+
 def cria_usuario(request):
     if request.method == 'POST':
         form = UserCreateForm(request.POST)
@@ -55,7 +55,7 @@ def cria_usuario(request):
     else:
         form = UserCreateForm()
     return render_to_response('criacao_usuario.html', {'form': form})
-    
+
 def edita_usuario(request, object_id):
     user = User.objects.get(pk=object_id)
     if request.method == 'POST':
@@ -72,3 +72,31 @@ def edita_usuario(request, object_id):
     else:
         form = UserEditForm(instance=user)
     return render_to_response('edita_usuario.html', {'form': form})
+
+def muda_senha_cliente(request, object_id):
+    user = User.objects.get(pk=object_id)
+    cliente = user.cliente_set.all()[0]
+    if request.method == 'POST':
+        form = UserChangePassForm(request.POST)
+        if form.is_valid():
+            password = form.cleaned_data['password']
+            user.set_password(password)
+            user.save()
+            return HttpResponseRedirect('/pizzer/cliente/edita/%s/' % cliente.id)
+    else:
+        form = UserChangePassForm()
+    return render_to_response('mudanca_senha.html', {'form': form, 'cliente': cliente, 'pessoa': 'cliente'})
+
+def muda_senha_funcionario(request, object_id):
+    user = User.objects.get(pk=object_id)
+    funcionario = user.funcionario_set.all()[0]
+    if request.method == 'POST':
+        form = UserChangePassForm(request.POST)
+        if form.is_valid():
+            password = form.cleaned_data['password']
+            user.set_password(password)
+            user.save()
+            return HttpResponseRedirect('/pizzer/funcionario/edita/%s/' % funcionario.id)
+    else:
+        form = UserChangePassForm()
+    return render_to_response('mudanca_senha.html', {'form': form, 'funcionario': funcionario, 'pessoa': 'funcionario'})

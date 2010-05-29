@@ -4,6 +4,8 @@
 Dados do cliente {{ object.nome }}
 {% endblock %}
 {% block conteudo %}
+<a href="/pizzer/usuario/senha/cliente/{{ object.usuario.id }}/">Alterar senha</a>
+<br/><br/>
 <form action="" method="post">
 {{ form.as_p }}
 <input type="submit" value="Salvar alterações">

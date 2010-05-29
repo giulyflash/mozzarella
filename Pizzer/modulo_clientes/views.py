@@ -2,6 +2,8 @@
 
 from django.db.models import Q
 from django.shortcuts import render_to_response
+from django.http import HttpResponseRedirect
+from django.contrib.auth.models import User
 
 from models import Cliente, ClienteForm
 from modulo_autenticacao.models import UserCreateForm
@@ -16,14 +18,16 @@ def cria_cliente(request):
     if request.method == 'POST':
         form_cliente = ClienteForm(request.POST)
         form_usuario = UserCreateForm(request.POST)
+        print form_cliente.is_valid()
+        print form_usuario.is_valid()
         if form_cliente.is_valid() and form_usuario.is_valid():
-            nome = form.cleaned_data['nome']
-            endereco = form.cleaned_data['endereco']
-            telefone = form.cleaned_data['telefone']
+            nome = form_cliente.cleaned_data['nome']
+            endereco = form_cliente.cleaned_data['endereco']
+            telefone = form_cliente.cleaned_data['telefone']
             cliente = Cliente(nome=nome, endereco=endereco, telefone=telefone)
-            username = form.cleaned_data['username']
-            email = form.cleaned_data['email']
-            password = form.cleaned_data['password']
+            username = form_usuario.cleaned_data['username']
+            email = form_usuario.cleaned_data['email']
+            password = form_usuario.cleaned_data['password']
             user = User.objects.create_user(username, email, password)
             user.save()
             cliente.usuario = user

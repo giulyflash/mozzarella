@@ -11,3 +11,4 @@ class Cliente(Pessoa):
 class ClienteForm(ModelForm):
     class Meta:
         model = Cliente
+        fields = ('nome', 'endereco', 'telefone')
