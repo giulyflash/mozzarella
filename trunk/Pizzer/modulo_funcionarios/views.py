@@ -4,16 +4,19 @@ from django.db.models import Q
 from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
 from django.contrib.auth.models import User, Group
+from django.contrib.auth.decorators import login_required, permission_required
 
 from models import Funcionario, FuncionarioForm, FuncionarioEditaForm
 from modulo_autenticacao.models import UserCreateForm
 from utils.views import lista_objetos
 
+@login_required
 def lista_funcionarios(request):
     nome = request.GET.get('nome')  # Obtenção dos parâmetros do request
     consulta = Q(nome__icontains=nome)
     return lista_objetos(request, [nome], Funcionario, 'listagem_funcionarios.html', 'funcionarios', consulta)# Create your views here.
 
+@login_required
 def cria_funcionario(request):
     if request.method == 'POST':
         form_funcionario = FuncionarioForm(request.POST)
@@ -46,6 +49,7 @@ def cria_funcionario(request):
         form_usuario = UserCreateForm()
     return render_to_response('criacao_funcionario.html', {'form_funcionario': form_funcionario, 'form_usuario': form_usuario})
 
+@login_required
 def edita_funcionario(request, object_id):
     funcionario = Funcionario.objects.get(pk=object_id)
     if request.method == 'POST':

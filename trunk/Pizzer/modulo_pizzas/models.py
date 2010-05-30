@@ -21,6 +21,7 @@ class Pizza(ItemCardapio):
            ('pode_criar_pizza', 'Pode criar pizza'),
             ('pode_ver_pizzas', 'Pode ver pizzas'),
             ('pode_editar_pizza', 'Pode editar pizza'),
+            ('pode_deletar_pizza', 'Pode deletar pizza'),
         )
 
     def __unicode__(self):
