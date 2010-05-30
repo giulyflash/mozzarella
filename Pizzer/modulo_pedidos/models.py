@@ -77,7 +77,7 @@ class PedidoFormParaCliente(ModelForm):
     cliente = forms.ComboField(required=False)
     class Meta:
         model = Pedido
-        exclude = ['itens_cardapio', 'status', 'entregador', 'pagamento']
+        exclude = ['itens_cardapio', 'status', 'entregador']
 
 class EditaPedidoForm(ModelForm):
     entregador = forms.ModelChoiceField(queryset=Funcionario.objects.filter(funcao='Entregador'), required=False)
