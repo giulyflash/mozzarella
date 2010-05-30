@@ -2,8 +2,9 @@
 
 from django.db.models import Q
 from django.shortcuts import render_to_response
+from django.http import HttpResponseRedirect
 
-from models import Reclamacao
+from models import Reclamacao, ReclamacaoFormCliente
 
 from utils.views import lista_objetos
 
@@ -16,3 +17,17 @@ def lista_reclamacoes(request):
 def resolve_reclamacao(request, object_id):
     reclamacao = Reclamacao.objects.get(pk=object_id)
     return render_to_response('resolucao_reclamacao.html', {'reclamacao': reclamacao})
+
+def cria_reclamacao(request):
+    if request.method == 'POST':
+        form = ReclamacaoFormCliente(request.POST)
+        if form.is_valid():
+            assunto = form.cleaned_data['assunto']
+            texto = form.cleaned_data['texto']
+            cliente = request.user.cliente_set.all()[0]
+            reclamacao = Reclamacao(assunto=assunto, cliente=cliente, texto=texto)
+            reclamacao.save()
+            return HttpResponseRedirect('/pizzer/')
+    else:
+        form = ReclamacaoFormCliente()
+    return render_to_response('criacao_reclamacao.html', {'form': form})

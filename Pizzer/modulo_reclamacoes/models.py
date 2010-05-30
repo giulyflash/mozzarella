@@ -26,6 +26,7 @@ class Reclamacao(models.Model):  # Note que Pessoa herda da classe Model, que es
 class ReclamacaoFormCliente(ModelForm):
     class Meta:
         model = Reclamacao
+        exclude = ['cliente']
 
 class ReclamacaoFormGerente(ModelForm):
     cliente = forms.ComboField(required=False, widget=Select(attrs={'readonly': True}))  # O Gerente só poderá editar o campo de resposta à reclamação
