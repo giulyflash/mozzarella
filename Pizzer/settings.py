@@ -66,6 +66,14 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
 )
 
+TEMPLATE_CONTEXT_PROCESSORS = (
+    'modulo_autenticacao.context_processors.group',
+    'django.core.context_processors.auth',
+    'django.core.context_processors.debug',
+    'django.core.context_processors.i18n',
+    'django.core.context_processors.media',
+)
+
 ROOT_URLCONF = 'Pizzer.urls'
 
 TEMPLATE_DIRS = (

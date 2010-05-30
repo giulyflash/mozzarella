@@ -5,7 +5,7 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.http import HttpResponseRedirect
 from django.contrib.auth.models import User, Group
-from django.contrib.auth.decorators import login_required, permission_required
+from django.contrib.auth.decorators import login_required, permission_required, user_passes_test
 from django.views.generic.create_update import create_object, update_object, delete_object
 
 from models import Funcionario, FuncionarioForm, FuncionarioEditaForm
@@ -54,9 +54,14 @@ def cria_funcionario(request):
         form_usuario = UserCreateForm()
     return render_to_response('criacao_funcionario.html', {'form_funcionario': form_funcionario, 'form_usuario': form_usuario}, context_instance=RequestContext(request))
 
-@permission_required('modulo_funcionarios.pode_editar_qualquer_funcionario')
+#  Pode editar funcionário se tiver permissão para editar qualquer funcionário, ou se forem seus próprios dados
+@user_passes_test(lambda u: u.has_perm('modulo_funcionarios.pode_editar_qualquer_funcionario') or u.funcionario_set.all())
 @login_required
 def edita_funcionario(request, object_id):
+    user = request.user
+    funcionario = user.funcionario_set.all()[0]
+    if not user.has_perm('modulo_funcionarios.pode_editar_qualquer_funcionario') and funcionario.id != int(object_id):
+        return HttpResponseRedirect('/pizzer/usuario/login/')
     funcionario = Funcionario.objects.get(pk=object_id)
     if request.method == 'POST':
         form = FuncionarioEditaForm(request.POST)
@@ -84,3 +89,16 @@ def edita_funcionario(request, object_id):
 @login_required
 def deleta_funcionario(request, object_id):
     return delete_object(request, Funcionario, '/pizzer/funcionarios/', object_id, template_name='confirmacao_delecao.html', extra_context={'model': Funcionario})
+
+@login_required
+def edita_pessoa(request):  # Pode ser funcionário ou cliente
+    user = request.user
+    if user.funcionario_set.all():
+        funcionario = user.funcionario_set.all()[0]
+        redirect_url = '/pizzer/funcionario/edita/%d/' % funcionario.id
+    elif user.cliente_set.all():
+        cliente = user.cliente_set.all()[0]
+        redirect_url = '/pizzer/cliente/edita/%d/' % cliente.id
+    else:
+        assert False
+    return HttpResponseRedirect(redirect_url)

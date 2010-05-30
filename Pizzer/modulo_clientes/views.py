@@ -5,7 +5,7 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.http import HttpResponseRedirect
 from django.contrib.auth.models import User, Group
-from django.contrib.auth.decorators import login_required, permission_required
+from django.contrib.auth.decorators import login_required, permission_required, user_passes_test
 from django.views.generic.create_update import create_object, update_object, delete_object
 
 from models import Cliente, ClienteForm
@@ -47,9 +47,14 @@ def cria_cliente(request):
         form_usuario = UserCreateForm()
     return render_to_response('criacao_cliente.html', {'form_cliente': form_cliente, 'form_usuario': form_usuario}, context_instance=RequestContext(request))
 
-@permission_required('modulo_clietes.pode_editar_qualquer_cliente')
+#  Pode editar cliente se tiver permissão para editar qualquer cliente, ou se forem seus próprios dados
+@user_passes_test(lambda u: u.has_perm('modulo_clientes.pode_editar_qualquer_cliente') or u.cliente_set.all())
 @login_required
 def edita_cliente(request, object_id):
+    user = request.user
+    cliente = user.cliente_set.all()[0]
+    if not user.has_perm('modulo_funcionarios.pode_editar_qualquer_cliente') and cliente.id != int(object_id):
+        return HttpResponseRedirect('/pizzer/usuario/login/')
     return update_object(request, Cliente, object_id, template_name='edicao_cliente.html')
 
 @permission_required('modulo_clientes.pode_deletar_cliente')

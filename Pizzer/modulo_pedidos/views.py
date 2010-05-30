@@ -112,7 +112,7 @@ def edita_pedido(request, object_id):
     return render_to_response('edicao_pedido.html', {'form': form, 'bebidas': bebidas, 'pizzas': pizzas, 'pedido': pedido,
                                                      'total': total, 'troco': troco}, context_instance=RequestContext(request))
 
-@permission_required('modulo_pedidos.pode_ver_todos_os_pedido')
+@permission_required('modulo_pedidos.pode_ver_todos_os_pedidos')
 @login_required
 def lista_pedidos(request):
     cliente = request.GET.get('cliente')  # Obtenção dos parâmetros do request
@@ -177,6 +177,7 @@ def lista_pedidos_smartphone(request):
     pedidos = Pedido.objects.filter(status='D')
     return render_to_response('smartphone_listagem_pedidos.html', {'pedidos': pedidos}, context_instance=RequestContext(request))
 
+@permission_required('modulo_pedidos.pode_criar_pedido')
 @login_required
 def cria_pedido_pda(request):
     pizzas = Pizza.objects.all()
@@ -221,6 +222,8 @@ def cria_pedido_pda(request):
         form = PedidoForm() # An unbound form
     return render_to_response('pda_criacao_pedido.html', {'form': form, 'bebidas': bebidas, 'pizzas': pizzas})
 
+@permission_required('modulo_pedidos.pode_editar_pedido')
+@login_required
 def edita_pedido_pda(request, object_id):
     pedido = Pedido.objects.get(pk=object_id)
     itens_pedidos = StatusItemPedido.objects.filter(pedido=pedido)
@@ -245,6 +248,8 @@ def edita_pedido_pda(request, object_id):
         return HttpResponseRedirect('/pizzer/pda/pedidos/') # Redirect after POST
     return render_to_response('pda_edicao_pedido.html', {'bebidas': bebidas, 'pizzas': pizzas, 'pedido': pedido})
 
+@permission_required('modulo_pedidos.pode_ver_todos_os_pedidos')
+@login_required
 def lista_pedidos_pda(request):
     pedidos = Pedido.objects.filter(Q(status='A') | Q(status='B'))
     return render_to_response('pda_listagem_pedidos.html', {'pedidos': pedidos})
