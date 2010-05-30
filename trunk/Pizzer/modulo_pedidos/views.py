@@ -47,6 +47,27 @@ def cria_pedido(request):
         form = PedidoForm() # An unbound form
     return render_to_response('criacao_pedido.html', {'form': form, 'bebidas': bebidas, 'pizzas': pizzas})
 
+def pagamento(request, object_id):
+    pedido = Pedido.objects.get(pk=object_id)
+    itens_pedidos = StatusItemPedido.objects.filter(pedido=pedido)
+    total = 0
+    for item_pedido in itens_pedidos:
+        total += (item_pedido.item_cardapio.preco * item_pedido.quantidade)
+    if request.method == 'POST': # If the form has been submitted...
+        form = PagamentoForm(request.POST) # A form bound to the POST data
+        if form.is_valid(): # All validation rules pass
+            pagamento = form.cleaned_data['pagamento']
+            if pagamento >= total:
+                pedido.pagamento = pagamento
+                pedido.save()
+                return HttpResponseRedirect('/pizzer/pedidos/') # Redirect after POST
+            else:
+                pedido.delete()
+                return HttpResponseRedirect('/pizzer/pedido/cria/pagamento/erro/')
+    else:
+        form = PagamentoForm(instance=pedido)
+    return render_to_response('pagamento.html', {'form':form, 'pedido':pedido, 'total': total})
+
 def edita_pedido(request, object_id):
     pedido = Pedido.objects.get(pk=object_id)
     itens_pedidos = StatusItemPedido.objects.filter(pedido=pedido)
@@ -81,27 +102,6 @@ def lista_pedidos(request):
     consulta = Q(cliente__nome__icontains=cliente)
     return lista_objetos(request, [cliente], Pedido, 'listagem_pedidos.html', 'pedidos', consulta)
 
-def pagamento(request, object_id):
-    pedido = Pedido.objects.get(pk=object_id)
-    itens_pedidos = StatusItemPedido.objects.filter(pedido=pedido)
-    total = 0
-    for item_pedido in itens_pedidos:
-        total += (item_pedido.item_cardapio.preco * item_pedido.quantidade)
-    if request.method == 'POST': # If the form has been submitted...
-        form = PagamentoForm(request.POST) # A form bound to the POST data
-        if form.is_valid(): # All validation rules pass
-            pagamento = form.cleaned_data['pagamento']
-            if pagamento >= total:
-                pedido.pagamento = pagamento
-                pedido.save()
-                return HttpResponseRedirect('/pizzer/pedidos/') # Redirect after POST
-            else:
-                pedido.delete()
-                return HttpResponseRedirect('/pizzer/pedido/cria/pagamento/erro/')
-    else:
-        form = EditaPedidoForm(instance=pedido)
-    return render_to_response('pagamento.html', {'form':form, 'pedido':pedido, 'total': total})
-
 def erro_vazio(request):
     return render_to_response('erro_vazio.html')
 
@@ -111,3 +111,35 @@ def erro_estoque(request):
 def erro_pagamento(request):
     return render_to_response('erro_pagamento.html')
 
+def edita_pedido_smartphone(request, object_id):
+    pedido = Pedido.objects.get(pk=object_id)
+    itens_pedidos = StatusItemPedido.objects.filter(pedido=pedido)
+    total = 0
+    for item_pedido in itens_pedidos:
+        total += (item_pedido.item_cardapio.preco * item_pedido.quantidade)
+    troco = pedido.pagamento - total
+    bebidas = []
+    pizzas = []
+    for item_pedido in itens_pedidos:
+        if item_pedido.tipo_de_item == 1:
+            pizzas.append(item_pedido)
+        else:
+            if item_pedido.tipo_de_item == 2:
+                bebidas.append(item_pedido)
+    if request.method == 'POST': # If the form has been submitted...
+        input_status = request.POST.get('status')
+        status = 'D'
+        if input_status == 'Entrega Finalizada':
+            status = 'E'
+        else:
+            if input_status == 'Problema na Entrega':
+                status = 'F'
+        pedido.status = status
+        pedido.save()
+        return HttpResponseRedirect('/pizzer/smartphone/pedidos/') # Redirect after POST
+    return render_to_response('smartphone_edicao_pedido.html', {'bebidas': bebidas, 'pizzas': pizzas, 'pedido': pedido,
+                                                                'troco': troco})
+
+def lista_pedidos_smartphone(request):
+    pedidos = Pedidos.objects.all()
+    return render_to_response('smartphone_listagem_pedidos.html', {'pedidos': pedidos})

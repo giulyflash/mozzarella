@@ -4,23 +4,16 @@
 Pedidos
 {% endblock %}
 {% block conteudo %}
-<form method="GET">
-    <label><i>Nome do dono do pedido:</i></label>
-    <input name="cliente" type="text">
-    <input type="submit" value="Filtrar"/>
-</form>
-<h4>{{ mensagem }}</h4>
 {% if pedidos_list %}
-    <table border=1>
+    <table>
     <tr>
         <th>
-        Nome do Cliente
+        Endereço
         </th>
         <th>
-        Status do Pedido
         </th>
     </tr>
-    {% for pedido in pedidos_list %}
+    {% for pedido in pedidos %}
         <tr>
             <td>
             <a href="/pizzer/pedido/edita/{{pedido.id}}/">{{ pedido.cliente }}</a>
