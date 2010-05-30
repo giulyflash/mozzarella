@@ -253,4 +253,4 @@ def lista_objetos(request, parametros, model, template_name, template_object_nam
             template_name=template_name,
             template_object_name=template_object_name, extra_context={'mensagem': mensagem})
     else:
-        return render_to_response(template_name, {'mensagem': mensagem})# Create your views here.
+        return render_to_response(template_name, {'mensagem': mensagem}, context_instance=RequestContext(request))# Create your views here.

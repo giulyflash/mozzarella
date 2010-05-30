@@ -2,6 +2,7 @@
 
 from django.db.models import Q
 from django.shortcuts import render_to_response
+from django.template import RequestContext
 from django.http import HttpResponseRedirect
 from django.contrib.auth.models import User, Group
 from django.contrib.auth.decorators import login_required, permission_required
@@ -51,7 +52,7 @@ def cria_funcionario(request):
     else:
         form_funcionario = FuncionarioForm()
         form_usuario = UserCreateForm()
-    return render_to_response('criacao_funcionario.html', {'form_funcionario': form_funcionario, 'form_usuario': form_usuario})
+    return render_to_response('criacao_funcionario.html', {'form_funcionario': form_funcionario, 'form_usuario': form_usuario}, context_instance=RequestContext(request))
 
 @permission_required('modulo_funcionarios.pode_editar_qualquer_funcionario')
 @login_required
@@ -77,7 +78,7 @@ def edita_funcionario(request, object_id):
             return HttpResponseRedirect('/pizzer/funcionarios/')
     else:
         form = FuncionarioEditaForm(instance=funcionario)
-    return render_to_response('edicao_funcionario.html', {'form': form, 'object': funcionario})
+    return render_to_response('edicao_funcionario.html', {'form': form, 'object': funcionario}, context_instance=RequestContext(request))
 
 @permission_required('modulo_funcionarios.pode_deletar_funcionario')
 @login_required

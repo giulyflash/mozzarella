@@ -25,8 +25,13 @@
 	    <b>Senha: </b>
 	    <input type="password" name="password" />
 	    <input type="submit" value="Login" />
-	    </p>
 	</form>
+	{% if user.is_authenticated %}
+	<br/>
+	<h3>Essa área é probida. Faça login com as credenciais necessárias. </h3>
+	<br/>
+	<input style="font-size: medium;" type="button" value="Voltar à página inicial" onClick="location.href='/pizzer/'"/>
+	{% endif %}
 </div>
 </div>
 <!-- END Container -->

@@ -2,6 +2,7 @@
 
 from django.db.models import Q
 from django.shortcuts import render_to_response
+from django.template import RequestContext
 from django.http import HttpResponseRedirect
 from django.contrib.auth.models import User, Group
 from django.contrib.auth.decorators import login_required, permission_required
@@ -12,7 +13,7 @@ from modulo_autenticacao.models import UserCreateForm
 from utils.views import lista_objetos
 from views import *
 
-@permission_required('modulo_clientes.pode_ver_clientes')
+@permission_required('modulo_clientes.pode_ver_todos_os_clientes')
 @login_required
 def lista_clientes(request):
     nome = request.GET.get('nome')  # Obtenção dos parâmetros do request
@@ -45,7 +46,7 @@ def cria_cliente(request):
     else:
         form_cliente = ClienteForm()
         form_usuario = UserCreateForm()
-    return render_to_response('criacao_cliente.html', {'form_cliente': form_cliente, 'form_usuario': form_usuario})
+    return render_to_response('criacao_cliente.html', {'form_cliente': form_cliente, 'form_usuario': form_usuario}, context_instance=RequestContext(request))
 
 @permission_required('modulo_clietes.pode_editar_qualquer_cliente')
 @login_required

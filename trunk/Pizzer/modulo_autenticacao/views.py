@@ -1,18 +1,18 @@
 # -*- coding: utf-8 -*-
 
 from django.contrib.auth import authenticate, login
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.shortcuts import render_to_response
+from django.template import RequestContext
 from django.http import HttpResponse, HttpResponseRedirect
 from django.db.models import Q
 from utils.views import lista_objetos
 from models import UserCreateForm, UserEditForm, UserChangePassForm
 
-def testa_autenticado(request):
-    if request.user.is_authenticated():
-        return render_to_response('index.html')
-    else:
-        return HttpResponseRedirect('/pizzer/usuario/login/')
+@login_required
+def index(request):
+    return render_to_response('index.html', context_instance=RequestContext(request))
 
 def faz_login(request):
     if request.method == 'POST':
@@ -24,11 +24,11 @@ def faz_login(request):
                 login(request, user)
                 return HttpResponseRedirect('/pizzer/')
             else:
-                return render_to_response('formulario_login.html', {'erro': 'Esse usuario foi desativado.'})
+                return render_to_response('formulario_login.html', {'erro': 'Esse usuario foi desativado.'}, context_instance=RequestContext(request))
         else:
-            return render_to_response('formulario_login.html', {'erro': 'Nome de usuario ou senha incorretos.'})
+            return render_to_response('formulario_login.html', {'erro': 'Nome de usuario ou senha incorretos.'}, context_instance=RequestContext(request))
     else:
-        return render_to_response('formulario_login.html')
+        return render_to_response('formulario_login.html', context_instance=RequestContext(request))
 
 from django.contrib.auth import logout
 
@@ -54,7 +54,7 @@ def cria_usuario(request):
             return HttpResponseRedirect('/pizzer/usuarios/')
     else:
         form = UserCreateForm()
-    return render_to_response('criacao_usuario.html', {'form': form})
+    return render_to_response('criacao_usuario.html', {'form': form}, context_instance=RequestContext(request))
 
 def edita_usuario(request, object_id):
     user = User.objects.get(pk=object_id)
@@ -71,7 +71,7 @@ def edita_usuario(request, object_id):
             return HttpResponseRedirect('/pizzer/usuarios/')
     else:
         form = UserEditForm(instance=user)
-    return render_to_response('edita_usuario.html', {'form': form})
+    return render_to_response('edita_usuario.html', {'form': form}, context_instance=RequestContext(request))
 
 def muda_senha_cliente(request, object_id):
     user = User.objects.get(pk=object_id)
@@ -85,7 +85,7 @@ def muda_senha_cliente(request, object_id):
             return HttpResponseRedirect('/pizzer/cliente/edita/%s/' % cliente.id)
     else:
         form = UserChangePassForm()
-    return render_to_response('mudanca_senha.html', {'form': form, 'cliente': cliente, 'pessoa': 'cliente'})
+    return render_to_response('mudanca_senha.html', {'form': form, 'cliente': cliente, 'pessoa': 'cliente'}, context_instance=RequestContext(request))
 
 def muda_senha_funcionario(request, object_id):
     user = User.objects.get(pk=object_id)
@@ -99,4 +99,4 @@ def muda_senha_funcionario(request, object_id):
             return HttpResponseRedirect('/pizzer/funcionario/edita/%s/' % funcionario.id)
     else:
         form = UserChangePassForm()
-    return render_to_response('mudanca_senha.html', {'form': form, 'funcionario': funcionario, 'pessoa': 'funcionario'})
+    return render_to_response('mudanca_senha.html', {'form': form, 'funcionario': funcionario, 'pessoa': 'funcionario'}, context_instance=RequestContext(request))

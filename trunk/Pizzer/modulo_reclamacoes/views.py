@@ -2,6 +2,7 @@
 
 from django.db.models import Q
 from django.shortcuts import render_to_response
+from django.template import RequestContext
 from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required, permission_required
 from django.views.generic.create_update import create_object, update_object, delete_object
@@ -23,7 +24,7 @@ def lista_reclamacoes(request):
 @login_required
 def resolve_reclamacao(request, object_id):
     reclamacao = Reclamacao.objects.get(pk=object_id)
-    return render_to_response('resolucao_reclamacao.html', {'reclamacao': reclamacao})
+    return render_to_response('resolucao_reclamacao.html', {'reclamacao': reclamacao}, context_instance=RequestContext(request))
 
 @permission_required('modulo_reclamacoes.pode_criar_reclamacao')
 @login_required
@@ -39,7 +40,7 @@ def cria_reclamacao(request):
             return HttpResponseRedirect('/pizzer/')
     else:
         form = ReclamacaoFormCliente()
-    return render_to_response('criacao_reclamacao.html', {'form': form})
+    return render_to_response('criacao_reclamacao.html', {'form': form}, context_instance=RequestContext(request))
 
 @permission_required('modulo_reclamacoes.pode_deletar_reclamacao')
 @login_required
