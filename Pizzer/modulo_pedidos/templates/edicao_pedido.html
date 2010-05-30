@@ -26,6 +26,7 @@ Edição de pedido
 		{% endfor %}
 	</table><br/><br/>
 
+	{% if bebidas %}
 	<table border="1">
 		<tr>
     		<th>Bebidas</th>
@@ -38,6 +39,7 @@ Edição de pedido
 		</tr>
 		{% endfor %}
 	</table><br/><br/>
+	{% endif %}
 
 	<h3> Valor Total do Pedido: R${{ total|floatformat:2 }}</h3><br/><br/>
 

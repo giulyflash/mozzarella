@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block titulo %}
+Atualização de Status
+{% endblock %}
+{% block conteudo %}
+<p><b>Cliente:</b> {{ pedido.cliente }}</p>
+<p><b>Entrada do Pedido:</b> {{ pedido.data_horario|date:"d/m/y - H:i" }}</p><br/>
+
+<h3> Conteúdo do Pedido </h3><br/>
+
+<table border="1">
+	<tr>
+		<th>Pizzas</th>
+		<th>Quantidade</th>
+	</tr>
+	{% for pizza in pizzas %}
+	<tr>
+		<td> {{ pizza.item_cardapio.nome }} </td>
+		<td> {{ pizza.quantidade }}</td>
+	</tr>
+	{% endfor %}
+</table><br/><br/>
+
+{% if bebidas %}
+<table border="1">
+	<tr>
+		<th>Bebidas</th>
+		<th>Quantidade</th>
+	</tr>
+	{% for bebida in bebidas %}
+	<tr>
+		<td> {{ bebida.item_cardapio.nome }} </td>
+		<td> {{ bebida.quantidade }}</td>
+	</tr>
+	{% endfor %}
+</table><br/><br/>
+{% endif %}
+
+<h3> Valor a ser Recebido: R${{ pedido.pagamento|floatformat:2 }}</h3><br/>
+<h3>Troco a ser Entregue:</b> R${{ troco|floatformat:2 }}</h3><br/><br/>
+
+<form action="" method="post">
+	<input type="submit" name="status" value="Entrega Finalizada">
+	<input type="submit" name="status" value="Problema na Entrega">
+</form>
+{% endblock %}

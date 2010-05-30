@@ -9,10 +9,11 @@ from modulo_funcionarios.models import Funcionario
 
 STATUS_PEDIDO_CHOICES = (
     ('A', 'Registrado'),
-    ('B', 'Preparo'),
-    ('C', 'Espera'),
-    ('D', 'Transporte'),
+    ('B', 'Em Preparo'),
+    ('C', 'Em Espera'),
+    ('D', 'Em Transporte'),
     ('E', 'Finalizado'),
+    ('F', 'Não Pôde Ser Entregue')
 )
 
 class Pedido(models.Model):
@@ -55,7 +56,7 @@ class EditaPedidoForm(ModelForm):
 
     class Meta:
         model = Pedido
-        exclude = ['cliente', 'itens_cardapio']
+        exclude = ['cliente', 'itens_cardapio', 'pagamento']
 
 class PagamentoForm(ModelForm):
     class Meta:
