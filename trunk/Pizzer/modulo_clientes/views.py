@@ -20,8 +20,7 @@ def lista_clientes(request):
     consulta = Q(nome__icontains=nome)
     return lista_objetos(request, [nome], Cliente, 'listagem_clientes.html', 'clientes', consulta)
 
-@permission_required('modulo_clientes.pode_criar_cliente')
-@login_required
+# Qualquer um pode cadastrar-se, logo, não há restrição por login
 def cria_cliente(request):
     if request.method == 'POST':
         form_cliente = ClienteForm(request.POST)

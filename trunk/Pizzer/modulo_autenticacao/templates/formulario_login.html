@@ -31,6 +31,9 @@
 	<h3>Essa área é probida. Faça login com as credenciais necessárias. </h3>
 	<br/>
 	<input style="font-size: medium;" type="button" value="Voltar à página inicial" onClick="location.href='/pizzer/'"/>
+	{% else %}
+	<br/>
+	<a href="/pizzer/cliente/cria/">Novo por aqui? Não perca a oportunidade e cadastre-se agora!</a>
 	{% endif %}
 </div>
 </div>
