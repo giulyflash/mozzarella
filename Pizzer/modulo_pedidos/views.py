@@ -23,6 +23,7 @@ def cria_pedido(request):
             cliente = form.cleaned_data['cliente']
             pedido = Pedido(cliente=cliente, status='A', pagamento=0)
             pedido.save()
+            vazio = True
             for pizza in pizzas:
                 quantidade = request.POST.get(pizza.nome + '_qtde')
                 quantidade = int(quantidade)
@@ -30,6 +31,9 @@ def cria_pedido(request):
                     s = StatusItemPedido(pedido=pedido, item_cardapio=pizza, quantidade=quantidade,
                                          tipo_de_item=1)
                     s.save()
+                    pedido.pagamento += s.item_cardapio.preco * s.quantidade
+                    pedido.save()
+                    vazio = False
             for bebida in bebidas:
                 quantidade = request.POST.get(bebida.nome + '_qtde')
                 quantidade = int(quantidade)
@@ -43,10 +47,11 @@ def cria_pedido(request):
                         s.save()
                         bebida.quantidade -= quantidade
                         bebida.save()
-            itens_pedidos = StatusItemPedido.objects.filter(pedido=pedido)
-            if len(itens_pedidos) == 0:
+                        pedido.pagamento += s.item_cardapio.preco * s.quantidade
+                        pedido.save()
+            if vazio:
                 pedido.delete()
-                return HttpResponseRedirect('/pizzer/pedido/cria/vazio')
+                return render_to_response('erro_vazio.html')
             return HttpResponseRedirect('/pizzer/pedido/cria/pagamento/' + str(pedido.id) + '/') # Redirect after POST
     else:
         form = PedidoForm() # An unbound form
@@ -70,7 +75,7 @@ def pagamento(request, object_id):
                 return HttpResponseRedirect('/pizzer/pedidos/') # Redirect after POST
             else:
                 pedido.delete()
-                return HttpResponseRedirect('/pizzer/pedido/cria/pagamento/erro/')
+                return render_to_response('erro_pagamento.html')
     else:
         form = PagamentoForm(instance=pedido)
     return render_to_response('pagamento.html', {'form':form, 'pedido':pedido, 'total': total})
@@ -115,21 +120,6 @@ def lista_pedidos(request):
 
 @permission_required('modulo_pedidos.pode_criar_pedido')
 @login_required
-def erro_vazio(request):
-    return render_to_response('erro_vazio.html')
-
-@permission_required('modulo_pedidos.pode_criar_pedido')
-@login_required
-def erro_estoque(request):
-    return render_to_response('erro_estoque.html')
-
-@permission_required('modulo_pedidos.pode_criar_pedido')
-@login_required
-def erro_pagamento(request):
-    return render_to_response('erro_pagamento.html')
-
-@permission_required('modulo_pedidos.pode_editar_pedido')
-@login_required
 def edita_pedido_smartphone(request, object_id):
     pedido = Pedido.objects.get(pk=object_id)
     itens_pedidos = StatusItemPedido.objects.filter(pedido=pedido)
@@ -169,3 +159,75 @@ def lista_pedidos_smartphone(request):
 @login_required
 def deleta_pedido(request, object_id):
     return delete_object(request, Pedido, '/pizzer/pedidos/', object_id, template_name='confirmacao_delecao.html', extra_context={'model': Pedido})
+
+#@login_required
+def cria_pedido_pda(request):
+    pizzas = Pizza.objects.all()
+    bebidas = Bebida.objects.all()
+    if request.method == 'POST': # If the form has been submitted...
+        form = PedidoForm(request.POST) # A form bound to the POST data
+        if form.is_valid(): # All validation rules pass
+            cliente = form.cleaned_data['cliente']
+            pedido = Pedido(cliente=cliente, status='A', pagamento=0)
+            pedido.save()
+            vazio = True
+            for pizza in pizzas:
+                quantidade = request.POST.get(pizza.nome + '_qtde')
+                quantidade = int(quantidade)
+                if quantidade != 0:
+                    s = StatusItemPedido(pedido=pedido, item_cardapio=pizza, quantidade=quantidade,
+                                         tipo_de_item=1)
+                    s.save()
+                    pedido.pagamento += s.item_cardapio.preco * s.quantidade
+                    pedido.save()
+                    vazio = False
+            for bebida in bebidas:
+                quantidade = request.POST.get(bebida.nome + '_qtde')
+                quantidade = int(quantidade)
+                if quantidade != 0:
+                    if bebida.quantidade - quantidade < 0:
+                        pedido.delete()
+                        return render_to_response('pda_erro_estoque.html', {'bebida': bebida})
+                    else:
+                        s = StatusItemPedido(pedido=pedido, item_cardapio=bebida, quantidade=quantidade,
+                                             tipo_de_item=2)
+                        s.save()
+                        bebida.quantidade -= quantidade
+                        bebida.save()
+                        pedido.pagamento += s.item_cardapio.preco * s.quantidade
+                        pedido.save()
+            if vazio:
+                pedido.delete()
+                return render_to_response('/pizzer/pda/pedido/cria/vazio')
+            return HttpResponseRedirect('/pizzer/pedidos/') # Redirect after POST
+    else:
+        form = PedidoForm() # An unbound form
+    return render_to_response('pda_criacao_pedido.html', {'form': form, 'bebidas': bebidas, 'pizzas': pizzas})
+
+def edita_pedido_pda2(request, object_id):
+    pedido = Pedido.objects.get(pk=object_id)
+    itens_pedidos = StatusItemPedido.objects.filter(pedido=pedido)
+    bebidas = []
+    pizzas = []
+    for item_pedido in itens_pedidos:
+        if item_pedido.tipo_de_item == 1:
+            pizzas.append(item_pedido)
+        else:
+            if item_pedido.tipo_de_item == 2:
+                bebidas.append(item_pedido)
+    if request.method == 'POST': # If the form has been submitted...
+        input_status = request.POST.get('status')
+        status = 'A'
+        if input_status == 'Pedido sendo Preparado':
+            status = 'B'
+        else:
+            if input_status == 'Pedido Pronto':
+                status = 'C'
+        pedido.status = status
+        pedido.save()
+        return HttpResponseRedirect('/pizzer/pda2/pedidos/') # Redirect after POST
+    return render_to_response('pda2_edicao_pedido.html', {'bebidas': bebidas, 'pizzas': pizzas, 'pedido': pedido})
+
+def lista_pedidos_pda2(request):
+    pedidos = Pedido.objects.filter(Q(status='A') | Q(status='B'))
+    return render_to_response('pda2_listagem_pedidos.html', {'pedidos': pedidos})

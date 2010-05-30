@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block titulo %}
+ERRO
+{% endblock %}
+
+{% block conteudo %}
+<h3> Não há estoque suficiente do item {{ bebida.nome }}. </h3>
+<br/>
+<form action="" method="post">
+<input type="button" value="Retornar"onClick="window.location.href='/pizzer/pda/pedido/cria'"/>
+</form>
+{% endblock %}
