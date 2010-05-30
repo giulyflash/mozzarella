@@ -65,38 +65,80 @@
         <div id="content-main">
         	<h1>{% block titulo %}{% endblock %}</h1>
         	<h2>{% block subtitulo %}{% endblock %}</h2>
-        	{% block envoltorio %}
-	            {% block conteudo %}
-	            {% endblock %}
-	        {% endblock %}
+            {% block conteudo %}
+            {% endblock %}
 	    </div>
         <div id="content-related">
         {% block sidebar %}
 	        <ul>
+	        {% if perms.modulo_reclamacoes %}
 	        <h3>Reclamações</h3>
+	        	{% if perms.modulo_reclamacoes.pode_criar_reclamacao %}
 		    	<li><a href="/pizzer/reclamacao/cria/">Reclamar</a></li>
+		    	{% endif %}
+		    	{% if perms.modulo_reclamacoes.pode_ver_reclamacoes %}
 		    	<li><a href="/pizzer/reclamacoes/">Atender reclamações</a></li>
+		    	{% endif %}
+		   	{% endif %}
+		   	{% if perms.modulo_clientes %}
 			<h3>Clientes</h3>
+				{% if perms.modulo_clientes.pode_criar_cliente %}
 		    	<li><a href="/pizzer/cliente/cria/">Cadastrar cliente</a></li>
+		    	{% endif %}
+		    	{% if perms.modulo_clientes.ver_todos_os_clientes %}
 		    	<li><a href="/pizzer/clientes/">Lista clientes</a></li>
+		    	{% endif %}
+	    	{% endif %}
+	    	{% if perms.modulo_pedidos %}
 	    	<h3>Pedidos<h3>
-				<li><a href="/pizzer/pedido/cria/">Cadastrar pedido</a></li>
-				<li><a href="/pizzer/pedidos/">Listar pedidos</a></li>
+	    		{% if perms.modulo_pedidos.pode_criar_pedido %}
+				<li><a href="/pizzer/pedido/cria/">Fazer pedido</a></li>
+				{% endif %}
+				{% if perms.modulo_pedidos.pode_ver_todos_os_pedidos %}
+				<li><a href="/pizzer/pedidos/">Lista de pedidos</a></li>
+				{% endif %}
+			{% endif %}
+			{% if perms.modulo_funcionarios %}
             <h3>Funcionários</h3>
-				<li><a href="/pizzer/funcionario/cria/">Cadastrar funcionario</a></li>
-				<li><a href="/pizzer/funcionarios/">Listar funcionarios</a></li>
+            	{% if perms.modulo_funcionarios.pode_criar_funcionario %}
+				<li><a href="/pizzer/funcionario/cria/">Cadastrar novo funcionario</a></li>
+				{% endif %}
+				{% if perms.modulo_funcionarios.pode_ver_funcionarios %}
+				<li><a href="/pizzer/funcionarios/">Lista de funcionarios</a></li>
+				{% endif %}
+			{% endif %}
+			{% if perms.modulo_pizzas %}
 			<h3>Pizzas</h3>
-				<li><a href="/pizzer/pizza/cria/">Cadastrar pizza</a></li>
-				<li><a href="/pizzer/pizzas/">Listar pizzas</a></li>
+				{% if perms.modulo_pizzas.pode_criar_pizza %}
+				<li><a href="/pizzer/pizza/cria/">Inventar uma nova pizza</a></li>
+				{% endif %}
+				{% if perms.modulo_pizzas.pode_ver_pizzas %}
+				<li><a href="/pizzer/pizzas/">Cardápio de pizzas</a></li>
+				{% endif %}
+			{% endif %}
+			{% if perms.modulo_bebidas %}
 			<h3>Bebidas<h3>
-				<li><a href="/pizzer/bebida/cria/">Cadastrar bebidas</a></li>
-				<li><a href="/pizzer/bebidas/">Listar bebidas</a></li>
+				{% if perms.modulo_bebidas.pode_criar_bebida %}
+				<li><a href="/pizzer/bebida/cria/">Cadastrar bebida</a></li>
+				{% endif %}
+				{% if perms.modulo_bebidas.pode_ver_bebidas %}
+				<li><a href="/pizzer/bebidas/">Estoque de bebidas</a></li>
+				{% endif %}
+			{% endif %}
+			{% if perms.modulo_ingredientes %}
 			<h3>Ingredientes</h3>
+				{% if perms.modulo_ingredientes.pode_criar_ingrediente %}
 				<li><a href="/pizzer/ingrediente/cria/">Cadastrar ingrediente</a></li>
-				<li><a href="/pizzer/ingredientes/">Listar ingredientes</a></li>
+				{% endif %}
+				{% if perms.modulo_ingredientes.pode_ver_ingredientes %}
+				<li><a href="/pizzer/ingredientes/">Estoque de ingredientes</a></li>
+				{% endif %}
+			{% endif %}
+			{% if user.is_superuser %}
             <h3>Usuários</h3>
 				<li><a href="/pizzer/usuario/cria/">Cadastrar usuario</a></li>
 				<li><a href="/pizzer/usuarios/">Listar usuarios</a></li>
+			{% endif %}
 		    </ul>
         {% endblock %}
         </div>

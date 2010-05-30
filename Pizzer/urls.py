@@ -4,7 +4,7 @@ from django.conf.urls.defaults import *
 from django.views.generic.simple import direct_to_template, redirect_to
 from django.views import static
 
-from modulo_autenticacao.views import testa_autenticado
+from modulo_autenticacao.views import index
 from utils.views import cria_grupos_usuarios, cria_usuarios
 
 # Uncomment the next two lines to enable the admin:
@@ -17,7 +17,7 @@ urlpatterns = patterns('',
     (r'^pizzer/dev/gera/grupos/$', cria_grupos_usuarios),  # Insere os grupos no banco. Rodar apenas na instalação.
     (r'^pizzer/dev/gera/usuarios/$', cria_usuarios),  # Insere clientes e funcionários com suas contas de usuários correspondentes no banco. Rodar apenas para testes.
     #(r'^pizzer/$', direct_to_template, {'template': 'index.html'}),  # Era útil enquanto não havia sistema de permissões
-    (r'^pizzer/$', testa_autenticado),
+    (r'^pizzer/$', index),
     (r'^pizzer/', include('Pizzer.modulo_autenticacao.urls')),
     (r'^pizzer/', include('Pizzer.modulo_reclamacoes.urls')),
 	(r'^pizzer/', include('Pizzer.modulo_funcionarios.urls')),

@@ -2,6 +2,7 @@
 from models import Cliente
 from django.db.models import Q
 from django.shortcuts import render_to_response
+from django.template import RequestContext
 from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required, permission_required
 from django.views.generic.create_update import create_object, update_object, delete_object
@@ -40,7 +41,7 @@ def cria_pedido(request):
                 if quantidade != 0:
                     if bebida.quantidade - quantidade < 0:
                         pedido.delete()
-                        return render_to_response('erro_estoque.html', {'bebida': bebida})
+                        return render_to_response('erro_estoque.html', {'bebida': bebida}, context_instance=RequestContext(request))
                     else:
                         s = StatusItemPedido(pedido=pedido, item_cardapio=bebida, quantidade=quantidade,
                                              tipo_de_item=2)
@@ -55,7 +56,7 @@ def cria_pedido(request):
             return HttpResponseRedirect('/pizzer/pedido/cria/pagamento/' + str(pedido.id) + '/') # Redirect after POST
     else:
         form = PedidoForm() # An unbound form
-    return render_to_response('criacao_pedido.html', {'form': form, 'bebidas': bebidas, 'pizzas': pizzas})
+    return render_to_response('criacao_pedido.html', {'form': form, 'bebidas': bebidas, 'pizzas': pizzas}, context_instance=RequestContext(request))
 
 @permission_required('modulo_pedidos.pode_criar_pedido')
 @login_required
@@ -78,7 +79,7 @@ def pagamento(request, object_id):
                 return render_to_response('erro_pagamento.html')
     else:
         form = PagamentoForm(instance=pedido)
-    return render_to_response('pagamento.html', {'form':form, 'pedido':pedido, 'total': total})
+    return render_to_response('pagamento.html', {'form':form, 'pedido':pedido, 'total': total}, context_instance=RequestContext(request))
 
 @permission_required('modulo_pedidos.pode_editar_pedido')
 @login_required
@@ -109,16 +110,16 @@ def edita_pedido(request, object_id):
     else:
         form = EditaPedidoForm(instance=pedido) # An unbound form
     return render_to_response('edicao_pedido.html', {'form': form, 'bebidas': bebidas, 'pizzas': pizzas, 'pedido': pedido,
-                                                     'total': total, 'troco': troco})
+                                                     'total': total, 'troco': troco}, context_instance=RequestContext(request))
 
-@permission_required('modulo_pedidos.pode_ver_todos_os_pedido')
+@permission_required('modulo_pedidos.pode_ver_todos_os_pedidos')
 @login_required
 def lista_pedidos(request):
     cliente = request.GET.get('cliente')  # Obtenção dos parâmetros do request
     consulta = Q(cliente__nome__icontains=cliente)
     return lista_objetos(request, [cliente], Pedido, 'listagem_pedidos.html', 'pedidos', consulta)
 
-@permission_required('modulo_pedidos.pode_criar_pedido')
+@permission_required('modulo_pedidos.pode_editar_pedido')
 @login_required
 def edita_pedido_smartphone(request, object_id):
     pedido = Pedido.objects.get(pk=object_id)
@@ -147,13 +148,13 @@ def edita_pedido_smartphone(request, object_id):
         pedido.save()
         return HttpResponseRedirect('/pizzer/smartphone/pedidos/') # Redirect after POST
     return render_to_response('smartphone_edicao_pedido.html', {'bebidas': bebidas, 'pizzas': pizzas, 'pedido': pedido,
-                                                                'troco': troco})
+                                                                'troco': troco}, context_instance=RequestContext(request))
 
 @permission_required('modulo_pedidos.pode_ver_pedidos_a_serem_entregues')
 @login_required
 def lista_pedidos_smartphone(request):
     pedidos = Pedido.objects.all()
-    return render_to_response('smartphone_listagem_pedidos.html', {'pedidos': pedidos})
+    return render_to_response('smartphone_listagem_pedidos.html', {'pedidos': pedidos}, context_instance=RequestContext(request))
 
 @permission_required('modulo_pedidos.pode_deletar_pedido')
 @login_required

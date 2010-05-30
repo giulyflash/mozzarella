@@ -8,7 +8,7 @@ Resolução de reclamação
 <p>Cliente: <b>{{ reclamacao.cliente.nome }}</b></p>
 <p>Assunto: <b>{{ reclamacao.assunto }}</b></p>
 <p>Texto:<br/><br/>{{ reclamacao.texto }}<br/></p>
-<input type="button" value="Marcar como resolvida"
+<input type="button" value="Apagar reclamação"
     onClick="location.href='/pizzer/reclamacao/deleta/{{ reclamacao.id }}/'"/>
 </form>
 {% endblock %}
