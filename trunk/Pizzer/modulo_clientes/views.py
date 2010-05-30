@@ -3,7 +3,7 @@
 from django.db.models import Q
 from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 
 from models import Cliente, ClienteForm
 from modulo_autenticacao.models import UserCreateForm
@@ -30,6 +30,8 @@ def cria_cliente(request):
             password = form_usuario.cleaned_data['password']
             user = User.objects.create_user(username, email, password)
             user.save()
+            grupo_cliente = Group.objects.get(name='cliente')
+            user.groups.add(grupo_cliente)
             cliente.usuario = user
             cliente.save()
             return HttpResponseRedirect('/pizzer/clientes/')

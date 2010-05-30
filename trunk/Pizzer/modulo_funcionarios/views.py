@@ -3,7 +3,7 @@
 from django.db.models import Q
 from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 
 from models import Funcionario, FuncionarioForm, FuncionarioEditaForm
 from modulo_autenticacao.models import UserCreateForm
@@ -36,6 +36,8 @@ def cria_funcionario(request):
             password = form_usuario.cleaned_data['password']
             user = User.objects.create_user(username, email, password)
             user.save()
+            grupo = Group.objects.get(name=funcao.lower())
+            user.groups.add(grupo)
             funcionario.usuario = user
             funcionario.save()
             return HttpResponseRedirect('/pizzer/funcionarios/')
