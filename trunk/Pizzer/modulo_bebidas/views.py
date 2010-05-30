@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required, permission_required
 
 from models import Bebida
 from utils.views import lista_objetos
+from views import *
 
 @permission_required('modulo_bebidas.pode_ver_bebidas')
 @login_required

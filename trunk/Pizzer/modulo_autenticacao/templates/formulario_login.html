@@ -1,28 +1,35 @@
-﻿{% extends "base.html" %}
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="{{ LANGUAGE_CODE }}" xml:lang="{{ LANGUAGE_CODE }}" {% if LANGUAGE_BIDI %}dir="rtl"{% endif %}>
+<head>
+<title>Sistema Pizzer - Login</title>
+<link rel="stylesheet" type="text/css" href="{% block stylesheet %}/pizzer/media/css/base.css{% endblock %}"/>
+{% block extrastyle %}{% endblock %}
+{% block extrahead %}{% endblock %}
+{% block blockbots %}<meta name="robots" content="NONE,NOARCHIVE" />{% endblock %}
+</head>
+{% load i18n %}
 
-{% block titulo %}
-Login
-{% endblock %}
+<body>
+<!-- Container -->
+<div id="container">
+<br/><br/><br/>
+<div align = "center">
+	<img src="/pizzer/media/img/pizzerlogo.jpg"/ width="20%" height="20%">
+	<br/>
+	<b style="color: red;">{{ erro }}</b>
+	<br/><br/>
+	<form method="POST">
+	    <b>Usuario: </b>
+	    <input name="username" />
+	    <spacer/>
+	    <b>Senha: </b>
+	    <input type="password" name="password" />
+	    <input type="submit" value="Login" />
+	    </p>
+	</form>
+</div>
+</div>
+<!-- END Container -->
 
-{% block conteudo %}
-<br/>
-<b>{{ erro }}</b>
-<br/><br/>
-<form method="POST">
-    <p>
-    <label>Usuario: </label>
-    <input name="username" />
-    </p>
-    <p>
-    <label>Senha: </label>
-    <input type="password" name="password" />
-    </p>
-    <p>
-    <input type="submit" value="Login" />
-    </p>
-</form>
-{% endblock %}
-
-{% block sidebar %}
-<!-- Esse block serve para apagar a barra lateral -->
-{% endblock %}
+</body>
+</html>

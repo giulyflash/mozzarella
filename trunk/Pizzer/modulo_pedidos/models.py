@@ -28,6 +28,7 @@ class Pedido(models.Model):
         permissions = (
            ('pode_criar_pedido', 'Pode criar pedido'),
             ('pode_ver_todos_os_pedidos', 'Pode ver todos os pedidos'),
+            ('pode_ver_pedidos_a_serem_entregues', 'Pode ver pedidos a serem entregues'),
             ('pode_editar_pedido', 'Pode editar pedido'),
             ('pode_deletar_pedido', 'Pode deletar pedido'),
         )

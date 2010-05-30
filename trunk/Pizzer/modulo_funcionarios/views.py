@@ -5,17 +5,21 @@ from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
 from django.contrib.auth.models import User, Group
 from django.contrib.auth.decorators import login_required, permission_required
+from django.views.generic.create_update import create_object, update_object, delete_object
 
 from models import Funcionario, FuncionarioForm, FuncionarioEditaForm
 from modulo_autenticacao.models import UserCreateForm
 from utils.views import lista_objetos
+from views import *
 
+@permission_required('modulo_funcionarios.pode_ver_funcionarios')
 @login_required
 def lista_funcionarios(request):
     nome = request.GET.get('nome')  # Obtenção dos parâmetros do request
     consulta = Q(nome__icontains=nome)
     return lista_objetos(request, [nome], Funcionario, 'listagem_funcionarios.html', 'funcionarios', consulta)# Create your views here.
 
+@permission_required('modulo_funcionarios.pode_criar_funcionario')
 @login_required
 def cria_funcionario(request):
     if request.method == 'POST':
@@ -49,6 +53,7 @@ def cria_funcionario(request):
         form_usuario = UserCreateForm()
     return render_to_response('criacao_funcionario.html', {'form_funcionario': form_funcionario, 'form_usuario': form_usuario})
 
+@permission_required('modulo_funcionarios.pode_editar_qualquer_funcionario')
 @login_required
 def edita_funcionario(request, object_id):
     funcionario = Funcionario.objects.get(pk=object_id)
@@ -73,3 +78,8 @@ def edita_funcionario(request, object_id):
     else:
         form = FuncionarioEditaForm(instance=funcionario)
     return render_to_response('edicao_funcionario.html', {'form': form, 'object': funcionario})
+
+@permission_required('modulo_funcionarios.pode_deletar_funcionario')
+@login_required
+def deleta_funcionario(request, object_id):
+    return delete_object(request, Funcionario, '/pizzer/funcionarios/', object_id, template_name='confirmacao_delecao.html', extra_context={'model': Funcionario})

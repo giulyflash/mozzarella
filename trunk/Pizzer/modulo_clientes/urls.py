@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 from django.conf.urls.defaults import *
-from django.views.generic.create_update import update_object, delete_object
 from modulo_clientes.models import Cliente, ClienteForm
 from views import *
 
@@ -12,9 +11,8 @@ from views import *
 urlpatterns = patterns('',
     # Example:
     (r'^cliente/cria/$', cria_cliente),
-    (r'^cliente/edita/(?P<object_id>\d+)/$', update_object, {'form_class': ClienteForm, 'template_name': 'edita_cliente.html'}),
-    (r'^cliente/deleta/(?P<object_id>\d+)/$', delete_object, {'model': Cliente, 'template_name': 'confirmacao_delecao.html',
-                                                                 'post_delete_redirect': '/pizzer/clientes/', 'extra_context': {'model': Cliente}}),
+    (r'^cliente/edita/(?P<object_id>\d+)/$', edita_cliente),
+    (r'^cliente/deleta/(?P<object_id>\d+)/$', deleta_cliente),
     (r'^clientes/$', lista_clientes)
 
     # Uncomment the admin/doc line below and add 'django.contrib.admindocs'

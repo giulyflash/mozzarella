@@ -8,6 +8,7 @@ FUNCAO_CHOICES = (
     ('Atendente', 'Atendente'),
     ('Gerente', 'Gerente'),
     ('Entregador', 'Entregador'),
+    ('Garçom', 'Garçom'),
 )
 
 PERIODO_CHOICES = (

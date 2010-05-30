@@ -13,8 +13,7 @@ urlpatterns = patterns('',
     # Example:
     (r'^reclamacao/cria/$', cria_reclamacao),
     (r'^reclamacao/resolve/(?P<object_id>\d+)/$', resolve_reclamacao),
-    (r'^reclamacao/deleta/(?P<object_id>\d+)/$', delete_object, {'model': Reclamacao, 'template_name': 'confirmacao_delecao.html',
-                                                                 'post_delete_redirect': '/pizzer/reclamacoes/', 'extra_context': {'model': Reclamacao}}),
+    (r'^reclamacao/deleta/(?P<object_id>\d+)/$', deleta_reclamacao),
     (r'^reclamacoes/$', lista_reclamacoes)
 
     # Uncomment the admin/doc line below and add 'django.contrib.admindocs'
