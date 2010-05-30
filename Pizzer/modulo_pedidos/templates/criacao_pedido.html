@@ -29,13 +29,13 @@ Cadastro de novo pedido
 
 {% block conteudo %}
 <form name="pedidoForm" action="" method="post">
-
+{% ifnotequal group "cliente" %}
 	<div class="fieldWrapper">
         {{ form.cliente.errors }}
         <label for="id_cliente">Cliente:</label>
         {{ form.cliente }}
     </div><br/>
-
+{% endifnotequal %}
 	<h3> Cardápio </h3><br/>
 
 	<table border="1" >

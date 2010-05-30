@@ -109,6 +109,9 @@
 				{% if perms.modulo_pedidos.pode_ver_pedidos_a_serem_entregues %}
 				<li><a href="/pizzer/smartphone/pedidos/">Lista de pedidos a serem entregues</a></li>
 				{% endif %}
+				{% ifequal group "cliente" %}
+				<li><a href="/pizzer/pedidos/cliente/">Seus pedidos</a></li>
+				{% endifequal %}
 			{% endif %}
 			{% if perms.modulo_funcionarios %}
             <h3>Funcionários</h3>

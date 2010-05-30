@@ -55,11 +55,12 @@ def cria_funcionario(request):
     return render_to_response('criacao_funcionario.html', {'form_funcionario': form_funcionario, 'form_usuario': form_usuario}, context_instance=RequestContext(request))
 
 #  Pode editar funcionário se tiver permissão para editar qualquer funcionário, ou se forem seus próprios dados
-@user_passes_test(lambda u: u.has_perm('modulo_funcionarios.pode_editar_qualquer_funcionario') or u.funcionario_set.all())
+@user_passes_test(lambda u: u.has_perm('modulo_funcionarios.pode_editar_qualquer_funcionario') or len(u.funcionario_set.all()) != 0)
 @login_required
 def edita_funcionario(request, object_id):
     user = request.user
-    funcionario = user.funcionario_set.all()[0]
+    if user.funcionario_set.all():
+        funcionario = user.funcionario_set.all()[0]
     if not user.has_perm('modulo_funcionarios.pode_editar_qualquer_funcionario') and funcionario.id != int(object_id):
         return HttpResponseRedirect('/pizzer/usuario/login/')
     funcionario = Funcionario.objects.get(pk=object_id)
@@ -75,7 +76,7 @@ def edita_funcionario(request, object_id):
             funcionario.nome = nome
             funcionario.endereco = endereco
             funcionario.telefone = telefone
-            funcionario.cpf = cpf
+            #funcionario.cpf = cpf
             funcionario.rg = rg
             funcionario.salario = salario
             funcionario.periodo = periodo

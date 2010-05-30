@@ -48,7 +48,7 @@ def cria_cliente(request):
     return render_to_response('criacao_cliente.html', {'form_cliente': form_cliente, 'form_usuario': form_usuario}, context_instance=RequestContext(request))
 
 #  Pode editar cliente se tiver permissão para editar qualquer cliente, ou se forem seus próprios dados
-@user_passes_test(lambda u: u.has_perm('modulo_clientes.pode_editar_qualquer_cliente') or u.cliente_set.all())
+@user_passes_test(lambda u: u.has_perm('modulo_clientes.pode_editar_qualquer_cliente') or len(u.cliente_set.all()) != 0)
 @login_required
 def edita_cliente(request, object_id):
     user = request.user

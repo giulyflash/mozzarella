@@ -4,7 +4,8 @@ from django.forms import ModelForm
 from django import forms
 
 from modulo_clientes.models import Cliente
-from modulo_pizzas.models import ItemCardapio
+from modulo_pizzas.models import ItemCardapio, Pizza
+from modulo_bebidas.models import Bebida
 from modulo_funcionarios.models import Funcionario
 
 STATUS_PEDIDO_CHOICES = (
@@ -39,6 +40,25 @@ class Pedido(models.Model):
     def status_display(self):
         return Pedido.get_status_display(self)
 
+    def get_itens_pedido(self):
+        return StatusItemPedido.objects.filter(pedido=self)
+
+    def get_pizzas(self):
+        itens_pedido = StatusItemPedido.objects.filter(pedido=self)
+        pizzas = []
+        for item_pedido in itens_pedido:
+            if type(item_pedido.item_cardapio.pizza) is not None:
+                pizzas.append(item_pedido)
+        return pizzas
+
+    def get_bebidas(self):
+        itens_pedido = StatusItemPedido.objects.filter(pedido=self)
+        bebidas = []
+        for item_pedido in itens_pedido:
+            if type(item_pedido.item_cardapio.bebida) is not None:
+                bebidas.append(item_pedido)
+        return bebidas
+
     def __str__(self):
         return 'Pedido' + str(self.id)
 
@@ -52,6 +72,12 @@ class PedidoForm(ModelForm):
     class Meta:
         model = Pedido
         exclude = ['itens_cardapio', 'status', 'entregador']
+
+class PedidoFormParaCliente(ModelForm):
+    cliente = forms.ComboField(required=False)
+    class Meta:
+        model = Pedido
+        exclude = ['itens_cardapio', 'status', 'entregador', 'pagamento']
 
 class EditaPedidoForm(ModelForm):
     entregador = forms.ModelChoiceField(queryset=Funcionario.objects.filter(funcao='Entregador'), required=False)
