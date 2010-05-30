@@ -16,13 +16,8 @@ urlpatterns = patterns('',
     (r'^pedido/cria/pagamento/(?P<object_id>\d+)/$', pagamento),
 
     (r'^pda/pedido/cria/$', cria_pedido_pda),
-    #(r'^pda/pedido/deleta/(?P<object_id>\d+)/$', delete_object, {'model': Pedido, 'template_name': 'confirmacao_delecao.html',
-    #                                                         'post_delete_redirect': '/pizzer/pedidos/',
-    #                                                         'extra_context': {'model': Pedido}}),
-    #(r'^pda/pedidos/$', lista_pedidos_pda),
-
-    (r'^pda2/pedido/edita/(?P<object_id>\d+)/$', edita_pedido_pda2),
-    (r'^pda2/pedidos/$', lista_pedidos_pda2),
+    (r'^pda/pedido/edita/(?P<object_id>\d+)/$', edita_pedido_pda),
+    (r'^pda/pedidos/$', lista_pedidos_pda),
 
     (r'^smartphone/pedido/edita/(?P<object_id>\d+)/$', edita_pedido_smartphone),
     (r'^smartphone/pedidos/$', lista_pedidos_smartphone)
