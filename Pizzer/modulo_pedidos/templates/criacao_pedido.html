@@ -1,46 +1,85 @@
 {% extends "base.html" %}
 
+{% block extrahead %}
+    <script type="text/javascript">
+		function startCalc(){
+  			interval = setInterval("calc()", 100);
+		}
+
+		function calc(){
+  			var x = 0;
+  			{% for pizza in pizzas %}
+			x += {{ pizza.preco }} * document.getElementById('{{ pizza.nome }}_qtde').value;
+			{% endfor %}
+			{% for bebida in bebidas %}
+			x += {{ bebida.preco }} * document.getElementById('{{ bebida.nome }}_qtde').value;
+			{% endfor %}
+			document.pedidoForm.total.value = x.toFixed(2);
+		}
+
+		function stopCalc(){
+  			clearInterval(interval);
+		}
+    </script>
+{% endblock %}
+
 {% block titulo %}
 Cadastro de novo pedido
 {% endblock %}
+
 {% block conteudo %}
-<form action="" method="post">
-{{ form.as_p }}
-<br/>
-<table border="1" >
-<tr>
-    <th> Pizzas </th>
-    <th> Ingredientes </th>
-	<th> Preço (R$) </th>
-    <th> Quantidade </th>
-</tr>
-{% for pizza in pizzas %}
-<tr>
-    <td> {{ pizza.nome }} </td>
-    <td> {{ pizza.ingredientes.all|join:", " }} </td>
-    <td> {{ pizza.preco|floatformat:2 }} </td>
-    <td> <input type="text" name="{{ pizza.nome }}_qtde" value="0"> </td>
-</tr>
-{% endfor %}
-</table>
-<br/>
-<br/>
-<table border="1" >
-<tr>
-    <th> Bebidas </th>
-    <th> Preço (R$) </th>
-    <th> Quantidade </th>
-</tr>
-{% for bebida in bebidas %}
-<tr>
-    <td> {{ bebida.nome }} </td>
-    <td> {{ bebida.preco|floatformat:2 }} </td>
-    <td> <input type="text" name="{{ bebida.nome }}_qtde" value="0"> </td>
-</tr>
-{% endfor %}
-</table>
-<br/>
-<br/>
-<input type="submit" value="Confirmar registro">
+<form name="pedidoForm" action="" method="post">
+
+	<div class="fieldWrapper">
+        {{ form.cliente.errors }}
+        <label for="id_cliente">Cliente:</label>
+        {{ form.cliente }}
+    </div><br/>
+
+	<h3> Cardápio </h3><br/>
+
+	<table border="1" >
+		<tr>
+    		<th> Pizzas </th>
+    		<th> Ingredientes </th>
+			<th> Preço (R$) </th>
+    		<th> Quantidade </th>
+		</tr>
+		{% for pizza in pizzas %}
+		<tr>
+    		<td> {{ pizza.nome }} </td>
+    		<td> {{ pizza.ingredientes.all|join:", " }} </td>
+    		<td> {{ pizza.preco|floatformat:2 }} </td>
+    		<td> <input type="text" name="{{ pizza.nome }}_qtde" value="0" id="{{ pizza.nome }}_qtde" onFocus="startCalc();" onBlur="stopCalc();"/> </td>
+		</tr>
+		{% endfor %}
+	</table><br/><br/>
+
+	<table border="1" >
+		<tr>
+    		<th> Bebidas </th>
+    		<th> Preço (R$) </th>
+    		<th> Quantidade </th>
+		</tr>
+		{% for bebida in bebidas %}
+		<tr>
+    		<td> {{ bebida.nome }} </td>
+    		<td> {{ bebida.preco|floatformat:2 }} </td>
+    		<td> <input type="text" name="{{ bebida.nome }}_qtde" value="0" id="{{ bebida.nome }}_qtde" onFocus="startCalc();" onBlur="stopCalc();"/> </td>
+		</tr>
+		{% endfor %}
+	</table><br/><br/>
+
+	<h3> Valor Total do Pedido (R$): <input type="text" name="total" value="0.00" readonly="readonly"/> </h3><br/><br/>
+
+	<b> É desejado troco para que quantia? </b><br/><br/>
+	<div class="fieldWrapper">
+        {{ form.pagamento.errors }}
+        <label for="id_pagamento">Quantia:</label>
+        {{ form.pagamento }} <i>R$ NN.DD</i>
+    </div><br/><br/>
+
+	<input type="submit" value="Confirmar registro">
+
 </form>
 {% endblock %}
