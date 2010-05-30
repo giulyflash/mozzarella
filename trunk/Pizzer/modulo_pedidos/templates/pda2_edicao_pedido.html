@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block titulo %}
+Atualização de Status
+{% endblock %}
+{% block conteudo %}
+<p><b>Cliente:</b> {{ pedido.cliente }}</p>
+<p><b>Entrada do Pedido:</b> {{ pedido.data_horario|date:"d/m/y - H:i" }}</p>
+<p><b>Status do Pedido:</b> {{ pedido.status_display }}</p><br/>
+
+<h3> Conteúdo do Pedido </h3><br/>
+
+<table border="1">
+	<tr>
+		<th>Pizzas</th>
+		<th>Quantidade</th>
+	</tr>
+	{% for pizza in pizzas %}
+	<tr>
+		<td> {{ pizza.item_cardapio.nome }} </td>
+		<td> {{ pizza.quantidade }}</td>
+	</tr>
+	{% endfor %}
+</table><br/><br/>
+
+{% if bebidas %}
+<table border="1">
+	<tr>
+		<th>Bebidas</th>
+		<th>Quantidade</th>
+	</tr>
+	{% for bebida in bebidas %}
+	<tr>
+		<td> {{ bebida.item_cardapio.nome }} </td>
+		<td> {{ bebida.quantidade }}</td>
+	</tr>
+	{% endfor %}
+</table><br/><br/>
+{% endif %}
+
+<h3> Alterar Status do Pedido </h3><br/>
+<form action="" method="post">
+	<input type="submit" name="status" value="Pedido sendo Preparado">
+	<input type="submit" name="status" value="Pedido Pronto">
+</form>
+{% endblock %}

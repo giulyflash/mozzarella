@@ -9,18 +9,20 @@ Pedidos Restantes
 {% if pedidos %}
 <table border="1">
 	<tr>
-		<th> Endereço de Entrega </th>
+		<th> Cliente </th>
 		<th> Horário do Pedido </th>
+		<th> Status </th>
 		<th> </th>
    	{% for pedido in pedidos %}
     <tr>
-        <td> {{ pedido.cliente.endereco }} </td>
+        <td> {{ pedido.cliente }} </td>
         <td> {{ pedido.data_horario|date:"H:i" }} </td>
-        <td><input type="button" value="Atualizar"onClick="window.location.href='/pizzer/smartphone/pedido/edita/{{pedido.id}}/'"/></td>
+        <td> {{ pedido.status_display }} </td>
+        <td><input type="button" value="Atualizar"onClick="window.location.href='/pizzer/pda2/pedido/edita/{{pedido.id}}/'"/></td>
     </tr>
 	{% endfor %}
 </table>
 {% else %}
-<h3> Todos os pedidos foram entregues. </h3>
+<h3> A lista de pedidos está vazia. </h3>
 {% endif %}
 {% endblock %}
