@@ -51,7 +51,7 @@ class StatusItemPedido(models.Model):
 class PedidoForm(ModelForm):
     class Meta:
         model = Pedido
-        exclude = ['itens_cardapio', 'status', 'entregador', 'pagamento']
+        exclude = ['itens_cardapio', 'status', 'entregador']
 
 class EditaPedidoForm(ModelForm):
     entregador = forms.ModelChoiceField(queryset=Funcionario.objects.filter(funcao='Entregador'), required=False)
@@ -60,7 +60,3 @@ class EditaPedidoForm(ModelForm):
         model = Pedido
         exclude = ['cliente', 'itens_cardapio', 'pagamento']
 
-class PagamentoForm(ModelForm):
-    class Meta:
-        model = Pedido
-        exclude = ['cliente', 'itens_cardapio', 'status', 'entregador']

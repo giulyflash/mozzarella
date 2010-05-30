@@ -13,7 +13,6 @@ urlpatterns = patterns('',
     (r'^pedido/edita/(?P<object_id>\d+)/$', edita_pedido),
     (r'^pedido/deleta/(?P<object_id>\d+)/$', deleta_pedido),
     (r'^pedidos/$', lista_pedidos),
-    (r'^pedido/cria/pagamento/(?P<object_id>\d+)/$', pagamento),
     (r'^pedido/cancela/(?P<object_id>\d+)/$', cancela_pedido),
 
     (r'^pda/pedido/cria/$', cria_pedido_pda),

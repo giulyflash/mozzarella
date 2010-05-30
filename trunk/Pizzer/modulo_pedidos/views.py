@@ -9,7 +9,7 @@ from django.views.generic.create_update import create_object, update_object, del
 
 from utils.views import lista_objetos
 from views import *
-from models import Cliente, ItemCardapio, StatusItemPedido, Pedido, PedidoForm, EditaPedidoForm, PagamentoForm
+from models import Cliente, ItemCardapio, StatusItemPedido, Pedido, PedidoForm, EditaPedidoForm
 from modulo_pizzas.models import Pizza
 from modulo_bebidas.models import Bebida
 
@@ -22,8 +22,10 @@ def cria_pedido(request):
         form = PedidoForm(request.POST) # A form bound to the POST data
         if form.is_valid(): # All validation rules pass
             cliente = form.cleaned_data['cliente']
-            pedido = Pedido(cliente=cliente, status='A', pagamento=0)
+            pagamento = form.cleaned_data['pagamento']
+            pedido = Pedido(cliente=cliente, status='A', pagamento=pagamento)
             pedido.save()
+            total = 0
             vazio = True
             for pizza in pizzas:
                 quantidade = request.POST.get(pizza.nome + '_qtde')
@@ -32,8 +34,7 @@ def cria_pedido(request):
                     s = StatusItemPedido(pedido=pedido, item_cardapio=pizza, quantidade=quantidade,
                                          tipo_de_item=1)
                     s.save()
-                    pedido.pagamento += s.item_cardapio.preco * s.quantidade
-                    pedido.save()
+                    total += s.item_cardapio.preco * s.quantidade
                     vazio = False
             for bebida in bebidas:
                 quantidade = request.POST.get(bebida.nome + '_qtde')
@@ -48,38 +49,17 @@ def cria_pedido(request):
                         s.save()
                         bebida.quantidade -= quantidade
                         bebida.save()
-                        pedido.pagamento += s.item_cardapio.preco * s.quantidade
-                        pedido.save()
+                        total += s.item_cardapio.preco * s.quantidade
             if vazio:
                 pedido.delete()
                 return render_to_response('erro_vazio.html')
-            return HttpResponseRedirect('/pizzer/pedido/cria/pagamento/' + str(pedido.id) + '/') # Redirect after POST
+            if pagamento < total:
+                pedido.delete()
+                return render_to_response('erro_pagamento.html')
+            return HttpResponseRedirect('/pizzer/pedidos/') # Redirect after POST
     else:
         form = PedidoForm() # An unbound form
     return render_to_response('criacao_pedido.html', {'form': form, 'bebidas': bebidas, 'pizzas': pizzas}, context_instance=RequestContext(request))
-
-@permission_required('modulo_pedidos.pode_criar_pedido')
-@login_required
-def pagamento(request, object_id):
-    pedido = Pedido.objects.get(pk=object_id)
-    itens_pedidos = StatusItemPedido.objects.filter(pedido=pedido)
-    total = 0
-    for item_pedido in itens_pedidos:
-        total += (item_pedido.item_cardapio.preco * item_pedido.quantidade)
-    if request.method == 'POST': # If the form has been submitted...
-        form = PagamentoForm(request.POST) # A form bound to the POST data
-        if form.is_valid(): # All validation rules pass
-            pagamento = form.cleaned_data['pagamento']
-            if pagamento >= total:
-                pedido.pagamento = pagamento
-                pedido.save()
-                return HttpResponseRedirect('/pizzer/pedidos/') # Redirect after POST
-            else:
-                pedido.delete()
-                return render_to_response('erro_pagamento.html')
-    else:
-        form = PagamentoForm(instance=pedido)
-    return render_to_response('pagamento.html', {'form':form, 'pedido':pedido, 'total': total}, context_instance=RequestContext(request))
 
 @permission_required('modulo_pedidos.pode_editar_pedido')
 @login_required
