@@ -13,8 +13,8 @@ from models import Cliente, ItemCardapio, StatusItemPedido, Pedido, PedidoForm, 
 from modulo_pizzas.models import Pizza
 from modulo_bebidas.models import Bebida
 
-@permission_required('modulo_pedidos.pode_criar_pedido')
-@login_required
+#@permission_required('modulo_pedidos.pode_criar_pedido')
+#@login_required
 def cria_pedido(request):
     pizzas = Pizza.objects.all()
     bebidas = Bebida.objects.all()
@@ -58,8 +58,8 @@ def cria_pedido(request):
         form = PedidoForm() # An unbound form
     return render_to_response('criacao_pedido.html', {'form': form, 'bebidas': bebidas, 'pizzas': pizzas}, context_instance=RequestContext(request))
 
-@permission_required('modulo_pedidos.pode_criar_pedido')
-@login_required
+#@permission_required('modulo_pedidos.pode_criar_pedido')
+#@login_required
 def pagamento(request, object_id):
     pedido = Pedido.objects.get(pk=object_id)
     itens_pedidos = StatusItemPedido.objects.filter(pedido=pedido)
@@ -81,8 +81,8 @@ def pagamento(request, object_id):
         form = PagamentoForm(instance=pedido)
     return render_to_response('pagamento.html', {'form':form, 'pedido':pedido, 'total': total}, context_instance=RequestContext(request))
 
-@permission_required('modulo_pedidos.pode_editar_pedido')
-@login_required
+#@permission_required('modulo_pedidos.pode_editar_pedido')
+#@login_required
 def edita_pedido(request, object_id):
     pedido = Pedido.objects.get(pk=object_id)
     itens_pedidos = StatusItemPedido.objects.filter(pedido=pedido)
@@ -112,15 +112,20 @@ def edita_pedido(request, object_id):
     return render_to_response('edicao_pedido.html', {'form': form, 'bebidas': bebidas, 'pizzas': pizzas, 'pedido': pedido,
                                                      'total': total, 'troco': troco}, context_instance=RequestContext(request))
 
-@permission_required('modulo_pedidos.pode_ver_todos_os_pedidos')
-@login_required
+#@permission_required('modulo_pedidos.pode_ver_todos_os_pedido')
+#@login_required
 def lista_pedidos(request):
     cliente = request.GET.get('cliente')  # Obtenção dos parâmetros do request
     consulta = Q(cliente__nome__icontains=cliente)
     return lista_objetos(request, [cliente], Pedido, 'listagem_pedidos.html', 'pedidos', consulta)
 
-@permission_required('modulo_pedidos.pode_editar_pedido')
-@login_required
+#@permission_required('modulo_pedidos.pode_deletar_pedido')
+#@login_required
+def deleta_pedido(request, object_id):
+    return delete_object(request, Pedido, '/pizzer/pedidos/', object_id, template_name='confirmacao_delecao.html', extra_context={'model': Pedido})
+
+#@permission_required('modulo_pedidos.pode_criar_pedido')
+#@login_required
 def edita_pedido_smartphone(request, object_id):
     pedido = Pedido.objects.get(pk=object_id)
     itens_pedidos = StatusItemPedido.objects.filter(pedido=pedido)
@@ -150,18 +155,13 @@ def edita_pedido_smartphone(request, object_id):
     return render_to_response('smartphone_edicao_pedido.html', {'bebidas': bebidas, 'pizzas': pizzas, 'pedido': pedido,
                                                                 'troco': troco}, context_instance=RequestContext(request))
 
-@permission_required('modulo_pedidos.pode_ver_pedidos_a_serem_entregues')
-@login_required
+#@permission_required('modulo_pedidos.pode_ver_pedidos_a_serem_entregues')
+#@login_required
 def lista_pedidos_smartphone(request):
-    pedidos = Pedido.objects.all()
+    pedidos = Pedido.objects.filter(status='D')
     return render_to_response('smartphone_listagem_pedidos.html', {'pedidos': pedidos}, context_instance=RequestContext(request))
 
-@permission_required('modulo_pedidos.pode_deletar_pedido')
-@login_required
-def deleta_pedido(request, object_id):
-    return delete_object(request, Pedido, '/pizzer/pedidos/', object_id, template_name='confirmacao_delecao.html', extra_context={'model': Pedido})
-
-#@login_required
+##@login_required
 def cria_pedido_pda(request):
     pizzas = Pizza.objects.all()
     bebidas = Bebida.objects.all()
@@ -205,7 +205,7 @@ def cria_pedido_pda(request):
         form = PedidoForm() # An unbound form
     return render_to_response('pda_criacao_pedido.html', {'form': form, 'bebidas': bebidas, 'pizzas': pizzas})
 
-def edita_pedido_pda2(request, object_id):
+def edita_pedido_pda(request, object_id):
     pedido = Pedido.objects.get(pk=object_id)
     itens_pedidos = StatusItemPedido.objects.filter(pedido=pedido)
     bebidas = []
@@ -226,9 +226,9 @@ def edita_pedido_pda2(request, object_id):
                 status = 'C'
         pedido.status = status
         pedido.save()
-        return HttpResponseRedirect('/pizzer/pda2/pedidos/') # Redirect after POST
-    return render_to_response('pda2_edicao_pedido.html', {'bebidas': bebidas, 'pizzas': pizzas, 'pedido': pedido})
+        return HttpResponseRedirect('/pizzer/pda/pedidos/') # Redirect after POST
+    return render_to_response('pda_edicao_pedido.html', {'bebidas': bebidas, 'pizzas': pizzas, 'pedido': pedido})
 
-def lista_pedidos_pda2(request):
+def lista_pedidos_pda(request):
     pedidos = Pedido.objects.filter(Q(status='A') | Q(status='B'))
-    return render_to_response('pda2_listagem_pedidos.html', {'pedidos': pedidos})
+    return render_to_response('pda_listagem_pedidos.html', {'pedidos': pedidos})
