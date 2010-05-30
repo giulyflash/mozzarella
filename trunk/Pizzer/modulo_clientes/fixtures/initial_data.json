@@ -1,1 +1,0 @@
-[{"pk": 1, "model": "modulo_clientes.cliente", "fields": {"endereco": "Rua Padre Jo\u00e3o Manuel, 1253", "nome": "Pedro Gomes Ferreira", "telefone": "3081-6043", "usuario": 1}}, {"pk": 2, "model": "modulo_clientes.cliente", "fields": {"endereco": "Rua Pascoal Vita, 329", "nome": "Marcelo Moreira dos Santos", "telefone": "3032-1469", "usuario": 2}}]
