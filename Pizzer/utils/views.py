@@ -61,8 +61,7 @@ def cria_grupos_usuarios(request):
                              Permission.objects.get(name='Pode ver bebidas')]
     pizzaiolo.permissions = [Permission.objects.get(name='Pode ver todos os pedidos'),
                              Permission.objects.get(name='Pode ver ingredientes'),]
-    entregador.permissions = [Permission.objects.get(name='Pode ver pedidos a serem entregues'),
-                              Permission.objects.get(name='Pode ver detalhes de cliente com pedido'),]
+    entregador.permissions = [Permission.objects.get(name='Pode ver pedidos a serem entregues'),]
     garcom.permissions = [Permission.objects.get(name='Pode criar pedido'),
                           Permission.objects.get(name='Pode ver todos os pedidos'),]
     return HttpResponse('Grupos criados com sucesso')

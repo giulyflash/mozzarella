@@ -11,7 +11,6 @@ class Cliente(Pessoa):
            ('pode_criar_cliente', 'Pode criar cliente'),
             ('pode_ver_todos_os_clientes', 'Pode ver todos os clientes'),
             ('pode_editar_qualquer_cliente', 'Pode editar qualquer cliente'),
-            ('pode_ver_detalhes_de_cliente_com_pedido', 'Pode ver detalhes de cliente com pedido'),
             ('pode_editar_qualquer_cliente', 'Pode deletar cliente'),
         )
 

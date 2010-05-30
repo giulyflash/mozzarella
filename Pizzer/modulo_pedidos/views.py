@@ -216,11 +216,11 @@ def cria_pedido_pda(request):
                         pedido.save()
             if vazio:
                 pedido.delete()
-                return render_to_response('/pizzer/pda/pedido/cria/vazio')
+                return render_to_response('/pizzer/pda/pedido/cria/vazio', context_instance=RequestContext(request))
             return HttpResponseRedirect('/pizzer/pedidos/') # Redirect after POST
     else:
         form = PedidoForm() # An unbound form
-    return render_to_response('pda_criacao_pedido.html', {'form': form, 'bebidas': bebidas, 'pizzas': pizzas})
+    return render_to_response('pda_criacao_pedido.html', {'form': form, 'bebidas': bebidas, 'pizzas': pizzas}, context_instance=RequestContext(request))
 
 @permission_required('modulo_pedidos.pode_editar_pedido')
 @login_required
@@ -246,10 +246,10 @@ def edita_pedido_pda(request, object_id):
         pedido.status = status
         pedido.save()
         return HttpResponseRedirect('/pizzer/pda/pedidos/') # Redirect after POST
-    return render_to_response('pda_edicao_pedido.html', {'bebidas': bebidas, 'pizzas': pizzas, 'pedido': pedido})
+    return render_to_response('pda_edicao_pedido.html', {'bebidas': bebidas, 'pizzas': pizzas, 'pedido': pedido}, context_instance=RequestContext(request))
 
 @permission_required('modulo_pedidos.pode_ver_todos_os_pedidos')
 @login_required
 def lista_pedidos_pda(request):
     pedidos = Pedido.objects.filter(Q(status='A') | Q(status='B'))
-    return render_to_response('pda_listagem_pedidos.html', {'pedidos': pedidos})
+    return render_to_response('pda_listagem_pedidos.html', {'pedidos': pedidos}, context_instance=RequestContext(request))
