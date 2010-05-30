@@ -4,10 +4,12 @@ from django.db.models import Q
 from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required, permission_required
+from django.views.generic.create_update import create_object, update_object, delete_object
 
 from models import Reclamacao, ReclamacaoFormCliente
 
 from utils.views import lista_objetos
+from views import *
 
 @permission_required('modulo_reclamacoes.pode_ver_reclamacoes')
 @login_required
@@ -38,3 +40,8 @@ def cria_reclamacao(request):
     else:
         form = ReclamacaoFormCliente()
     return render_to_response('criacao_reclamacao.html', {'form': form})
+
+@permission_required('modulo_reclamacoes.pode_deletar_reclamacao')
+@login_required
+def deleta_reclamacao(request, object_id):
+    return delete_object(request, Reclamacao, '/pizzer/reclamacoes/', object_id, template_name='confirmacao_delecao.html', extra_context={'model': Reclamacao})

@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 from django.conf.urls.defaults import *
-from django.views.generic.create_update import delete_object
 from modulo_pedidos.models import Pedido
 from views import *
 
@@ -12,9 +11,7 @@ from views import *
 urlpatterns = patterns('',
     (r'^pedido/cria/$', cria_pedido),
     (r'^pedido/edita/(?P<object_id>\d+)/$', edita_pedido),
-    (r'^pedido/deleta/(?P<object_id>\d+)/$', delete_object, {'model': Pedido, 'template_name': 'confirmacao_delecao.html',
-                                                             'post_delete_redirect': '/pizzer/pedidos/',
-                                                             'extra_context': {'model': Pedido}}),
+    (r'^pedido/deleta/(?P<object_id>\d+)/$', deleta_pedido),
     (r'^pedidos/$', lista_pedidos),
     (r'^pedido/cria/vazio/$', erro_vazio),
     (r'^pedido/cria/estoque/$', erro_estoque),

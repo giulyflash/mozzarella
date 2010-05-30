@@ -5,10 +5,12 @@ from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
 from django.contrib.auth.models import User, Group
 from django.contrib.auth.decorators import login_required, permission_required
+from django.views.generic.create_update import create_object, update_object, delete_object
 
 from models import Cliente, ClienteForm
 from modulo_autenticacao.models import UserCreateForm
 from utils.views import lista_objetos
+from views import *
 
 @permission_required('modulo_clientes.pode_ver_clientes')
 @login_required
@@ -44,3 +46,13 @@ def cria_cliente(request):
         form_cliente = ClienteForm()
         form_usuario = UserCreateForm()
     return render_to_response('criacao_cliente.html', {'form_cliente': form_cliente, 'form_usuario': form_usuario})
+
+@permission_required('modulo_clietes.pode_editar_qualquer_cliente')
+@login_required
+def edita_cliente(request, object_id):
+    return update_object(request, Cliente, object_id, template_name='edicao_cliente.html')
+
+@permission_required('modulo_clientes.pode_deletar_cliente')
+@login_required
+def deleta_cliente(request, object_id):
+    return delete_object(request, Cliente, '/pizzer/clientes/', object_id, template_name='confirmacao_delecao.html', extra_context={'model': Cliente})
