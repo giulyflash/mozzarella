@@ -50,10 +50,13 @@
     </div>
     <!-- END Header -->
     {% block breadcrumbs %}
+    {% if user.is_authenticated %}
     <div class="breadcrumbs"><a href="/">{% trans 'Home' %}</a>{% if title %} &rsaquo; {{ title }}{% endif %}
     |
     <a href="/pizzer/usuario/logout/">Logout</a>
-    </div>{% endblock %}
+    </div>
+    {% endif %}
+    {% endblock %}
     {% endif %}
 
         {% if messages %}
@@ -74,7 +77,7 @@
 	        {% if perms.modulo_reclamacoes %}
 	        <h3>Reclamações</h3>
 	        	{% if perms.modulo_reclamacoes.pode_criar_reclamacao %}
-		    	<li><a href="/pizzer/reclamacao/cria/">Reclamar</a></li>
+		    	<li><a href="/pizzer/reclamacao/cria/">Fazer reclamação</a></li>
 		    	{% endif %}
 		    	{% if perms.modulo_reclamacoes.pode_ver_reclamacoes %}
 		    	<li><a href="/pizzer/reclamacoes/">Atender reclamações</a></li>

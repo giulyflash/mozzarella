@@ -8,7 +8,7 @@ from modulo_funcionarios.models import Funcionario
 from modulo_clientes.models import Cliente
 
 def cria_grupos_usuarios(request):
-    for nome_grupo in ('cliente', 'gerente', 'pizzaiolo', 'atendente', 'motoqueiro', 'garçom'):
+    for nome_grupo in ('cliente', 'gerente', 'pizzaiolo', 'atendente', 'entregador', 'garçom'):
         try:
             Group.objects.get(name=nome_grupo).delete()
         except Exception:
@@ -27,7 +27,6 @@ def cria_grupos_usuarios(request):
     garcom = Group(name='garçom')
     garcom.save()
     cliente.permissions = [Permission.objects.get(name='Pode criar reclamacao'),
-                           Permission.objects.get(name='Pode criar cliente'),
                            Permission.objects.get(name='Pode criar pedido'),
                            Permission.objects.get(name='Pode criar pizza'),
                            Permission.objects.get(name='Pode ver pizzas'),
