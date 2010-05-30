@@ -4,24 +4,32 @@ from django.db.models import Q
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.http import HttpResponseRedirect
-from django.contrib.auth.decorators import login_required, permission_required
+from django.contrib.auth.decorators import login_required, permission_required, user_passes_test
 from django.views.generic.create_update import create_object, update_object, delete_object
 
 from utils.views import lista_objetos
 from views import *
-from models import Cliente, ItemCardapio, StatusItemPedido, Pedido, PedidoForm, EditaPedidoForm
-from modulo_pizzas.models import Pizza
+from models import Cliente, ItemCardapio, StatusItemPedido, Pedido, PedidoForm, PedidoFormParaCliente, EditaPedidoForm
+from modulo_pizzas.models import Pizza, ItemCardapio
 from modulo_bebidas.models import Bebida
 
 @permission_required('modulo_pedidos.pode_criar_pedido')
 @login_required
 def cria_pedido(request):
+    user = request.user
+    grupo = user.groups.all()[0].name
+    if grupo == 'cliente':
+        cliente = user.cliente_set.all()[0]
     pizzas = Pizza.objects.all()
     bebidas = Bebida.objects.all()
-    if request.method == 'POST': # If the form has been submitted...
-        form = PedidoForm(request.POST) # A form bound to the POST data
-        if form.is_valid(): # All validation rules pass
-            cliente = form.cleaned_data['cliente']
+    if request.method == 'POST':
+        if grupo == 'cliente':
+            form = PedidoFormParaCliente(request.POST)
+        else:
+            form = PedidoForm(request.POST)
+        if form.is_valid():
+            if grupo != 'cliente':
+                cliente = form.cleaned_data['cliente']
             pagamento = form.cleaned_data['pagamento']
             pedido = Pedido(cliente=cliente, status='A', pagamento=pagamento)
             pedido.save()
@@ -58,7 +66,10 @@ def cria_pedido(request):
                 return render_to_response('erro_pagamento.html')
             return HttpResponseRedirect('/pizzer/pedidos/') # Redirect after POST
     else:
-        form = PedidoForm() # An unbound form
+        if grupo == 'cliente':
+            form = PedidoFormParaCliente()
+        else:
+            form = PedidoForm()
     return render_to_response('criacao_pedido.html', {'form': form, 'bebidas': bebidas, 'pizzas': pizzas}, context_instance=RequestContext(request))
 
 @permission_required('modulo_pedidos.pode_editar_pedido')
@@ -233,3 +244,10 @@ def edita_pedido_pda(request, object_id):
 def lista_pedidos_pda(request):
     pedidos = Pedido.objects.filter(Q(status='A') | Q(status='B'))
     return render_to_response('pda_listagem_pedidos.html', {'pedidos': pedidos}, context_instance=RequestContext(request))
+
+@user_passes_test(lambda u: u.groups.filter(name='cliente').count() != 0)
+@login_required
+def lista_pedidos_cliente(request):
+    cliente = request.user.cliente_set.all()[0]
+    pedidos = Pedido.objects.filter(cliente=cliente)
+    return render_to_response('listagem_pedidos_cliente.html', {'pedidos': pedidos}, context_instance=RequestContext(request))

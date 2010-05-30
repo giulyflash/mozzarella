@@ -1,0 +1,50 @@
+﻿{% extends "base.html" %}
+
+{% block titulo %}
+Seus pedidos
+{% endblock %}
+{% block conteudo %}
+	{% for pedido in pedidos %}
+		<h2>Pedido do {{ pedido.data_horario|date:"d/m/y - H:i" }}</h2>
+		<div class="fieldWrapper">
+	    	<h3><b>Status do Pedido: </b> <b style="color: #3399FF;">{{ pedido.get_status_display }}</b><h3>
+		</div><br/>
+
+		<h3> Conteúdo do Pedido </h3><br/>
+
+		<table border="1">
+			<tr>
+	    		<th>Pizzas</th>
+	    		<th>Quantidade</th>
+			</tr>
+			{% for pizza in pedido.get_pizzas %}
+			<tr>
+	    		<td> {{ pizza.item_cardapio.nome }} </td>
+	    		<td> {{ pizza.quantidade }}</td>
+			</tr>
+			{% endfor %}
+		</table><br/><br/>
+
+		{% if pedido.get_bebidas %}
+		<table border="1">
+			<tr>
+	    		<th>Bebidas</th>
+	    		<th>Quantidade</th>
+			</tr>
+			{% for bebida in pedido.get_bebidas %}
+			<tr>
+	    		<td> {{ bebida.item_cardapio.nome }} </td>
+	    		<td> {{ bebida.quantidade }}</td>
+			</tr>
+			{% endfor %}
+		</table><br/><br/>
+		{% endif %}
+
+		<h3> Valor Total do Pedido: R${{ total|floatformat:2 }}</h3><br/><br/>
+
+	    <div class="fieldWrapper">
+	        <b>Entregador: </b> {{ pedido.entregador }}
+	    </div><br/>
+	    <hr style="height: 2px;"/>
+    {% endfor %}
+{% endblock %}
