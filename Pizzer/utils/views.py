@@ -22,28 +22,33 @@ def cria_grupos_usuarios(request):
     atendente.save()
     motoqueiro = Group(name='motoqueiro')
     motoqueiro.save()
-    cliente.Permission = [Permission.objects.get(name='Pode criar reclamacao'),
+    cliente.permissions = [Permission.objects.get(name='Pode criar reclamacao'),
                            Permission.objects.get(name='Pode criar cliente'),
                            Permission.objects.get(name='Pode criar pedido'),
                            Permission.objects.get(name='Pode criar pizza'),
                            Permission.objects.get(name='Pode ver pizzas'),
                            Permission.objects.get(name='Pode ver bebidas')]
-    gerente.Permission = [Permission.objects.get(name='Pode ver reclamacoes'),
+    gerente.permissions = [Permission.objects.get(name='Pode ver reclamacoes'),
                            Permission.objects.get(name='Pode resolver reclamacao'),
+                           Permission.objects.get(name='Pode deletar reclamacao'),
                            Permission.objects.get(name='Pode criar funcionario'),
                            Permission.objects.get(name='Pode ver funcionarios'),
                            Permission.objects.get(name='Pode editar qualquer funcionario'),
+                           Permission.objects.get(name='Pode deletar funcionario'),
                            Permission.objects.get(name='Pode ver todos os pedidos'),
                            Permission.objects.get(name='Pode criar pizza'),
                            Permission.objects.get(name='Pode ver pizzas'),
                            Permission.objects.get(name='Pode editar pizza'),
+                           Permission.objects.get(name='Pode deletar pizza'),
                            Permission.objects.get(name='Pode criar bebida'),
                            Permission.objects.get(name='Pode ver bebidas'),
                            Permission.objects.get(name='Pode editar bebida'),
+                           Permission.objects.get(name='Pode deletar bebida'),
                            Permission.objects.get(name='Pode criar ingrediente'),
                            Permission.objects.get(name='Pode ver ingredientes'),
-                           Permission.objects.get(name='Pode editar ingrediente'),]
-    atendente.Permission = [Permission.objects.get(name='Pode criar cliente'),
+                           Permission.objects.get(name='Pode editar ingrediente'),
+                           Permission.objects.get(name='Pode deletar ingrediente'),]
+    atendente.permissions = [Permission.objects.get(name='Pode criar cliente'),
                              Permission.objects.get(name='Pode ver todos os clientes'),
                              Permission.objects.get(name='Pode editar qualquer cliente'),
                              Permission.objects.get(name='Pode criar pedido'),
@@ -51,9 +56,9 @@ def cria_grupos_usuarios(request):
                              Permission.objects.get(name='Pode criar pizza'),
                              Permission.objects.get(name='Pode ver pizzas'),
                              Permission.objects.get(name='Pode ver bebidas')]
-    pizzaiolo.Permission = [Permission.objects.get(name='Pode ver todos os pedidos'),
+    pizzaiolo.permissions = [Permission.objects.get(name='Pode ver todos os pedidos'),
                              Permission.objects.get(name='Pode ver ingredientes'),]
-    motoqueiro.Permission = [Permission.objects.get(name='Pode ver todos os pedidos'),
+    motoqueiro.permissions = [Permission.objects.get(name='Pode ver todos os pedidos'),
                               Permission.objects.get(name='Pode ver detalhes de cliente com pedido'),]
 
     return HttpResponse('Grupos criados com sucesso')

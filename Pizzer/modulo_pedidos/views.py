@@ -3,12 +3,13 @@ from models import Cliente
 from django.db.models import Q
 from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
-
+from django.contrib.auth.decorators import login_required, permission_required
 from utils.views import lista_objetos
 from models import Cliente, ItemCardapio, StatusItemPedido, Pedido, PedidoForm, EditaPedidoForm, PagamentoForm
 from modulo_pizzas.models import Pizza
 from modulo_bebidas.models import Bebida
 
+@login_required
 def cria_pedido(request):
     pizzas = Pizza.objects.all()
     bebidas = Bebida.objects.all()
@@ -47,6 +48,7 @@ def cria_pedido(request):
         form = PedidoForm() # An unbound form
     return render_to_response('criacao_pedido.html', {'form': form, 'bebidas': bebidas, 'pizzas': pizzas})
 
+@login_required
 def pagamento(request, object_id):
     pedido = Pedido.objects.get(pk=object_id)
     itens_pedidos = StatusItemPedido.objects.filter(pedido=pedido)
@@ -96,18 +98,21 @@ def edita_pedido(request, object_id):
         form = EditaPedidoForm(instance=pedido) # An unbound form
     return render_to_response('edicao_pedido.html', {'form': form, 'bebidas': bebidas, 'pizzas': pizzas, 'pedido': pedido,
                                                      'total': total, 'troco': troco})
-
+@login_required
 def lista_pedidos(request):
     cliente = request.GET.get('cliente')  # Obtenção dos parâmetros do request
     consulta = Q(cliente__nome__icontains=cliente)
     return lista_objetos(request, [cliente], Pedido, 'listagem_pedidos.html', 'pedidos', consulta)
 
+@login_required
 def erro_vazio(request):
     return render_to_response('erro_vazio.html')
 
+@login_required
 def erro_estoque(request):
     return render_to_response('erro_estoque.html')
 
+@login_required
 def erro_pagamento(request):
     return render_to_response('erro_pagamento.html')
 
@@ -141,5 +146,5 @@ def edita_pedido_smartphone(request, object_id):
                                                                 'troco': troco})
 
 def lista_pedidos_smartphone(request):
-    pedidos = Pedidos.objects.all()
+    pedidos = Pedido.objects.all()
     return render_to_response('smartphone_listagem_pedidos.html', {'pedidos': pedidos})

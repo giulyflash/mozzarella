@@ -46,6 +46,7 @@ class Funcionario(Pessoa):
            ('pode_criar_funcionario', 'Pode criar funcionario'),
             ('pode_ver_funcionarios', 'Pode ver funcionarios'),
             ('pode_editar_qualquer_funcionario', 'Pode editar qualquer funcionario'),
+            ('pode_deletar_funcionario', 'Pode deletar funcionario'),
         )
 
     def get_absolute_url(self): #retorna o URL absoluto da instancia de Funcionario

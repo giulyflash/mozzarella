@@ -4,16 +4,21 @@ from django.db.models import Q
 from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
 from django.contrib.auth.models import User, Group
+from django.contrib.auth.decorators import login_required, permission_required
 
 from models import Cliente, ClienteForm
 from modulo_autenticacao.models import UserCreateForm
 from utils.views import lista_objetos
 
+@permission_required('modulo_clientes.pode_ver_clientes')
+@login_required
 def lista_clientes(request):
     nome = request.GET.get('nome')  # Obtenção dos parâmetros do request
     consulta = Q(nome__icontains=nome)
     return lista_objetos(request, [nome], Cliente, 'listagem_clientes.html', 'clientes', consulta)
 
+@permission_required('modulo_clientes.pode_criar_cliente')
+@login_required
 def cria_cliente(request):
     if request.method == 'POST':
         form_cliente = ClienteForm(request.POST)

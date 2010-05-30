@@ -12,6 +12,7 @@ class Ingrediente(models.Model):
            ('pode_criar_ingrediente', 'Pode criar ingrediente'),
             ('pode_ver_ingredientes', 'Pode ver ingredientes'),
             ('pode_editar_ingrediente', 'Pode editar ingrediente'),
+            ('pode_deletar_pedido', 'Pode deletar pedido'),
         )
 
     def __str__(self):
