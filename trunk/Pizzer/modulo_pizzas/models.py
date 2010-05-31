@@ -31,5 +31,10 @@ class Pizza(ItemCardapio):
         return "/pizzer/"
 
 class PizzaForm(ModelForm):
-    class meta:
+    class Meta:
         model = Pizza
+
+class PizzaPersonalizadaForm(ModelForm):
+    class Meta:
+        model = Pizza
+        exclude = ['preco', 'inventor', 'personalizada', 'ingredientes']
