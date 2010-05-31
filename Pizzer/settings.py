@@ -68,6 +68,7 @@ MIDDLEWARE_CLASSES = (
 
 TEMPLATE_CONTEXT_PROCESSORS = (
     'modulo_autenticacao.context_processors.group',
+    'modulo_autenticacao.context_processors.is_desktop_group',
     'django.core.context_processors.auth',
     'django.core.context_processors.debug',
     'django.core.context_processors.i18n',
