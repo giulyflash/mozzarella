@@ -4,6 +4,10 @@
 Seus pedidos
 {% endblock %}
 {% block conteudo %}
+	{% if pedidos %}
+	{% else %}
+		Você ainda não fez nenhum pedido.
+	{% endif %}
 	{% for pedido in pedidos %}
 		<h2>Pedido do {{ pedido.data_horario|date:"d/m/y - H:i" }}</h2>
 		<div class="fieldWrapper">
