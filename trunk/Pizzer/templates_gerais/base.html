@@ -3,7 +3,16 @@
 <head>
 <title>{% block title %}Sistema Pizzer{% endblock %}</title>
 <link rel="stylesheet" type="text/css" href="{% block stylesheet %}/pizzer/media/css/base.css{% endblock %}"/>
-{% block extrastyle %}{% endblock %}
+{% block extrastyle %}
+{% if is_desktop_group %}
+{% else %}
+	<style type="text/css">
+		body, input, td {
+			font-size: large;
+		}
+	</style>
+{% endif %}
+{% endblock %}
 {% block extrahead %}{% endblock %}
 {% block blockbots %}<meta name="robots" content="NONE,NOARCHIVE" />{% endblock %}
 </head>
