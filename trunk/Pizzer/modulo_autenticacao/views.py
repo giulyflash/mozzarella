@@ -12,6 +12,14 @@ from models import UserCreateForm, UserEditForm, UserChangePassForm
 
 @login_required
 def index(request):
+    if request.user.groups.all():
+        group = request.user.groups.all()[0].name
+        if  group == 'pizzaiolo':
+            return HttpResponseRedirect('/pizzer/pda/pedidos/')
+        elif group == 'entregador':
+            return HttpResponseRedirect('/pizzer/smartphone/pedidos/')
+        elif group == u'garçom':
+            return HttpResponseRedirect('/pizzer/pda/pedido/cria/')
     return render_to_response('index.html', context_instance=RequestContext(request))
 
 def faz_login(request):

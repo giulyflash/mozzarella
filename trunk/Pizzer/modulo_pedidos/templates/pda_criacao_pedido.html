@@ -9,6 +9,12 @@
                 document.getElementById(id).value--;
         }
     </script>
+    <style type="text/css">
+		body, input, td {
+			font-size: large;
+		}
+
+	</style>
 {% endblock %}
 
 {% block titulo %}
@@ -28,8 +34,8 @@ Cadastro de novo pedido
     <td> {{ pizza.nome }} </td>
     <td>
     <input type="text" name="{{ pizza.nome }}_qtde" value="0" id="{{ pizza.nome }}_qtde"/>
-	<input type="button" onclick="javascript: subtract('{{ pizza.nome }}_qtde');" value="-"/>
-	<input type="button" onclick="javascript: document.getElementById('{{ pizza.nome }}_qtde').value++;" value="+"/>
+	<input type="button" style="font-size: large;" onclick="javascript: subtract('{{ pizza.nome }}_qtde');" value="-"/>
+	<input type="button" style="font-size: large;" onclick="javascript: document.getElementById('{{ pizza.nome }}_qtde').value++;" value="+"/>
     </td>
 </tr>
 {% endfor %}
@@ -46,8 +52,8 @@ Cadastro de novo pedido
     <td> {{ bebida.nome }} </td>
     <td>
     <input type="text" name="{{ bebida.nome }}_qtde" value="0" id="{{ bebida.nome }}_qtde"/>
-	<input type="button" onclick="javascript: subtract('{{ bebida.nome }}_qtde');" value="-"/>
-	<input type="button" onclick="javascript: document.getElementById('{{ bebida.nome }}_qtde').value++;" value="+"/>
+	<input type="button" style="font-size: large;" onclick="javascript: subtract('{{ bebida.nome }}_qtde');" value="-"/>
+	<input type="button" style="font-size: large;" onclick="javascript: document.getElementById('{{ bebida.nome }}_qtde').value++;" value="+"/>
     </td>
 </tr>
 {% endfor %}
