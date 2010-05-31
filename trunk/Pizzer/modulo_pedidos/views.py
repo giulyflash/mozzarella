@@ -21,12 +21,14 @@ def cria_pedido(request):
         grupo = user.groups.all()[0].name
         if grupo == 'cliente':
             cliente = user.cliente_set.all()[0]
+            pizzas = Pizza.objects.filter(Q(personalizada=False) | Q(inventor=cliente))
+        else:
+            pizzas = Pizza.objects.filter(personalizada=False)
     elif user.is_authenticated():
         grupo = 'admin'
+        pizzas = Pizza.objects.filter(personalizada=False)
     else:
         grupo = u'anônimo'
-        pizzas = Pizza.objects.filter(Q(personalizada=False) | Q(inventor=cliente))
-    else:
         pizzas = Pizza.objects.filter(personalizada=False)
     bebidas = Bebida.objects.all()
     if request.method == 'POST':
