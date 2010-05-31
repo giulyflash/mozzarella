@@ -71,6 +71,11 @@ class PedidoForm(ModelForm):
         model = Pedido
         exclude = ['itens_cardapio', 'status', 'entregador']
 
+class PedidoFormPDA(ModelForm):
+    class Meta:
+        model = Pedido
+        exclude = ['itens_cardapio', 'status', 'entregador', 'pagamento']
+
 class PedidoFormParaCliente(ModelForm):
     cliente = forms.ComboField(required=False)
     class Meta:
