@@ -165,7 +165,8 @@ def edita_pedido_smartphone(request, object_id):
 @permission_required('modulo_pedidos.pode_ver_pedidos_a_serem_entregues')
 @login_required
 def lista_pedidos_smartphone(request):
-    pedidos = Pedido.objects.filter(status='D')
+    entregador = request.user.funcionario_set.all()[0]
+    pedidos = Pedido.objects.filter(status='D', entregador=entregador)
     return render_to_response('smartphone_listagem_pedidos.html', {'pedidos': pedidos}, context_instance=RequestContext(request))
 
 @permission_required('modulo_pedidos.pode_criar_pedido')
