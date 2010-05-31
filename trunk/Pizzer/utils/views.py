@@ -28,7 +28,6 @@ def cria_grupos_usuarios(request):
     garcom.save()
     cliente.permissions = [Permission.objects.get(name='Pode criar reclamacao'),
                            Permission.objects.get(name='Pode criar pedido'),
-                           Permission.objects.get(name='Pode criar pizza'),
                            Permission.objects.get(name='Pode ver pizzas'),
                            Permission.objects.get(name='Pode ver bebidas')]
     gerente.permissions = [Permission.objects.get(name='Pode ver reclamacoes'),
@@ -57,7 +56,6 @@ def cria_grupos_usuarios(request):
                              Permission.objects.get(name='Pode criar pedido'),
                              Permission.objects.get(name='Pode editar pedido'),
                              Permission.objects.get(name='Pode ver todos os pedidos'),
-                             Permission.objects.get(name='Pode criar pizza'),
                              Permission.objects.get(name='Pode ver pizzas'),
                              Permission.objects.get(name='Pode ver bebidas')]
     pizzaiolo.permissions = [Permission.objects.get(name='Pode ver todos os pedidos'),

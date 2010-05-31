@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.db import models
 from django.forms import ModelForm
+from django import forms
 from modulo_clientes.models import Cliente
 from modulo_ingredientes.models import Ingrediente
 
@@ -37,4 +38,10 @@ class PizzaForm(ModelForm):
 class PizzaPersonalizadaForm(ModelForm):
     class Meta:
         model = Pizza
-        exclude = ['preco', 'inventor', 'personalizada', 'ingredientes']
+        exclude = ['inventor', 'preco', 'personalizada', 'ingredientes']
+
+class PizzaPersonalizadaFormParaAtendente(ModelForm):
+    inventor = forms.ModelChoiceField(queryset=Cliente.objects.all(), required=True)
+    class Meta:
+        model = Pizza
+        exclude = ['preco', 'personalizada', 'ingredientes']

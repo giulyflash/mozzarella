@@ -16,9 +16,6 @@ Pizzas
 	Nome
 	</th>
 	<th>
-	Inventor
-	</th>
-	<th>
 	Ingredientes
 	</th>
 	<th>
@@ -29,9 +26,6 @@ Pizzas
 	<tr>
 		<td>
 		<a href="/pizzer/pizza/edita/{{pizza.id}}/">{{pizza.nome}}</a>
-		</td>
-		<td>
-		{{pizza.inventor}}
 		</td>
 		<td>
 		{{ pizza.ingredientes.all|join:", " }}

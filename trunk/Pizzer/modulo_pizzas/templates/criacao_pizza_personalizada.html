@@ -23,6 +23,14 @@ Cadastro de Pizza Personalizada
 {% block conteudo %}
 <br/>
 <form name="pizzaForm" action="" method="post">
+	{% ifequal group "atendente" %}
+		<div class="fieldWrapper">
+	        {{ form.inventor.errors }}
+	        <label for="id_inventor">Cliente inventor:</label>
+	        {{ form.inventor }}
+	    </div><br>
+    {% endifequal %}
+
     <div class="fieldWrapper">
         {{ form.nome.errors }}
         <label for="id_nome">Nome da pizza:</label>
