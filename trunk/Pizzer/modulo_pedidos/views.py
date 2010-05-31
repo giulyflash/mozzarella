@@ -131,7 +131,7 @@ def cancela_pedido(request, object_id):
 def deleta_pedido(request, object_id):
     return delete_object(request, Pedido, '/pizzer/pedidos/', object_id, template_name='confirmacao_delecao.html', extra_context={'model': Pedido})
 
-@permission_required('modulo_pedidos.pode_criar_pedido')
+@permission_required('modulo_pedidos.pode_editar_pedido')
 @login_required
 def edita_pedido_smartphone(request, object_id):
     pedido = Pedido.objects.get(pk=object_id)
