@@ -11,6 +11,7 @@ urlpatterns = patterns('',
     (r'^pizzas/$', lista_pizzas),
 
     (r'^pizza/personalizada/cria/$', cria_pizza_personalizada),
-    (r'^pizzas/personalizadas/$', lista_pizzas_personalizadas)
-
+    (r'^pizza/personalizada/edita/(?P<object_id>\d+)/$', edita_pizza_personalizada),
+    (r'^pizza/personalizada/deleta/(?P<object_id>\d+)/$', deleta_pizza_personalizada),
+    (r'^pizzas/personalizadas/$', lista_pizzas_personalizadas),
 )

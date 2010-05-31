@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block extrahead %}
+    <script type="text/javascript">
+		function updateTotal(){
+  			var x, y;
+  			y = 15;
+			{% for ingrediente in ingredientes %}
+			x = document.getElementById('{{ ingrediente.nome }}');
+			if (x.checked == true) {
+				y += {{ ingrediente.preco }};
+			}
+			{% endfor %}
+  			document.pizzaForm.total.value = y.toFixed(2);
+		}
+    </script>
+{% endblock %}
+
+{% block titulo %}
+Dados da Pizza
+{% endblock %}
+
+{% block conteudo %}
+<br/>
+<form name="pizzaForm" action="" method="post">
+    <div class="fieldWrapper">
+        {{ form.nome.errors }}
+        <label for="id_nome">Nome da pizza:</label>
+        {{ form.nome }}
+    </div><br>
+
+	<h3> Ingredientes </h3><br/>
+
+	<table border="1" >
+		<tr>
+    		<th> Ingredientes </th>
+			<th> Preço (R$) </th>
+			<th> Adicionar </th>
+		</tr>
+		{% for ingrediente in ingredientes1 %}
+		<tr>
+			<td> {{ ingrediente.nome }} </td>
+			<td> {{ ingrediente.preco|floatformat:2 }} </td>
+			<td> <input type="checkbox" checked="checked" name="{{ ingrediente.nome }}" id="{{ ingrediente.nome }}" onClick="updateTotal();"/> </td>
+		</tr>
+		{% endfor %}
+		{% for ingrediente in ingredientes2 %}
+		<tr>
+			<td> {{ ingrediente.nome }} </td>
+			<td> {{ ingrediente.preco|floatformat:2 }} </td>
+			<td> <input type="checkbox" name="{{ ingrediente.nome }}" id="{{ ingrediente.nome }}" onClick="updateTotal();"/> </td>
+		</tr>
+		{% endfor %}
+	</table><br/><br/>
+
+<h3> Valor Total da Pizza (R$): <input type="text" name="total" value="{{ pizza.preco|floatformat:'2' }}" readonly="readonly"/> </h3><br/><br/>
+
+<input type="submit" value="Salvar alterações">
+<input type="button" value="Deletar" onClick="location.href='/pizzer/pizza/personalizada/deleta/{{ pizza.id }}/'"/>
+</form>
+{% endblock %}

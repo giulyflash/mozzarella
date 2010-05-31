@@ -56,7 +56,7 @@ def cria_pizza_personalizada(request):
         form = Formulario(request.POST)
         if form.is_valid():
             nome = form.cleaned_data['nome']
-            preco = request.POST.get('total')
+            preco = 15
             if not cliente_criando_pessoalmente:
                 cliente = form.cleaned_data['inventor']
             pizza = Pizza(nome=nome, preco=preco, inventor=cliente, personalizada=True)
@@ -64,6 +64,7 @@ def cria_pizza_personalizada(request):
             for ingrediente in ingredientes:
                 if request.POST.get(ingrediente.nome) == 'on':
                     pizza.ingredientes.add(ingrediente)
+                    pizza.preco += ingrediente.preco
             pizza.save()
             return HttpResponseRedirect('/pizzer/')
     else:
@@ -99,4 +100,34 @@ def lista_pizzas_personalizadas(request):
             mensagem = 'Nenhum registrado foi encontrado.'
     return list_detail.object_list(request, queryset=queryset, template_name='listagem_pizzas_personalizadas.html',
                                    template_object_name='pizzas', extra_context={'mensagem': mensagem})
+
+def edita_pizza_personalizada(request, object_id):
+    pizza = Pizza.objects.get(pk=object_id)
+    inventor = pizza.inventor
+    ingredientes = Ingrediente.objects.all()
+    if request.method == 'POST':
+        pizza.delete()
+        form = PizzaPersonalizadaForm(request.POST)
+        if form.is_valid():
+            nome = form.cleaned_data['nome']
+            pizza = Pizza(nome=nome, inventor=inventor, preco=15, personalizada=True)
+            pizza.save()
+            for ingrediente in ingredientes:
+                if request.POST.get(ingrediente.nome) == 'on':
+                    pizza.ingredientes.add(ingrediente)
+                    pizza.preco += ingrediente.preco
+            pizza.save()
+            return HttpResponseRedirect('/pizzer/')
+    else:
+        ingredientes1 = pizza.ingredientes.all()
+        ingredientes2 = ingredientes
+        for ingrediente in ingredientes1:
+            ingredientes2 = ingredientes2.exclude(nome=ingrediente.nome)
+        form = PizzaPersonalizadaForm(instance=pizza)
+    return render_to_response('edicao_pizza_personalizada.html', {'form': form, 'pizza': pizza, 'ingredientes': ingredientes,
+                                                                  'ingredientes1': ingredientes1, 'ingredientes2': ingredientes2},
+                                                                  context_instance=RequestContext(request))
+
+def deleta_pizza_personalizada(request, object_id):
+    return delete_object(request, Pizza, '/pizzer/pizzas/personalizadas/', object_id, template_name='confirmacao_delecao.html', extra_context={'model': Pizza})
 

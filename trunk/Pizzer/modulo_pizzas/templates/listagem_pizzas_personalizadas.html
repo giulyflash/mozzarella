@@ -25,7 +25,7 @@ Suas Pizzas
 {% for pizza in pizzas_list %}
 	<tr>
 		<td>
-		<a href="/pizzer/pizza/edita/{{pizza.id}}/">{{pizza.nome}}</a>
+		<a href="/pizzer/pizza/personalizada/edita/{{pizza.id}}/">{{pizza.nome}}</a>
 		</td>
 		<td>
 		{{ pizza.ingredientes.all|join:", " }}
