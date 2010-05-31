@@ -25,7 +25,9 @@ def cria_pedido(request):
         grupo = 'admin'
     else:
         grupo = u'anônimo'
-    pizzas = Pizza.objects.all()
+        pizzas = Pizza.objects.filter(Q(personalizada=False) | Q(inventor=cliente))
+    else:
+        pizzas = Pizza.objects.filter(personalizada=False)
     bebidas = Bebida.objects.all()
     if request.method == 'POST':
         if grupo == 'cliente':
@@ -177,7 +179,7 @@ def lista_pedidos_smartphone(request):
 @permission_required('modulo_pedidos.pode_criar_pedido')
 @login_required
 def cria_pedido_pda(request):
-    pizzas = Pizza.objects.all()
+    pizzas = Pizza.objects.filter(personalizada=False)
     bebidas = Bebida.objects.all()
     if request.method == 'POST': # If the form has been submitted...
         form = PedidoFormPDA(request.POST) # A form bound to the POST data
