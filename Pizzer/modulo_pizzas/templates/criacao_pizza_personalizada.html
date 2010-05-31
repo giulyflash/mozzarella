@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block extrahead %}
+    <script type="text/javascript">
+		function updateTotal(){
+  			var x, y;
+  			y = 15;
+			{% for ingrediente in ingredientes %}
+			x = document.getElementById('{{ ingrediente.nome }}');
+			if (x.checked == true) {
+				y += {{ ingrediente.preco }};
+			}
+			{% endfor %}
+  			document.pizzaForm.total.value = y.toFixed(2);
+		}
+    </script>
+{% endblock %}
+
+{% block titulo %}
+Cadastro de Pizza Personalizada
+{% endblock %}
+
+{% block conteudo %}
+<br/>
+<form name="pizzaForm" action="" method="post">
+    <div class="fieldWrapper">
+        {{ form.nome.errors }}
+        <label for="id_nome">Nome da pizza:</label>
+        {{ form.nome }}
+    </div><br>
+
+	<h3> Ingredientes </h3><br/>
+
+	<table border="1" >
+		<tr>
+    		<th> Ingredientes </th>
+			<th> Preço (R$) </th>
+			<th> Adicionar </th>
+		</tr>
+		{% for ingrediente in ingredientes %}
+		<tr>
+    		<td> {{ ingrediente.nome }} </td>
+    		<td> {{ ingrediente.preco|floatformat:2 }} </td>
+    		<td> <input type="checkbox" name="{{ ingrediente.nome }}" id="{{ ingrediente.nome }}" onClick="updateTotal();"/> </td>
+		</tr>
+		{% endfor %}
+	</table><br/><br/>
+
+<h3> Valor Total da Pizza (R$): <input type="text" name="total" value="15.00" readonly="readonly"/> </h3><br/><br/>
+
+<input type="submit" value="Confirmar registro">
+</form>
+{% endblock %}
