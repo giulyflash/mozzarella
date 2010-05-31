@@ -17,9 +17,14 @@ from modulo_bebidas.models import Bebida
 @login_required
 def cria_pedido(request):
     user = request.user
-    grupo = user.groups.all()[0].name
-    if grupo == 'cliente':
-        cliente = user.cliente_set.all()[0]
+    if user.groups.all():
+        grupo = user.groups.all()[0].name
+        if grupo == 'cliente':
+            cliente = user.cliente_set.all()[0]
+    elif user.is_authenticated():
+        grupo = 'admin'
+    else:
+        grupo = u'anônimo'
     pizzas = Pizza.objects.all()
     bebidas = Bebida.objects.all()
     if request.method == 'POST':
