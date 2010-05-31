@@ -9,7 +9,7 @@ from django.views.generic.create_update import create_object, update_object, del
 
 from utils.views import lista_objetos
 from views import *
-from models import Cliente, ItemCardapio, StatusItemPedido, Pedido, PedidoForm, PedidoFormParaCliente, EditaPedidoForm
+from models import Cliente, ItemCardapio, StatusItemPedido, Pedido, PedidoForm, PedidoFormPDA, PedidoFormParaCliente, EditaPedidoForm
 from modulo_pizzas.models import Pizza, ItemCardapio
 from modulo_bebidas.models import Bebida
 
@@ -64,7 +64,7 @@ def cria_pedido(request):
             if pagamento < total:
                 pedido.delete()
                 return render_to_response('erro_pagamento.html')
-            return HttpResponseRedirect('/pizzer/pedidos/') # Redirect after POST
+            return HttpResponseRedirect('/pizzer/') # Redirect after POST
     else:
         if grupo == 'cliente':
             form = PedidoFormParaCliente()
@@ -174,7 +174,7 @@ def cria_pedido_pda(request):
     pizzas = Pizza.objects.all()
     bebidas = Bebida.objects.all()
     if request.method == 'POST': # If the form has been submitted...
-        form = PedidoForm(request.POST) # A form bound to the POST data
+        form = PedidoFormPDA(request.POST) # A form bound to the POST data
         if form.is_valid(): # All validation rules pass
             cliente = form.cleaned_data['cliente']
             pedido = Pedido(cliente=cliente, status='A', pagamento=0)
@@ -207,10 +207,10 @@ def cria_pedido_pda(request):
                         pedido.save()
             if vazio:
                 pedido.delete()
-                return render_to_response('/pizzer/pda/pedido/cria/vazio', context_instance=RequestContext(request))
-            return HttpResponseRedirect('/pizzer/pedidos/') # Redirect after POST
+                return render_to_response('pda_erro_vazio.html', context_instance=RequestContext(request))
+            return HttpResponseRedirect('/pizzer/') # Redirect after POST
     else:
-        form = PedidoForm() # An unbound form
+        form = PedidoFormPDA() # An unbound form
     return render_to_response('pda_criacao_pedido.html', {'form': form, 'bebidas': bebidas, 'pizzas': pizzas}, context_instance=RequestContext(request))
 
 @permission_required('modulo_pedidos.pode_editar_pedido')
