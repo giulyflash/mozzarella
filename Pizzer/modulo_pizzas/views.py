@@ -2,13 +2,13 @@
 
 from django.views.generic import list_detail
 from django.db.models import Q
-from django.contrib.auth.decorators import login_required, permission_required
+from django.contrib.auth.decorators import login_required, permission_required, user_passes_test
 from django.template import RequestContext
 from django.views.generic.create_update import create_object, update_object, delete_object
 from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
 
-from models import Pizza, PizzaPersonalizadaForm, Ingrediente
+from models import Pizza, PizzaPersonalizadaForm, PizzaPersonalizadaFormParaAtendente, Ingrediente
 from utils.views import lista_objetos
 from views import *
 
@@ -17,16 +17,23 @@ from views import *
 def lista_pizzas(request):
     nome = request.GET.get('nome')  # Obtenção dos parâmetros do request
     consulta = Q(nome__icontains=nome)
-    return lista_objetos(request, [nome], Pizza, 'listagem_pizzas.html', 'pizzas', consulta)
+    universo = Q(inventor__isnull=True)
+    return lista_objetos(request, [nome], Pizza, 'listagem_pizzas.html', 'pizzas', consulta, universo)
 
 @permission_required('modulo_pizzas.pode_criar_pizza')
 @login_required
 def cria_pizza(request):
     return create_object(request, Pizza, 'criacao_pizza.html')
 
-@permission_required('modulo_pizzas.pode_editar_pizza')
+@user_passes_test(lambda u: u.has_perm('modulo_pizzas.pode_editar_pizza') or u.groups.filter(name='cliente').count() != 0)
 @login_required
 def edita_pizza(request, object_id):
+    user = request.user
+    if user.cliente_set.all():
+       cliente = user.cliente_set.all()[0]
+       pizza = Pizza.objects.get(id=object_id)
+       if pizza.inventor != cliente:
+           return HttpResponseRedirect('/pizzer/usuario/login/')
     return update_object(request, Pizza, object_id, template_name='edicao_pizza.html')
 
 @permission_required('modulo_pizzas.pode_deletar_pizza')
@@ -34,14 +41,24 @@ def edita_pizza(request, object_id):
 def deleta_pizza(request, object_id):
     return delete_object(request, Pizza, '/pizzer/pizzas/', object_id, template_name='confirmacao_delecao.html', extra_context={'model': Pizza})
 
+@user_passes_test(lambda u: u.groups.filter(name='cliente').count() != 0 or u.groups.filter(name='atendente').count() != 0)
+@login_required
 def cria_pizza_personalizada(request):
-    cliente = request.user.cliente_set.all()[0]
+    cliente_criando_pessoalmente = len(request.user.cliente_set.all()) != 0
+    if cliente_criando_pessoalmente:
+        cliente = request.user.cliente_set.all()[0]
+        Formulario = PizzaPersonalizadaForm
+    else:
+        atendente = request.user.funcionario_set.all()[0]
+        Formulario = PizzaPersonalizadaFormParaAtendente
     ingredientes = Ingrediente.objects.all()
     if request.method == 'POST':
-        form = PizzaPersonalizadaForm(request.POST)
+        form = Formulario(request.POST)
         if form.is_valid():
             nome = form.cleaned_data['nome']
             preco = request.POST.get('total')
+            if not cliente_criando_pessoalmente:
+                cliente = form.cleaned_data['inventor']
             pizza = Pizza(nome=nome, preco=preco, inventor=cliente, personalizada=True)
             pizza.save()
             for ingrediente in ingredientes:
@@ -50,10 +67,12 @@ def cria_pizza_personalizada(request):
             pizza.save()
             return HttpResponseRedirect('/pizzer/')
     else:
-        form = PizzaPersonalizadaForm()
+        form = Formulario()
     return render_to_response('criacao_pizza_personalizada.html', {'form': form, 'ingredientes': ingredientes},
                               context_instance=RequestContext(request))
 
+@user_passes_test(lambda u: u.groups.filter(name='cliente').count() != 0)
+@login_required
 def lista_pizzas_personalizadas(request):
     cliente = request.user.cliente_set.all()[0]
     nome = request.GET.get('nome')  # Obtenção dos parâmetros do request

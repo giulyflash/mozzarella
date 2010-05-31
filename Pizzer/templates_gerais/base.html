@@ -155,11 +155,22 @@
 			{% if perms.modulo_pizzas %}
 			<h3>Pizzas</h3>
 				{% if perms.modulo_pizzas.pode_criar_pizza %}
-				<li><a href="/pizzer/pizza/cria/">Inventar uma nova pizza</a></li>
+					{% ifequal group "cliente" %}
+						<li><a href="/pizzer/pizza/personalizada/cria/">Inventar nova pizza pelo cliente</a></li>
+					{% else %}
+						{% ifequal group "atendente" %}
+							<li><a href="/pizzer/pizza/personalizada/cria/">Inventar uma nova pizza</a></li>
+						{% else %}
+							<li><a href="/pizzer/pizza/cria/">Cadastrar uma nova pizza</a></li>
+						{% endifequal %}
+					{% endifequal %}
 				{% endif %}
 				{% if perms.modulo_pizzas.pode_ver_pizzas %}
 				<li><a href="/pizzer/pizzas/">Cardápio de pizzas</a></li>
 				{% endif %}
+				{% ifequal group "cliente" %}
+				<li><a href="/pizzer/pizzas/personalizadas/">Pizzas que você inventou</a></li>
+				{% endifequal %}
 			{% endif %}
 			{% if perms.modulo_bebidas %}
 			<h3>Bebidas<h3>
