@@ -44,20 +44,18 @@ class Pedido(models.Model):
         return StatusItemPedido.objects.filter(pedido=self)
 
     def get_pizzas(self):
-        itens_pedido = StatusItemPedido.objects.filter(pedido=self)
-        pizzas = []
-        for item_pedido in itens_pedido:
-            if type(item_pedido.item_cardapio.pizza) is not None:
-                pizzas.append(item_pedido)
-        return pizzas
+        itens_pedido = []
+        for pizza in Pizza.objects.all():
+            if pizza.statusitempedido_set.filter(pedido=self):
+                itens_pedido.append(pizza.statusitempedido_set.get(pedido=self))
+        return itens_pedido
 
     def get_bebidas(self):
-        itens_pedido = StatusItemPedido.objects.filter(pedido=self)
-        bebidas = []
-        for item_pedido in itens_pedido:
-            if type(item_pedido.item_cardapio.bebida) is not None:
-                bebidas.append(item_pedido)
-        return bebidas
+        itens_pedido = []
+        for bebida in Bebida.objects.all():
+            if bebida.statusitempedido_set.filter(pedido=self):
+                itens_pedido.append(bebida.statusitempedido_set.get(pedido=self))
+        return itens_pedido
 
     def __str__(self):
         return 'Pedido' + str(self.id)
