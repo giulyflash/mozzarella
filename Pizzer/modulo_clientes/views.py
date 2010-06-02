@@ -52,9 +52,10 @@ def cria_cliente(request):
 @login_required
 def edita_cliente(request, object_id):
     user = request.user
-    cliente = user.cliente_set.all()[0]
-    if not user.has_perm('modulo_funcionarios.pode_editar_qualquer_cliente') and cliente.id != int(object_id):
-        return HttpResponseRedirect('/pizzer/usuario/login/')
+    if user.cliente_set.all():
+        cliente = user.cliente_set.all()[0]
+        if not user.has_perm('modulo_funcionarios.pode_editar_qualquer_cliente') and cliente.id != int(object_id):
+            return HttpResponseRedirect('/pizzer/usuario/login/')
     return update_object(request, Cliente, object_id, template_name='edicao_cliente.html')
 
 @permission_required('modulo_clientes.pode_deletar_cliente')

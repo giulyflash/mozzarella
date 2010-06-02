@@ -3,7 +3,7 @@ from models import Cliente
 from django.db.models import Q
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-from django.http import HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required, permission_required, user_passes_test
 from django.views.generic.create_update import create_object, update_object, delete_object
 
@@ -174,7 +174,10 @@ def edita_pedido_smartphone(request, object_id):
 @permission_required('modulo_pedidos.pode_ver_pedidos_a_serem_entregues')
 @login_required
 def lista_pedidos_smartphone(request):
-    entregador = request.user.funcionario_set.all()[0]
+    try:
+        entregador = request.user.funcionario_set.all()[0]
+    except IndexError:
+        return HttpResponse(u'Apenas um entregador pode acessar essa área')
     pedidos = Pedido.objects.filter(status='D', entregador=entregador)
     return render_to_response('smartphone_listagem_pedidos.html', {'pedidos': pedidos}, context_instance=RequestContext(request))
 
