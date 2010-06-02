@@ -96,9 +96,9 @@ def cria_usuarios(request):
     cliente.save()
 
     """ Criação de um gerente """
-    nome = 'Bob, o gerente'
-    endereco = 'Reijavic, Islândia'
-    telefone = '33 10 4591-5326'
+    nome = 'Geraldo Gomes'
+    endereco = 'Av. Dr. Arnaldo'
+    telefone = '4591-5326'
     cpf = '1'
     rg = '1'
     salario = '1'
@@ -106,9 +106,9 @@ def cria_usuarios(request):
     periodo = 'T'
     funcionario = Funcionario(nome=nome, endereco=endereco, telefone=telefone, cpf=cpf, rg=rg,
                               salario=salario, funcao=funcao, periodo=periodo)
-    username = 'bob'
+    username = 'geraldo'
     email = ''
-    password = 'bob'
+    password = 'geraldo'
     user = User.objects.create_user(username, email, password)
     user.save()
     grupo = Group.objects.get(name=funcao.lower())
