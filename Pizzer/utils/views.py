@@ -7,6 +7,11 @@ from django.contrib.auth.models import User, Permission, Group
 from modulo_funcionarios.models import Funcionario
 from modulo_clientes.models import Cliente
 
+def cria_tudo(request):
+    cria_grupos_usuarios(request)
+    cria_usuarios(request)
+    return HttpResponse('Foram criados:<br/>Grupos<br/>Funcionarios<br/>Clientes')
+
 def cria_grupos_usuarios(request):
     for nome_grupo in ('cliente', 'gerente', 'pizzaiolo', 'atendente', 'entregador', 'garçom'):
         try:
@@ -66,7 +71,7 @@ def cria_grupos_usuarios(request):
     return HttpResponse('Grupos criados com sucesso')
 
 def cria_usuarios(request):
-    for username in ('admin', 'carlos', 'bob', 'pedro', 'ana', 'eric', 'garcia'):
+    for username in ('admin', 'carlos', 'geraldo', 'pedro', 'ana', 'eric', 'garcia'):
         try:
             User.objects.get(username=username).delete()
         except Exception:
