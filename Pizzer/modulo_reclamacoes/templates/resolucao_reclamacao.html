@@ -5,10 +5,18 @@ Resolução de reclamação
 {% endblock %}
 {% block conteudo %}
 <form action="" method="post">
-<p>Cliente: <b>{{ reclamacao.cliente.nome }}</b></p>
-<p>Assunto: <b>{{ reclamacao.assunto }}</b></p>
-<p>Texto:<br/><br/>{{ reclamacao.texto }}<br/></p>
-<input type="button" value="Apagar reclamação"
-    onClick="location.href='/pizzer/reclamacao/deleta/{{ reclamacao.id }}/'"/>
+<p> <b> Cliente: </b> {{ reclamacao.cliente.nome }} </p>
+<p> <b> Assunto: </b> {{ reclamacao.assunto }} </p>
+<p> <b> Texto: </b> {{ reclamacao.texto }} </p><br/>
+
+<div class="fieldWrapper">
+	{{ form.status.errors }}
+    <label for="id_status"><b>Status:<b/></label>
+    {{ form.status }}
+</div><br><br>
+
+<input type="submit" value="Confirmar Alterações">
+<input type="button" value="Apagar Reclamação" onClick="location.href='/pizzer/reclamacao/deleta/{{ reclamacao.id }}/'"/>
+<input type="button" value="Cancelar" onClick="location.href='/pizzer/'"/>
 </form>
 {% endblock %}

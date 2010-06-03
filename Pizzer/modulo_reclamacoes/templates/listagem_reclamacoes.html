@@ -5,37 +5,30 @@ Atendimento a reclamações
 {% endblock %}
 {% block conteudo %}
 <form method="GET">
-	<p>
+<p>
 	<label><i>Assunto:</i></label>
 	<input name="assunto" type="text">
-	</p>
-	<p>
 	<label><i>Texto:</i></label>
 	<input name="texto" type="text">
-	</p>
 	<input type="submit" value="Filtrar"/>
+</p>
 </form>
+
 <h4>{{ mensagem }}</h4>
 {% if reclamacoes_list %}
 	<table border=1>
-	<tr>
-		<th>
-		Assunto
-		</th>
-		<th>
-		Texto
-		</th>
-	</tr>
-	{% for reclamacao in reclamacoes_list %}
 		<tr>
-			<td>
-			<a href="/pizzer/reclamacao/resolve/{{reclamacao.id}}/">{{ reclamacao.assunto }}</a>
-			</td>
-			<td>
-			{{ reclamacao.texto|truncatewords:5 }}
-			</td>
+			<th> Assunto </th>
+			<th> Texto </th>
+			<th> Status </th>
 		</tr>
-	{% endfor %}
+		{% for reclamacao in reclamacoes_list %}
+		<tr>
+			<td> <a href="/pizzer/reclamacao/resolve/{{reclamacao.id}}/">{{ reclamacao.assunto }}</a> </td>
+			<td> {{ reclamacao.texto|truncatewords:5 }} </td>
+			<td> {{ reclamacao.status_display }}
+		</tr>
+		{% endfor %}
 	</table>
 {% endif %}
 {% endblock %}
