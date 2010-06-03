@@ -5,10 +5,19 @@ from django.forms import ModelForm
 from django.forms.widgets import TextInput, Textarea, Select
 from modulo_clientes.models import Cliente
 
+STATUS_PEDIDO_CHOICES = (
+    ('A', 'Não Lida'),
+    ('B', 'Em Investigação'),
+    ('C', 'Incoerente'),
+    ('D', 'Plausível'),
+    ('E', 'Resolvida'),
+)
+
 class Reclamacao(models.Model):  # Note que Pessoa herda da classe Model, que está dentro do módulo models
     cliente = models.ForeignKey(Cliente, null=True)  # null=True temporário até implementarem Cliente
     assunto = models.CharField(max_length=60)
     texto = models.TextField()
+    status = models.CharField(max_length=1, choices=STATUS_PEDIDO_CHOICES)
 
     class Meta:
         permissions = (
@@ -24,15 +33,16 @@ class Reclamacao(models.Model):  # Note que Pessoa herda da classe Model, que es
     def get_absolute_url(self):
         return '/pizzer/'
 
+    def status_display(self):
+        return Reclamacao.get_status_display(self)
+
+
 class ReclamacaoFormCliente(ModelForm):
     class Meta:
         model = Reclamacao
-        exclude = ['cliente']
+        exclude = ['cliente', 'status']
 
 class ReclamacaoFormGerente(ModelForm):
-    cliente = forms.ComboField(required=False, widget=Select(attrs={'readonly': True}))  # O Gerente só poderá editar o campo de resposta à reclamação
-    assunto = forms.CharField(required=False, widget=TextInput(attrs={'readonly': True}))
-    texto = forms.CharField(required=False, widget=Textarea(attrs={'readonly': True}))
-
     class Meta:
         model = Reclamacao
+        exclude = ['cliente', 'assunto', 'texto']
