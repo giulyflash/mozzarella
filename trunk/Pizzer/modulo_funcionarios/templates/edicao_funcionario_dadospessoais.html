@@ -1,16 +1,15 @@
 {% extends "base.html" %}
 
 {% block titulo %}
-Dados de {{ object.nome }}
+Dados do funcionário {{ object.nome }}
 {% endblock %}
 {% block conteudo %}
 <a href="/pizzer/usuario/senha/funcionario/{{ object.usuario.id }}/">Alterar senha</a>
 <br/><br/>
 <form action="" method="post">
     <div class="fieldWrapper">
-        {{ form.nome.errors }}
         <label for="id_nome">Nome completo:</label><br>
-        {{ form.nome }}
+        <b>{{ object.nome }}</b>
     </div><br>
     <div class="fieldWrapper">
         {{ form.endereco.errors }}
@@ -31,22 +30,18 @@ Dados de {{ object.nome }}
         <b>{{ object.rg }}</b>
     </div><br>
     <div class="fieldWrapper">
-        {{ form.salario.errors }}
         <label for="id_salario">Salário:</label><br>
-        {{ form.salario }}
+        <b>{{ object.salario }}</b>
     </div><br>
     <div class="fieldWrapper">
-        {{ form.funcao.errors }}
         <label for="id_funcao">Função:</label><br>
         <b>{{ object.funcao }}</b>
     </div><br>
     <div class="fieldWrapper">
-        {{ form.periodo.errors }}
         <label for="id_periodo">Período:</label><br>
-        {{ form.periodo }}
+        <b>{{ object.periodo }}</b>
     </div><br>
 <input type="submit" value="Salvar alterações">
-<input type="button" value="Deletar" onClick="location.href='/pizzer/funcionario/deleta/{{ object.id }}/'"/>
-{% endif %}
+<input type="button" value="Cancelar" onClick="location.href='/pizzer/'"/>
 </form>
 {% endblock %}

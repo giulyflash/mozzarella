@@ -25,7 +25,7 @@ def lista_pizzas(request):
 def cria_pizza(request):
     return create_object(request, Pizza, 'criacao_pizza.html')
 
-@user_passes_test(lambda u: u.has_perm('modulo_pizzas.pode_editar_pizza') or u.groups.filter(name='cliente').count() != 0)
+@user_passes_test(lambda u: u.has_perm('modulo_pizzas.pode_editar_pizza') or len(u.cliente_set.all()) != 0)
 @login_required
 def edita_pizza(request, object_id):
     user = request.user
@@ -41,7 +41,7 @@ def edita_pizza(request, object_id):
 def deleta_pizza(request, object_id):
     return delete_object(request, Pizza, '/pizzer/pizzas/', object_id, template_name='confirmacao_delecao.html', extra_context={'model': Pizza})
 
-@user_passes_test(lambda u: u.groups.filter(name='cliente').count() != 0 or u.groups.filter(name='atendente').count() != 0)
+@user_passes_test(lambda u: len(u.groups.filter(name='cliente')) != 0 or len(u.groups.filter(name='atendente')) != 0)
 @login_required
 def cria_pizza_personalizada(request):
     cliente_criando_pessoalmente = len(request.user.cliente_set.all()) != 0
