@@ -246,7 +246,8 @@ def edita_pedido_pda(request, object_id):
         pedido.status = status
         pedido.save()
         return HttpResponseRedirect('/pizzer/pda/pedidos/') # Redirect after POST
-    return render_to_response('pda_edicao_pedido.html', {'bebidas': bebidas, 'pizzas': pizzas, 'pedido': pedido}, context_instance=RequestContext(request))
+    return render_to_response('pda_edicao_pedido.html', {'bebidas': bebidas, 'pizzas': pizzas, 'pedido': pedido},
+                              context_instance=RequestContext(request))
 
 @permission_required('modulo_pedidos.pode_ver_todos_os_pedidos')
 @login_required
