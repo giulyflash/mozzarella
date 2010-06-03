@@ -9,7 +9,8 @@ Seus pedidos
 		Você ainda não fez nenhum pedido.
 	{% endif %}
 	{% for pedido in pedidos %}
-		<h2>Pedido do {{ pedido.data_horario|date:"d/m/y - H:i" }}</h2>
+		<br/>
+		<h3 style="color: #000000;">Pedido de {{ pedido.data_horario|date:"d/m/y - H:i" }}</h3><br/>
 		<div class="fieldWrapper">
 	    	<h3><b>Status do Pedido: </b> <b style="color: #3399FF;">{{ pedido.get_status_display }}</b><h3>
 		</div><br/>
@@ -44,7 +45,7 @@ Seus pedidos
 		</table><br/><br/>
 		{% endif %}
 
-		<h3> Valor Total do Pedido: R${{ total|floatformat:2 }}</h3><br/><br/>
+		<h3> Valor Total do Pedido: R${{ pedido.get_preco|floatformat:2 }}</h3><br/><br/>
 
 	    <div class="fieldWrapper">
 	        <b>Entregador: </b> {{ pedido.entregador }}

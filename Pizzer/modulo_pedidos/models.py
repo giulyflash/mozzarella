@@ -57,6 +57,13 @@ class Pedido(models.Model):
                 itens_pedido.append(bebida.statusitempedido_set.get(pedido=self))
         return itens_pedido
 
+    def get_preco(self):
+        itens_pedidos = self.get_itens_pedido()
+        preco = 0
+        for item_pedido in itens_pedidos:
+            preco += item_pedido.item_cardapio.preco * item_pedido.quantidade
+        return preco
+
     def __str__(self):
         return 'Pedido' + str(self.id)
 
