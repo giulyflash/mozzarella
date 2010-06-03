@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.db import models
 from django.forms import ModelForm
+from django.contrib.localflavor.br.forms import BRPhoneNumberField
 
 from modulo_funcionarios.models import Pessoa
 
@@ -18,6 +19,8 @@ class Cliente(Pessoa):
         return '/pizzer/'
 
 class ClienteForm(ModelForm):
+    telefone = BRPhoneNumberField()
+
     class Meta:
         model = Cliente
         fields = ('nome', 'endereco', 'telefone')

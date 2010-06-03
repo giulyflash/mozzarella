@@ -9,6 +9,8 @@ Dados do cliente {{ object.nome }}
 <form action="" method="post">
 {{ form.as_p }}
 <input type="submit" value="Salvar alterações">
-<input type="button" value="Deletar" onClick="location.href='/pizzer/cliente/deleta/{{ object.id }}/'"/>
+{% ifnotequal group "cliente" %}
+	<input type="button" value="Deletar" onClick="location.href='/pizzer/cliente/deleta/{{ object.id }}/'"/>
+{% endifnotequal %}
 </form>
 {% endblock %}

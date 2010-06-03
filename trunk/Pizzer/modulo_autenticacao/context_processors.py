@@ -18,4 +18,4 @@ def is_desktop_group(request):
             group = request.user.groups.all()[0].name
     else:
         group = 'anônimo'
-    return {'is_desktop_group': group in ('admin', 'cliente', 'gerente', 'atendente')}
+    return {'is_desktop_group': group in ('admin', 'anônimo', 'cliente', 'gerente', 'atendente')}

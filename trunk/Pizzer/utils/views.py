@@ -41,6 +41,7 @@ def cria_grupos_usuarios(request):
                            Permission.objects.get(name='Pode editar qualquer funcionario'),
                            Permission.objects.get(name='Pode deletar funcionario'),
                            Permission.objects.get(name='Pode ver todos os pedidos'),
+                           Permission.objects.get(name='Pode editar pedido'),
                            Permission.objects.get(name='Pode criar pizza'),
                            Permission.objects.get(name='Pode ver pizzas'),
                            Permission.objects.get(name='Pode editar pizza'),
@@ -76,12 +77,26 @@ def cria_usuarios(request):
             pass
 
     """ Criação de um superusuário (a princípio, para testes) """
+    nome = 'Testador do sistema'
+    endereco = 'Lugar nenhum'
+    telefone = '11 1234-5678'
+    cpf = '0'
+    rg = '0'
+    salario = '1'
+    funcao = 'Gerente'
+    periodo = 'N'
+    funcionario = Funcionario(nome=nome, endereco=endereco, telefone=telefone, cpf=cpf, rg=rg,
+                              salario=salario, funcao=funcao, periodo=periodo)
     username = 'admin'
     email = ''
     password = 'admin'
     user = User.objects.create_user(username, email, password)
     user.is_superuser = True  # superuser == tem todas as permissões
     user.save()
+    grupo = Group.objects.get(name=funcao.lower())
+    user.groups.add(grupo)
+    funcionario.usuario = user
+    funcionario.save()
 
     """ Criação de um cliente """
     nome = 'Carlos Alves'
@@ -100,7 +115,7 @@ def cria_usuarios(request):
 
     """ Criação de um gerente """
     nome = 'Geraldo Gomes'
-    endereco = 'Av. Dr. Arnaldo'
+    endereco = 'Av. Dr. Arnaldo Malta'
     telefone = '4591-5326'
     cpf = '1'
     rg = '1'
@@ -142,7 +157,7 @@ def cria_usuarios(request):
 
     """ Criação de um atendente """
     nome = 'Ana Luíza'
-    endereco = 'Av. Eng. Bob'
+    endereco = 'Av. Eng. Tácio Fonseca de Souza'
     telefone = '7233-9158'
     cpf = '3'
     rg = '3'

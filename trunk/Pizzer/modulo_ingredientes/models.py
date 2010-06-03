@@ -4,7 +4,7 @@ from django.forms import ModelForm
 
 class Ingrediente(models.Model):
     nome = models.CharField(max_length=25, unique=True)
-    preco = models.DecimalField(max_digits=4, decimal_places=2)
+    preco = models.DecimalField(max_digits=5, decimal_places=2)
     quantidade = models.IntegerField()
 
     class Meta:

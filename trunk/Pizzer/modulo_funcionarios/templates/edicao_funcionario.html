@@ -20,17 +20,15 @@ Dados do funcionário {{ object.nome }}
     <div class="fieldWrapper">
         {{ form.telefone.errors }}
         <label for="id_telefone">Telefone:</label><br>
-        {{ form.telefone }} <i>(Ex.: 2976-6544)</i>
+        {{ form.telefone }} <i>(Ex.: 11 2976-6544)</i>
     </div><br>
     <div class="fieldWrapper">
-        {{ form.cpf.errors }}
         <label for="id_cpf">CPF:</label><br>
         <b>{{ object.cpf }}</b>
     </div><br>
     <div class="fieldWrapper">
-        {{ form.rg.errors }}
         <label for="id_rg">RG:</label><br>
-        {{ form.rg }} <i>(Ex.: 4356677789-6)</i>
+        <b>{{ object.rg }}</b>
     </div><br>
     <div class="fieldWrapper">
         {{ form.salario.errors }}
@@ -48,6 +46,8 @@ Dados do funcionário {{ object.nome }}
         {{ form.periodo }}
     </div><br>
 <input type="submit" value="Salvar alterações">
-<input type="button" value="Deletar" onClick="location.href='/pizzer/funcionario/deleta/{{ object.id }}/'"/>
+{% ifnotequal group "atendente" %}
+	<input type="button" value="Deletar" onClick="location.href='/pizzer/funcionario/deleta/{{ object.id }}/'"/>
+{% endifnotequal %}
 </form>
 {% endblock %}
