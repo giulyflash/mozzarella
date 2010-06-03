@@ -101,7 +101,7 @@ def cria_usuarios(request):
     """ Criação de um cliente """
     nome = 'Carlos Alves'
     endereco = 'Av. Los pasos 51'
-    telefone = '3951-2380'
+    telefone = '11 3951-2380'
     cliente = Cliente(nome=nome, endereco=endereco, telefone=telefone)
     username = 'carlos'
     email = ''
@@ -116,7 +116,7 @@ def cria_usuarios(request):
     """ Criação de um gerente """
     nome = 'Geraldo Gomes'
     endereco = 'Av. Dr. Arnaldo Malta'
-    telefone = '4591-5326'
+    telefone = '11 4591-5326'
     cpf = '1'
     rg = '1'
     salario = '1'
@@ -137,7 +137,7 @@ def cria_usuarios(request):
     """ Criação de um pizzaiolo """
     nome = 'Pedro Almirez'
     endereco = 'Av. Atlântica 1943'
-    telefone = '5165-2603'
+    telefone = '11 5165-2603'
     cpf = '2'
     rg = '2'
     salario = '1'
@@ -158,7 +158,7 @@ def cria_usuarios(request):
     """ Criação de um atendente """
     nome = 'Ana Luíza'
     endereco = 'Av. Eng. Tácio Fonseca de Souza'
-    telefone = '7233-9158'
+    telefone = '11 7233-9158'
     cpf = '3'
     rg = '3'
     salario = '1'
@@ -179,7 +179,7 @@ def cria_usuarios(request):
     """ Criação de um entregador """
     nome = 'Eric Gomes'
     endereco = 'R. Estados Unidos 5501'
-    telefone = '7395-8412'
+    telefone = '11 7395-8412'
     cpf = '4'
     rg = '4'
     salario = '1'
@@ -200,7 +200,7 @@ def cria_usuarios(request):
     """ Criação de um garçom """
     nome = 'Garcia da Silva Sauro'
     endereco = 'R. Dr. Aluísio Fonseca Cruz del Aroyo'
-    telefone = '5165-2603'
+    telefone = '11 5165-2603'
     cpf = '5'
     rg = '5'
     salario = '2'
