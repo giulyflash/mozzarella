@@ -1,16 +1,18 @@
 ﻿{% extends "base.html" %}
 
 {% block titulo %}
-Dados do cliente {{ object.nome }}
+Dados de {{ object.nome }}
 {% endblock %}
 {% block conteudo %}
 <a href="/pizzer/usuario/senha/cliente/{{ object.usuario.id }}/">Alterar senha</a>
 <br/><br/>
 <form action="" method="post">
 {{ form.as_p }}
+<br/>
 <input type="submit" value="Salvar alterações">
 {% ifnotequal group "cliente" %}
 	<input type="button" value="Deletar" onClick="location.href='/pizzer/cliente/deleta/{{ object.id }}/'"/>
 {% endifnotequal %}
+<input type="button" value="Cancelar" onClick="location.href='/pizzer/clientes/'">
 </form>
 {% endblock %}

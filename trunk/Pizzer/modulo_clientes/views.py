@@ -7,18 +7,40 @@ from django.http import HttpResponseRedirect
 from django.contrib.auth.models import User, Group
 from django.contrib.auth.decorators import login_required, permission_required, user_passes_test
 from django.views.generic.create_update import create_object, update_object, delete_object
+from django.views.generic import list_detail
 
 from models import Cliente, ClienteForm
 from modulo_autenticacao.models import UserCreateForm
-from utils.views import lista_objetos
 from views import *
 
 @permission_required('modulo_clientes.pode_ver_todos_os_clientes')
 @login_required
 def lista_clientes(request):
     nome = request.GET.get('nome')  # Obtenção dos parâmetros do request
-    consulta = Q(nome__icontains=nome)
-    return lista_objetos(request, [nome], Cliente, 'listagem_clientes.html', 'clientes', consulta)
+    telefone = request.GET.get('telefone')
+    consulta = Q(nome__icontains=nome) & Q(telefone__icontains=telefone)
+
+    if request.method == 'POST':
+        raise Exception('Essa view não pode ser acessada via POST')
+
+    mensagem = ''
+    if (not nome) and (not telefone):
+        queryset = Cliente.objects.all()
+        if queryset:
+            mensagem = 'Exibindo todos os registros.'
+        else:
+            mensagem = 'Não há registros a serem exibidos.'
+    else:
+        queryset = Cliente.objects.filter(consulta);
+        if queryset:
+            if len(queryset) > 1:
+                mensagem = 'Foram encontrados %d resultados' % len(queryset)
+            else:
+                mensagem = 'Foi encontrado %d resultado' % len(queryset)
+        else:
+            mensagem = 'Nenhum registrado foi encontrado.'
+    return list_detail.object_list(request, queryset=queryset, template_name='listagem_clientes.html',
+                                   template_object_name='clientes', extra_context={'mensagem': mensagem})
 
 # Qualquer um pode cadastrar-se, logo, não há restrição por login
 def cria_cliente(request):
