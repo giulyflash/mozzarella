@@ -7,6 +7,7 @@ Cadastro de novo cliente
 <form action="" method="post">
 	<h2>Dados pessoais</h2>
     <div class="fieldWrapper">
+    	{{ form_cliente.nome.errors }}
         <label for="id_nome">Nome completo:</label><br>
         {{ form_cliente.nome }}
     </div><br>
