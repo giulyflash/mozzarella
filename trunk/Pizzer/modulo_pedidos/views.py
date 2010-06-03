@@ -67,12 +67,8 @@ def cria_pedido(request):
                         bebida.quantidade -= quantidade
                         bebida.save()
                         total += s.item_cardapio.preco * s.quantidade
-            if vazio:
+            if vazio or (pagamento < total):
                 pedido.delete()
-                return render_to_response('erro_vazio.html')
-            if pagamento < total:
-                pedido.delete()
-                return render_to_response('erro_pagamento.html')
             return HttpResponseRedirect('/pizzer/') # Redirect after POST
     else:
         if grupo == 'cliente':
