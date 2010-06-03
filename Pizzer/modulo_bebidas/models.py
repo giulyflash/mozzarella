@@ -18,5 +18,6 @@ class Bebida(ItemCardapio):
         return '/pizzer/'
 
 class BebidaForm(ModelForm):
+
     class meta:
         model = Bebida

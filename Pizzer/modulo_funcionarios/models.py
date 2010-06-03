@@ -55,6 +55,8 @@ class Funcionario(Pessoa):
         return "/pizzer/"
 
 class FuncionarioForm(forms.ModelForm):
+    nome = forms.RegexField(u'^([a-zA-Záéíóúãeõäëïöüç]+ )+[a-zA-Záéíóúãeõäëïöüç]+$', error_message='Nome com caracteres inválidos ou incompleto.')
+    rg = forms.CharField(min_length=5, max_length=15)
     cpf = BRCPFField()
     telefone = BRPhoneNumberField()
 
@@ -62,6 +64,7 @@ class FuncionarioForm(forms.ModelForm):
         model = Funcionario
 
 class FuncionarioEditaForm(forms.ModelForm):
+    nome = forms.RegexField(u'^([a-zA-Záéíóúãeõäëïöüç]+ )+[a-zA-Záéíóúãeõäëïöüç]+$', error_message='Nome com caracteres inválidos ou incompleto.')
     telefone = BRPhoneNumberField()
     funcao = forms.ComboField(required=False)
     cpf = BRCPFField(required=False)
@@ -70,3 +73,14 @@ class FuncionarioEditaForm(forms.ModelForm):
     class Meta:
         model = Funcionario
 
+class FuncionarioEditaFormDadosPessoais(forms.ModelForm):
+    nome = forms.CharField(required=False)
+    telefone = BRPhoneNumberField()
+    funcao = forms.ComboField(required=False)
+    cpf = BRCPFField(required=False)
+    rg = forms.CharField(required=False)
+    salario = forms.DecimalField(required=False)
+    periodo = forms.ChoiceField(required=False)
+
+    class Meta:
+        model = Funcionario

@@ -32,15 +32,22 @@ class Pizza(ItemCardapio):
         return "/pizzer/"
 
 class PizzaForm(ModelForm):
+    nome = forms.RegexField(r'^([a-zA-Z]+ )+[a-zA-Z]+|[0-9]+$', error_message='Insira um nome válido (e.g. Indiana, Napolitana 2).')
+
     class Meta:
         model = Pizza
 
 class PizzaPersonalizadaForm(ModelForm):
+    nome = forms.RegexField(r'^([a-zA-Z]+ )+[a-zA-Z]+|[0-9]+$', error_message='Insira um nome válido (e.g. Indiana, Napolitana 2).')
+
     class Meta:
         model = Pizza
         exclude = ['inventor', 'preco', 'personalizada', 'ingredientes']
 
 class PizzaPersonalizadaFormParaAtendente(ModelForm):
+    nome = forms.RegexField(r'^([a-zA-Z]+ )+[a-zA-Z]+|[0-9]+$', error_message='Insira um nome válido (e.g. Indiana, Napolitana 2).')
+
+    inventor = forms.ModelChoiceField(queryset=Cliente.objects.all(), required=True)
     class Meta:
         model = Pizza
         exclude = ['preco', 'inventor', 'personalizada', 'ingredientes']

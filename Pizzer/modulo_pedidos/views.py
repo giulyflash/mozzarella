@@ -255,7 +255,7 @@ def lista_pedidos_pda(request):
     pedidos = Pedido.objects.filter(Q(status='A') | Q(status='B'))
     return render_to_response('pda_listagem_pedidos.html', {'pedidos': pedidos}, context_instance=RequestContext(request))
 
-@user_passes_test(lambda u: u.groups.filter(name='cliente').count() != 0)
+@user_passes_test(lambda u: len(u.cliente_set.all()) != 0)
 @login_required
 def lista_pedidos_cliente(request):
     cliente = request.user.cliente_set.all()[0]

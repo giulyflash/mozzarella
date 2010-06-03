@@ -22,5 +22,6 @@ class Ingrediente(models.Model):
         return "/pizzer/"
 
 class IngredientesForm(ModelForm):
+
     class meta:
         model = Ingrediente
