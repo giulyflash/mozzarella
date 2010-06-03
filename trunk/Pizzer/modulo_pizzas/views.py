@@ -8,7 +8,7 @@ from django.views.generic.create_update import create_object, update_object, del
 from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
 
-from models import Pizza, PizzaPersonalizadaForm, PizzaPersonalizadaFormParaAtendente, Ingrediente
+from models import Pizza, PizzaPersonalizadaForm, PizzaPersonalizadaFormParaAtendente, Ingrediente, Cliente
 from utils.views import lista_objetos
 from views import *
 
@@ -49,7 +49,7 @@ def cria_pizza_personalizada(request):
         cliente = request.user.cliente_set.all()[0]
         Formulario = PizzaPersonalizadaForm
     else:
-        atendente = request.user.funcionario_set.all()[0]
+        cliente = Cliente.objects.get(nome='Personalizadas')
         Formulario = PizzaPersonalizadaFormParaAtendente
     ingredientes = Ingrediente.objects.all()
     if request.method == 'POST':
@@ -57,8 +57,6 @@ def cria_pizza_personalizada(request):
         if form.is_valid():
             nome = form.cleaned_data['nome']
             preco = 15
-            if not cliente_criando_pessoalmente:
-                cliente = form.cleaned_data['inventor']
             pizza = Pizza(nome=nome, preco=preco, inventor=cliente, personalizada=True)
             pizza.save()
             for ingrediente in ingredientes:
@@ -129,5 +127,43 @@ def edita_pizza_personalizada(request, object_id):
                                                                   context_instance=RequestContext(request))
 
 def deleta_pizza_personalizada(request, object_id):
-    return delete_object(request, Pizza, '/pizzer/pizzas/personalizadas/', object_id, template_name='confirmacao_delecao.html', extra_context={'model': Pizza})
+    cliente_usuario = len(request.user.cliente_set.all()) != 0
+    if cliente_usuario:
+        return delete_object(request, Pizza, '/pizzer/pizzas/personalizadas/', object_id, template_name='confirmacao_delecao.html', extra_context={'model': Pizza})
+    return delete_object(request, Pizza, '/pizzer/pizzas/personalizadas/telefone/', object_id, template_name='confirmacao_delecao.html', extra_context={'model': Pizza})
+
+def lista_pizzas_personalizadas_telefone(request):
+    nome = request.GET.get('nome')  # Obtenção dos parâmetros do request
+    consulta = Q(nome__icontains=nome) & Q(inventor__nome='Personalizadas');
+
+    if request.method == 'POST':
+        raise Exception('Essa view não pode ser acessada via POST')
+
+    mensagem = ''
+    if not nome:
+        queryset = Pizza.objects.filter(inventor__nome='Personalizadas');
+        if queryset:
+            mensagem = 'Exibindo todos os registros.'
+        else:
+            mensagem = 'Não há registros a serem exibidos.'
+    else:
+        queryset = Pizza.objects.filter(consulta);
+        if queryset:
+            if len(queryset) > 1:
+                mensagem = 'Foram encontrados %d resultados' % len(queryset)
+            else:
+                mensagem = 'Foi encontrado %d resultado' % len(queryset)
+        else:
+            mensagem = 'Nenhum registrado foi encontrado.'
+    return list_detail.object_list(request, queryset=queryset, template_name='listagem_pizzas_personalizadas_telefone.html',
+                                   template_object_name='pizzas', extra_context={'mensagem': mensagem})
+
+def deleta_pizzas_personalizadas_telefone(request):
+    if request.method == 'POST':
+        pizzas = Pizza.objects.filter(inventor__nome='Personalizadas')
+        for pizza in pizzas:
+            pizza.delete()
+        return HttpResponseRedirect('/pizzer/pizzas/personalizadas/telefone/')
+    return render_to_response('confirmacao_delecao_personalizadas.html', context_instance=RequestContext(request))
+
 

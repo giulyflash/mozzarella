@@ -23,7 +23,7 @@ def cria_pedido(request):
             cliente = user.cliente_set.all()[0]
             pizzas = Pizza.objects.filter(Q(personalizada=False) | Q(inventor=cliente))
         else:
-            pizzas = Pizza.objects.filter(personalizada=False)
+            pizzas = Pizza.objects.filter(Q(personalizada=False) | Q(inventor__nome='Personalizadas'))
     elif user.is_authenticated():
         grupo = 'admin'
         pizzas = Pizza.objects.filter(personalizada=False)

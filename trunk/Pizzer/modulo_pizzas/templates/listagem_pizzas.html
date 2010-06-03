@@ -25,7 +25,11 @@ Pizzas
 {% for pizza in pizzas_list %}
 	<tr>
 		<td>
-		<a href="/pizzer/pizza/edita/{{pizza.id}}/">{{pizza.nome}}</a>
+		{% ifequal group "atendente" %}
+			{{pizza.nome}}
+		{% else %}
+			<a href="/pizzer/pizza/edita/{{pizza.id}}/">{{pizza.nome}}</a>
+		{% endifequal %}
 		</td>
 		<td>
 		{{ pizza.ingredientes.all|join:", " }}
