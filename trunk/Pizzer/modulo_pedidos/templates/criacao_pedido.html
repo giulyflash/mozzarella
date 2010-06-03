@@ -22,6 +22,7 @@
 		}
 
 		function validateForm() {
+  			var w = document.pedidoForm.id_cliente.value
   			var x = 0;
   			var y = parseFloat(document.pedidoForm.id_pagamento.value);
   			var z = parseFloat(document.pedidoForm.total.value);
@@ -29,7 +30,10 @@
 				x += document.getElementById('{{ pizza.nome }}_qtde').value;
 			{% endfor %}
 
-			if (x == 0) {
+			if (w == "") {
+				alert("O campo de cliente não pode ser deixado em branco.");
+				return false;
+			} else if (x == 0) {
 				alert("Não é permitido o cadastro de pedidos sem pizza.");
 				return false;
 			} else if (y < z) {

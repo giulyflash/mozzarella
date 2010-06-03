@@ -74,7 +74,7 @@ def cria_pedido(request):
         if grupo == 'cliente':
             form = PedidoFormParaCliente(initial={'pagamento': '0.00'})
         else:
-            form = PedidoForm({'pagamento': '0.00'})
+            form = PedidoForm(initial={'pagamento': '0.00'})
     return render_to_response('criacao_pedido.html', {'form': form, 'bebidas': bebidas, 'pizzas': pizzas}, context_instance=RequestContext(request))
 
 @permission_required('modulo_pedidos.pode_editar_pedido')
