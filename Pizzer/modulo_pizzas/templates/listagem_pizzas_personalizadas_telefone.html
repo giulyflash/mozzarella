@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block titulo %}
-Suas Pizzas
+Pizzas Personalizadas
 {% endblock %}
 {% block conteudo %}
 <form method="GET">
@@ -22,11 +22,13 @@ Suas Pizzas
 	<th>
 	Preço (R$)
 	</th>
+	<th>
+	</th>
 </tr>
 {% for pizza in pizzas_list %}
 	<tr>
 		<td>
-		<a href="/pizzer/pizza/personalizada/edita/{{pizza.id}}/">{{pizza.nome}}</a>
+		{{pizza.nome}}
 		</td>
 		<td>
 		{{ pizza.ingredientes.all|join:", " }}
@@ -34,8 +36,13 @@ Suas Pizzas
 		<td>
 		{{ pizza.preco|floatformat:2 }}
 		</td>
+		<td>
+		<input type="button" value="Remover" onClick="location.href='/pizzer/pizza/personalizada/deleta/{{ pizza.id }}/'"/>
+		</td>
 	</tr>
 {% endfor %}
-</table>
+</table><br/><br/>
+
+<input type="button" value="Remover todos os Registros" onClick="location.href='/pizzer/pizzas/personalizadas/telefone/deleta/'">
 {% endif %}
 {% endblock %}

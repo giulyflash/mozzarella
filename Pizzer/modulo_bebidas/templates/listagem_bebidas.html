@@ -26,7 +26,11 @@ Bebidas
 	{% for bebida in bebidas_list %}
 		<tr>
 			<td>
-			<a href="/pizzer/bebida/edita/{{bebida.id}}/">{{ bebida.nome }}</a>
+			{% ifequal group "atendente" %}
+				{{ bebida.nome }}
+			{% else %}
+				<a href="/pizzer/bebida/edita/{{bebida.id}}/">{{ bebida.nome }}</a>
+			{% endifequal %}
 			</td>
 			<td>
 			{{ bebida.preco|floatformat:2 }}

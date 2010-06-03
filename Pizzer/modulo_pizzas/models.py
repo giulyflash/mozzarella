@@ -41,7 +41,6 @@ class PizzaPersonalizadaForm(ModelForm):
         exclude = ['inventor', 'preco', 'personalizada', 'ingredientes']
 
 class PizzaPersonalizadaFormParaAtendente(ModelForm):
-    inventor = forms.ModelChoiceField(queryset=Cliente.objects.all(), required=True)
     class Meta:
         model = Pizza
-        exclude = ['preco', 'personalizada', 'ingredientes']
+        exclude = ['preco', 'inventor', 'personalizada', 'ingredientes']
