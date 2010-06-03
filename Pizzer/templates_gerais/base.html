@@ -120,7 +120,7 @@
 				{% if perms.modulo_clientes.pode_criar_cliente %}
 		    	<li><a href="/pizzer/cliente/cria/">Cadastrar cliente</a></li>
 		    	{% endif %}
-		    	{% if perms.modulo_clientes.ver_todos_os_clientes %}
+		    	{% if perms.modulo_clientes.pode_ver_todos_os_clientes %}
 		    	<li><a href="/pizzer/clientes/">Lista clientes</a></li>
 		    	{% endif %}
 	    	{% endif %}
