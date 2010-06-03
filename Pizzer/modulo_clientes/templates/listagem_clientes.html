@@ -5,11 +5,13 @@ Clientes
 {% endblock %}
 {% block conteudo %}
 <form method="GET">
-	<p>
+<p>
 	<label><i>Nome:</i></label>
 	<input name="nome" type="text">
-	</p>
+	<label><i>Telefone:</i></label>
+	<input name="telefone" type="text">
 	<input type="submit" value="Filtrar"/>
+</p>
 </form>
 <h4>{{ mensagem }}</h4>
 {% if clientes_list %}
