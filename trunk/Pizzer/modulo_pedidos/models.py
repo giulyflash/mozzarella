@@ -14,7 +14,7 @@ STATUS_PEDIDO_CHOICES = (
     ('C', 'Em Espera'),
     ('D', 'Em Transporte'),
     ('E', 'Finalizado'),
-    ('F', 'Não Pôde Ser Entregue')
+    ('F', 'Problema na Entrega')
 )
 
 class Pedido(models.Model):

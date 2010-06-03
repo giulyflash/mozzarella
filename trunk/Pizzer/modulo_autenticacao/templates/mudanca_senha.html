@@ -16,7 +16,7 @@ Mudança de senha
 	    <label for="id_password_r">Repita a nova senha:</label><br>
 	    {{ form.password_r }}
 	</div><br>
-<input type="submit" value="Salvar alteracoes">
+<input type="submit" value="Salvar alterações">
 {% ifequal pessoa "cliente" %}
 <input type="button" value="Cancelar" onClick="location.href='/pizzer/cliente/edita/{{ cliente.id }}/'"/>
 {% else %}
