@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block titulo %}
-Dados do funcionário {{ object.nome }}
+Dados de {{ object.nome }}
 {% endblock %}
 {% block conteudo %}
 <a href="/pizzer/usuario/senha/funcionario/{{ object.usuario.id }}/">Alterar senha</a>
