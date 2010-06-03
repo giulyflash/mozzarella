@@ -259,5 +259,5 @@ def lista_pedidos_pda(request):
 @login_required
 def lista_pedidos_cliente(request):
     cliente = request.user.cliente_set.all()[0]
-    pedidos = Pedido.objects.filter(cliente=cliente)
+    pedidos = Pedido.objects.filter(cliente=cliente).order_by('-data_horario')
     return render_to_response('listagem_pedidos_cliente.html', {'pedidos': pedidos}, context_instance=RequestContext(request))

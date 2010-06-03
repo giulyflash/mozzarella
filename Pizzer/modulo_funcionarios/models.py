@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.db import models
 from django import forms
+from django.contrib.localflavor.br.forms import BRPhoneNumberField, BRCPFField
 from django.contrib.auth.models import User
 
 FUNCAO_CHOICES = (
@@ -54,12 +55,18 @@ class Funcionario(Pessoa):
         return "/pizzer/"
 
 class FuncionarioForm(forms.ModelForm):
+    cpf = BRCPFField()
+    telefone = BRPhoneNumberField()
+
     class Meta:
         model = Funcionario
 
 class FuncionarioEditaForm(forms.ModelForm):
+    telefone = BRPhoneNumberField()
     funcao = forms.ComboField(required=False)
-    cpf = forms.CharField(required=False)
+    cpf = BRCPFField(required=False)
+    rg = forms.CharField(required=False)
+
     class Meta:
         model = Funcionario
 
