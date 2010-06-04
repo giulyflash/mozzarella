@@ -42,6 +42,14 @@ def lista_clientes(request):
     return list_detail.object_list(request, queryset=queryset, template_name='listagem_clientes.html',
                                    template_object_name='clientes', extra_context={'mensagem': mensagem})
 
+def snippet_lista_clientes(request):
+    nome = request.GET.get('nome')
+    if nome:
+        clientes = Cliente.objects.filter(nome__icontains=nome)
+    else:
+        clientes = Cliente.objects.all()
+    return render_to_response('snippet_listagem_clientes.html', {'clientes': clientes})
+
 # Qualquer um pode cadastrar-se, logo, não há restrição por login
 def cria_cliente(request):
     if request.method == 'POST':

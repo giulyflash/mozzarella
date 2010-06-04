@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block extrahead %}
+<script type="text/javascript">
+function loadXMLDoc()
+{
+if (window.XMLHttpRequest)
+  {// code for IE7+, Firefox, Chrome, Opera, Safari
+  xmlhttp=new XMLHttpRequest();
+  }
+else
+  {// code for IE6, IE5
+  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  }
+xmlhttp.onreadystatechange=function()
+  {
+  if (xmlhttp.readyState==4 && xmlhttp.status==200)
+    {
+    document.getElementById("aqui").innerHTML=xmlhttp.responseText;
+    }
+  }
+xmlhttp.open("GET","/pizzer/clientes/snippet/?nome=" + document.getElementById("nome_cliente").value,true);
+xmlhttp.send();
+}
+</script>
+{% endblock %}
+
+{% block titulo %}
+Filtra clientes
+{% endblock %}
+
+{% block conteudo %}
+
+<input type="text" id="nome_cliente" onChange="loadXMLDoc();"/>
+
+<div id="aqui">
+	<div class="fieldWrapper">
+        <label for="id_cliente">Cliente:</label>
+        <select name="cliente" id="id_cliente">
+        	<option value="" selected="selected">---------</option>
+		</select>
+    </div>
+</div>
+
+<input type="button" value="oi" onClick="loadXMLDoc();"/>
+{% endblock %}

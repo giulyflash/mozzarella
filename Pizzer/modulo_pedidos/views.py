@@ -13,6 +13,9 @@ from models import Cliente, ItemCardapio, StatusItemPedido, Pedido, PedidoForm, 
 from modulo_pizzas.models import Pizza, ItemCardapio
 from modulo_bebidas.models import Bebida
 
+def teste(request):
+    return render_to_response('filtra_clientes.html')
+
 @permission_required('modulo_pedidos.pode_criar_pedido')
 @login_required
 def cria_pedido(request):
