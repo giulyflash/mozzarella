@@ -16,7 +16,11 @@ Cadastro de novo pedido
 {% endblock %}
 {% block conteudo %}
 <form action="" method="post">
-{{ form.as_p }}
+<div class="fieldWrapper">
+	{{ form.cliente.errors }}
+	<label for="id_cliente">Cliente:</label>
+	{{ form.cliente }}
+</div><br/><br/>
 <br/>
 <table border="1" >
 <tr>
@@ -51,8 +55,13 @@ Cadastro de novo pedido
     </td>
 </tr>
 {% endfor %}
-</table>
+</table><br/>
 <br/>
+<div class="fieldWrapper">
+	{{ form.observacoes.errors }}
+	<label for="id_observacoes">Observações</label><br/><br/>
+	{{ form.observacoes }}
+</div><br/><br/>
 <br/>
 <input type="submit" value="Confirmar registro">
 </form>

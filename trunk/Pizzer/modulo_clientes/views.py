@@ -18,14 +18,14 @@ from views import *
 def lista_clientes(request):
     nome = request.GET.get('nome')  # Obtenção dos parâmetros do request
     telefone = request.GET.get('telefone')
-    consulta = Q(nome__icontains=nome) & Q(telefone__icontains=telefone)
+    consulta = Q(nome__icontains=nome) & Q(telefone__icontains=telefone) & ~Q(telefone='11 1010-1010')
 
     if request.method == 'POST':
         raise Exception('Essa view não pode ser acessada via POST')
 
     mensagem = ''
     if (not nome) and (not telefone):
-        queryset = Cliente.objects.all()
+        queryset = Cliente.objects.filter(~Q(telefone__icontains='11 1010-1010'))
         if queryset:
             mensagem = 'Exibindo todos os registros.'
         else:
