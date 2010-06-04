@@ -20,6 +20,7 @@ class Pizza(ItemCardapio):
     class Meta:
         permissions = (
            ('pode_criar_pizza', 'Pode criar pizza'),
+           ('pode_criar_pizza_personalizada', 'Pode criar pizza personalizada'),
             ('pode_ver_pizzas', 'Pode ver pizzas'),
             ('pode_editar_pizza', 'Pode editar pizza'),
             ('pode_deletar_pizza', 'Pode deletar pizza'),
@@ -32,20 +33,20 @@ class Pizza(ItemCardapio):
         return "/pizzer/"
 
 class PizzaForm(ModelForm):
-    nome = forms.RegexField(r'^([a-zA-Z]+ )+[a-zA-Z]+|[0-9]+$', error_message='Insira um nome válido (e.g. Indiana, Napolitana 2).')
+    nome = forms.RegexField(r'^([a-zA-Z]+ )+[a-zA-Z]+|[0-9]+$', error_message='Insira um nome vï¿½lido (e.g. Indiana, Napolitana 2).')
 
     class Meta:
         model = Pizza
 
 class PizzaPersonalizadaForm(ModelForm):
-    nome = forms.RegexField(r'^([a-zA-Z]+ )+[a-zA-Z]+|[0-9]+$', error_message='Insira um nome válido (e.g. Indiana, Napolitana 2).')
+    nome = forms.RegexField(r'^([a-zA-Z]+ )+[a-zA-Z]+|[0-9]+$', error_message='Insira um nome vï¿½lido (e.g. Indiana, Napolitana 2).')
 
     class Meta:
         model = Pizza
         exclude = ['inventor', 'preco', 'personalizada', 'ingredientes']
 
 class PizzaPersonalizadaFormParaAtendente(ModelForm):
-    nome = forms.RegexField(r'^([a-zA-Z]+ )+[a-zA-Z]+|[0-9]+$', error_message='Insira um nome válido (e.g. Indiana, Napolitana 2).')
+    nome = forms.RegexField(r'^([a-zA-Z]+ )+[a-zA-Z]+|[0-9]+$', error_message='Insira um nome vï¿½lido (e.g. Indiana, Napolitana 2).')
 
     inventor = forms.ModelChoiceField(queryset=Cliente.objects.all(), required=True)
     class Meta:
