@@ -99,6 +99,8 @@ def lista_pizzas_personalizadas(request):
     return list_detail.object_list(request, queryset=queryset, template_name='listagem_pizzas_personalizadas.html',
                                    template_object_name='pizzas', extra_context={'mensagem': mensagem})
 
+@permission_required('modulo_pizzas.pode_editar_pizza_personalizada')
+@login_required
 def edita_pizza_personalizada(request, object_id):
     pizza = Pizza.objects.get(pk=object_id)
     inventor = pizza.inventor
@@ -125,13 +127,16 @@ def edita_pizza_personalizada(request, object_id):
     return render_to_response('edicao_pizza_personalizada.html', {'form': form, 'pizza': pizza, 'ingredientes': ingredientes,
                                                                   'ingredientes1': ingredientes1, 'ingredientes2': ingredientes2},
                                                                   context_instance=RequestContext(request))
-
+@permission_required('modulo_pizzas.pode_deletar_pizza_personalizada')
+@login_required
 def deleta_pizza_personalizada(request, object_id):
     cliente_usuario = len(request.user.cliente_set.all()) != 0
     if cliente_usuario:
         return delete_object(request, Pizza, '/pizzer/pizzas/personalizadas/', object_id, template_name='confirmacao_delecao.html', extra_context={'model': Pizza})
     return delete_object(request, Pizza, '/pizzer/pizzas/personalizadas/telefone/', object_id, template_name='confirmacao_delecao.html', extra_context={'model': Pizza})
 
+@permission_required('modulo_pizzas.pode_ver_pizzas_personalizadas_telefone')
+@login_required
 def lista_pizzas_personalizadas_telefone(request):
     nome = request.GET.get('nome')  # Obtenção dos parâmetros do request
     consulta = Q(nome__icontains=nome) & Q(inventor__nome='Personalizadas');
@@ -158,6 +163,8 @@ def lista_pizzas_personalizadas_telefone(request):
     return list_detail.object_list(request, queryset=queryset, template_name='listagem_pizzas_personalizadas_telefone.html',
                                    template_object_name='pizzas', extra_context={'mensagem': mensagem})
 
+@permission_required('modulo_pizzas.pode_deletar_pizza_personalizada_telefone')
+@login_required
 def deleta_pizzas_personalizadas_telefone(request):
     if request.method == 'POST':
         pizzas = Pizza.objects.filter(inventor__nome='Personalizadas')

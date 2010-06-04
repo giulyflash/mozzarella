@@ -22,8 +22,12 @@ class Pizza(ItemCardapio):
            ('pode_criar_pizza', 'Pode criar pizza'),
            ('pode_criar_pizza_personalizada', 'Pode criar pizza personalizada'),
             ('pode_ver_pizzas', 'Pode ver pizzas'),
+            ('pode_ver_pizzas_personalizadas_telefone', 'Pode ver pizzas personalizadas telefone'),
             ('pode_editar_pizza', 'Pode editar pizza'),
+            ('pode_editar_pizza_personalizada', 'Pode editar pizza personalizada'),
             ('pode_deletar_pizza', 'Pode deletar pizza'),
+            ('pode_deletar_pizza_personalizada', 'Pode deletar pizza personalizada'),
+            ('pode_deletar_pizza_personalizada_telefone', 'Pode deletar pizza personalizada telefone'),
         )
 
     def __unicode__(self):

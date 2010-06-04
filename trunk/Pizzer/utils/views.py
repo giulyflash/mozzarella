@@ -66,7 +66,9 @@ def cria_grupos_usuarios(request):
     garcom.save()
     cliente.permissions = [Permission.objects.get(name='Pode criar reclamacao'),
                            Permission.objects.get(name='Pode criar pedido'),
-                           Permission.objects.get(name='Pode criar pizza personalizada'),]
+                           Permission.objects.get(name='Pode criar pizza personalizada'),
+                           Permission.objects.get(name='Pode editar pizza personalizada'),
+                           Permission.objects.get(name='Pode deletar pizza personalizada'),]
     gerente.permissions = [Permission.objects.get(name='Pode ver reclamacoes'),
                            Permission.objects.get(name='Pode resolver reclamacao'),
                            Permission.objects.get(name='Pode deletar reclamacao'),
@@ -94,9 +96,11 @@ def cria_grupos_usuarios(request):
                              Permission.objects.get(name='Pode criar pedido'),
                              Permission.objects.get(name='Pode editar pedido'),
                              Permission.objects.get(name='Pode ver todos os pedidos'),
-                             Permission.objects.get(name='Pode ver pizzas'),
+                             Permission.objects.get(name='Pode ver pizzas personalizadas telefone'),
+                             Permission.objects.get(name='Pode ver bebidas'),
                              Permission.objects.get(name='Pode criar pizza personalizada'),
-                             Permission.objects.get(name='Pode ver bebidas')]
+                             Permission.objects.get(name='Pode deletar pizza personalizada telefone'),
+                             Permission.objects.get(name='Pode editar pizza personalizada'),]
     pizzaiolo.permissions = [Permission.objects.get(name='Pode ver todos os pedidos'),
                              Permission.objects.get(name='Pode editar pedido'),]
     entregador.permissions = [Permission.objects.get(name='Pode ver pedidos a serem entregues'),
