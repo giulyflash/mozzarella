@@ -103,6 +103,7 @@ def cria_grupos_usuarios(request):
                              Permission.objects.get(name='Pode ver bebidas'),
                              Permission.objects.get(name='Pode criar pizza personalizada'),
                              Permission.objects.get(name='Pode deletar pizza personalizada telefone'),
+                             Permission.objects.get(name='Pode deletar pizza personalizada'),
                              Permission.objects.get(name='Pode editar pizza personalizada'),]
     pizzaiolo.permissions = [Permission.objects.get(name='Pode ver todos os pedidos'),
                              Permission.objects.get(name='Pode editar pedido'),]
