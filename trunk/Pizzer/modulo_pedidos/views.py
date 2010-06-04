@@ -40,7 +40,8 @@ def cria_pedido(request):
             if grupo != 'cliente':
                 cliente = form.cleaned_data['cliente']
             pagamento = form.cleaned_data['pagamento']
-            pedido = Pedido(cliente=cliente, status='A', pagamento=pagamento)
+            observacoes = form.cleaned_data['observacoes']
+            pedido = Pedido(cliente=cliente, status='A', pagamento=pagamento, observacoes=observacoes)
             pedido.save()
             total = 0
             vazio = True

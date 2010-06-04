@@ -5,7 +5,17 @@ Reclamação
 {% endblock %}
 {% block conteudo %}
 <form action="" method="post">
-{{ form.as_p }}
-<input type="submit" value="Registrar reclamação">
+	<div class="fieldWrapper">
+        {{ form.assunto.errors }}
+        <label for="id_assunto"><b>Assunto:</b></label><br/><br/>
+        {{ form.assunto }}
+    </div><br/><br/>
+
+    <div class="fieldWrapper">
+        {{ form.texto.errors }}
+        <label for="id_texto"><b>Conteúdo:</b><br/><br/> <i> Utilize o espaço abaixo para registrar sua opinião sobre nosso serviços. </i></label><br/><br/>
+        {{ form.texto }}
+    </div><br>
+<input type="submit" value="Registrar Reclamação">
 </form>
 {% endblock %}

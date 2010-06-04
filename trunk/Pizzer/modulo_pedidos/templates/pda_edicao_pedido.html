@@ -38,6 +38,12 @@ Atualização de Status
 </table><br/><br/>
 {% endif %}
 
+{% if pedido.observacoes %}
+<p><b>Observações</b></p>
+{{ pedido.observacoes }}
+<br/><br/>
+{% endif %}
+
 <h3> Alterar Status do Pedido </h3><br/>
 <form action="" method="post">
 	<input type="submit" name="status" value="Pedido sendo Preparado">

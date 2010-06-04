@@ -46,7 +46,7 @@ def cria_reclamacao(request):
             cliente = request.user.cliente_set.all()[0]
             reclamacao = Reclamacao(assunto=assunto, cliente=cliente, texto=texto, status='A')
             reclamacao.save()
-            return HttpResponseRedirect('/pizzer/')
+            return render_to_response('confirmacao_reclamacao.html', context_instance=RequestContext(request))
     else:
         form = ReclamacaoFormCliente()
     return render_to_response('criacao_reclamacao.html', {'form': form}, context_instance=RequestContext(request))

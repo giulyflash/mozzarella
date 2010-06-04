@@ -10,9 +10,9 @@ Dados de {{ object.nome }}
 {{ form.as_p }}
 <br/>
 <input type="submit" value="Salvar alterações">
-{% ifnotequal group "cliente" %}
+{% ifequal group "gerente" %}
 	<input type="button" value="Deletar" onClick="location.href='/pizzer/cliente/deleta/{{ object.id }}/'"/>
-{% endifnotequal %}
+{% endifequal %}
 <input type="button" value="Cancelar" onClick="location.href='/pizzer/clientes/'">
 </form>
 {% endblock %}
