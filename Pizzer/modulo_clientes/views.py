@@ -16,28 +16,16 @@ from views import *
 @permission_required('modulo_clientes.pode_ver_todos_os_clientes')
 @login_required
 def lista_clientes(request):
-    user_atendente = True
-    user = request.user
-    if user.groups.all():
-        grupo = user.groups.all()[0].name
-        if grupo != 'atendente':
-            user_atendente = False
     nome = request.GET.get('nome')  # Obtenção dos parâmetros do request
     telefone = request.GET.get('telefone')
-    if user_atendente:
-        consulta = Q(nome__icontains=nome) & Q(telefone__icontains=telefone) & ~Q(telefone='11 1010-1010')
-    else:
-        consulta = Q(nome__icontains=nome) & Q(telefone__icontains=telefone)
+    consulta = Q(nome__icontains=nome) & Q(telefone__icontains=telefone) & ~Q(telefone='11 1010-1010')
 
     if request.method == 'POST':
         raise Exception('Essa view não pode ser acessada via POST')
 
     mensagem = ''
     if (not nome) and (not telefone):
-        if user_atendente:
-            queryset = Cliente.objects.filter(~Q(telefone__icontains='11 1010-1010'))
-        else:
-            queryset = Cliente.objects.all()
+        queryset = Cliente.objects.filter(~Q(telefone='11 1010-1010'))
         if queryset:
             mensagem = 'Exibindo todos os registros.'
         else:
