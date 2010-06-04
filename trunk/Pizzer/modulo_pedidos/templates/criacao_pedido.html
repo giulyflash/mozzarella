@@ -99,8 +99,11 @@ Cadastro de novo pedido
 
 	<h3> Valor Total do Pedido (R$): <input type="text" name="total" value="0.00" readonly="readonly"/> </h3><br/><br/>
 
-	<b> É desejado troco para que quantia? </b>
-	<i> (Caso não seja necessário troco preencha o campo abaixo com o valor do pedido.) </i><br/><br/>
+	<b>
+	É desejado troco para que quantia?
+	Caso não seja necessário troco preencha o campo abaixo com o valor exato do pedido.
+	</b><br/><br/>
+	<i> (Preencha o campo abaixo com o valor a ser entregue ao motoqueiro. O troco por ele carregado depende desta informação.) </i><br/><br/>
 	<div class="fieldWrapper">
         {{ form.pagamento.errors }}
         <label for="id_pagamento">Quantia:</label>

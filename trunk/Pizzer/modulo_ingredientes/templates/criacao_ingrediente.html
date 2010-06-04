@@ -7,19 +7,22 @@ Cadastro de novo ingrediente
 <form action="" method="post">
 	<div class="fieldWrapper">
         {{ form.nome.errors }}
-        <label for="id_nome">Nome:</label><br>
-        {{ form.nome }} <i>(Nome completo)</i>
+        <label for="id_nome">Nome do ingrediente:</label><br>
+        {{ form.nome }}
     </div><br>
-    <div class="fieldWrapper">
-        {{ form.preco.errors }}
-        <label for="id_nome">Preço:</label><br>
-        {{ form.preco }} <i>R$ NN.DD</i>
-    </div><br>
+
     <div class="fieldWrapper">
         {{ form.quantidade.errors }}
         <label for="id_nome">Quantidade:</label><br>
         {{ form.quantidade }} <i>Kg</i>
     </div><br>
+
+    <div class="fieldWrapper">
+        {{ form.preco.errors }}
+        <label for="id_nome">Preço:</label><br>
+        {{ form.preco }} <i>R$ NN.DD</i>
+    </div><br><br/>
+
 <input type="submit" value="Confirmar registro">
 </form>
 {% endblock %}

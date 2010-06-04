@@ -153,16 +153,16 @@
 			{% if perms.modulo_funcionarios %}
             <h3>Funcionários</h3>
             	{% if perms.modulo_funcionarios.pode_criar_funcionario %}
-				<li><a href="/pizzer/funcionario/cria/">Cadastrar novo funcionario</a></li>
+				<li><a href="/pizzer/funcionario/cria/">Cadastrar funcionário</a></li>
 				{% endif %}
 				{% if perms.modulo_funcionarios.pode_ver_funcionarios %}
-				<li><a href="/pizzer/funcionarios/">Lista de funcionarios</a></li>
+				<li><a href="/pizzer/funcionarios/">Lista de funcionários</a></li>
 				{% endif %}
 			{% endif %}
 			{% if perms.modulo_pizzas %}
 			<h3>Pizzas</h3>
 				{% if perms.modulo_pizzas.pode_criar_pizza %}
-				<li><a href="/pizzer/pizza/cria/">Cadastrar uma nova pizza</a></li>
+				<li><a href="/pizzer/pizza/cria/">Cadastrar pizza</a></li>
 				{% endif %}
 					{% ifequal group "cliente" %}
 						<li><a href="/pizzer/pizza/personalizada/cria/">Inventar uma nova pizza</a></li>
