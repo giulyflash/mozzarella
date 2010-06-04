@@ -10,6 +10,9 @@
 		body, input, td {
 			font-size: large;
 		}
+		input {
+			width: 420px;
+		}
 	</style>
 {% endif %}
 {% endblock %}
@@ -70,9 +73,9 @@
 	    {% else %}
 	    <div align="center">
 	    <input type="button" style="font-size: large;" value="{% trans 'Home' %}" onClick="location.href='/'"/>{% if title %} &rsaquo; {{ title }}{% endif %}
-	    <i style="font-size: large;">|</i>
+	    <br/>
 	    <input type="button" style="font-size: large;" value="Logout" onClick="location.href='/pizzer/usuario/logout/'"/>
-	    <i style="font-size: large;">|</i>
+	    <br/>
 	    <input type="button" style="font-size: large;" value="Editar dados pessoais" onClick="location.href='/pizzer/pessoa/edita/'"/>
 	    </div>
 	    <hr style="height: 2px;"/>

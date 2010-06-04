@@ -18,7 +18,7 @@ Pedidos Restantes
         <td> {{ pedido.cliente }} </td>
         <td> {{ pedido.data_horario|date:"H:i" }} </td>
         <td> {{ pedido.status_display }} </td>
-        <td><input type="button" value="Atualizar status" onClick="window.location.href='/pizzer/pda/pedido/edita/{{pedido.id}}/'"/></td>
+        <td><input style="width: auto;" type="button" value="Atualizar status" onClick="window.location.href='/pizzer/pda/pedido/edita/{{pedido.id}}/'"/></td>
     </tr>
 	{% endfor %}
 </table>
