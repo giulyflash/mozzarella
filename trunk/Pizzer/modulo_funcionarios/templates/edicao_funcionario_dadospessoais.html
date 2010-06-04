@@ -1,45 +1,45 @@
 {% extends "base.html" %}
 
 {% block titulo %}
-Dados do funcionário {{ object.nome }}
+Dados de {{ object.nome }}
 {% endblock %}
 {% block conteudo %}
 <a href="/pizzer/usuario/senha/funcionario/{{ object.usuario.id }}/">Alterar senha</a>
 <br/><br/>
 <form action="" method="post">
     <div class="fieldWrapper">
-        <label for="id_nome">Nome completo:</label><br>
+        <label for="id_nome">Nome completo</label><br>
         <b>{{ object.nome }}</b>
     </div><br>
     <div class="fieldWrapper">
         {{ form.endereco.errors }}
-        <label for="id_endereco">Endereço:</label><br>
+        <label for="id_endereco">Endereço</label><br>
         {{ form.endereco }}
     </div><br>
     <div class="fieldWrapper">
         {{ form.telefone.errors }}
-        <label for="id_telefone">Telefone:</label><br>
+        <label for="id_telefone">Telefone</label><br>
         {{ form.telefone }}
     </div><br>
     <div class="fieldWrapper">
-        <label for="id_cpf">CPF:</label><br>
+        <label for="id_cpf">CPF</label><br>
         <b>{{ object.cpf }}</b>
     </div><br>
     <div class="fieldWrapper">
-        <label for="id_rg">RG:</label><br>
+        <label for="id_rg">RG</label><br>
         <b>{{ object.rg }}</b>
     </div><br>
     <div class="fieldWrapper">
-        <label for="id_salario">Salário:</label><br>
+        <label for="id_salario">Salário</label><br>
         <b>{{ object.salario }}</b>
     </div><br>
     <div class="fieldWrapper">
-        <label for="id_funcao">Função:</label><br>
+        <label for="id_funcao">Função</label><br>
         <b>{{ object.funcao }}</b>
     </div><br>
     <div class="fieldWrapper">
-        <label for="id_periodo">Período:</label><br>
-        <b>{{ object.periodo }}</b>
+        <label for="id_periodo">Período</label><br>
+        <b>{{ object.get_periodo_display }}</b>
     </div><br>
     <input type="submit" value="Salvar alterações">
     {% if is_desktop_group %}
