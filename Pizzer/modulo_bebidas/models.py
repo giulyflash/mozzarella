@@ -15,7 +15,7 @@ class Bebida(ItemCardapio):
         )
 
     def get_absolute_url(self):
-        return '/pizzer/'
+        return '/pizzer/bebidas/'
 
 class BebidaForm(ModelForm):
 

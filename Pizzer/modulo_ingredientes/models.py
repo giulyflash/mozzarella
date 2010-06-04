@@ -19,7 +19,7 @@ class Ingrediente(models.Model):
         return self.nome
 
     def get_absolute_url(self):
-        return "/pizzer/"
+        return "/pizzer/ingredientes/"
 
 class IngredientesForm(ModelForm):
 
