@@ -72,6 +72,7 @@ def cria_grupos_usuarios(request):
     gerente.permissions = [Permission.objects.get(name='Pode criar cliente'),
                            Permission.objects.get(name='Pode ver todos os clientes'),
                            Permission.objects.get(name='Pode editar qualquer cliente'),
+                           Permission.objects.get(name='Pode deletar cliente'),
                            Permission.objects.get(name='Pode ver reclamacoes'),
                            Permission.objects.get(name='Pode resolver reclamacao'),
                            Permission.objects.get(name='Pode deletar reclamacao'),
