@@ -10,7 +10,40 @@ from modulo_clientes.models import Cliente
 def cria_tudo(request):
     cria_grupos_usuarios(request)
     cria_usuarios(request)
-    return HttpResponse('Foram criados:<br/>Grupos<br/>Funcionarios<br/>Clientes')
+    cria_clientes_dummy(request)
+    return HttpResponse('Foram criados:<br/>Grupos<br/>Funcionarios<br/>Clientes<br/>Clientes dummy')
+
+def cria_clientes_dummy(request):
+    """ Criação de um cliente dummy para pizza personalizada """
+    nome = 'Personalizadas'
+    endereco = 'Personalizadas'
+    telefone = '11 1010-1010'
+    cliente = Cliente(nome=nome, endereco=endereco, telefone=telefone)
+    username = 'dummy_personalizadas'
+    email = ''
+    password = '+h)9eyjmn_72ix%f#*@x*_r16m3'
+    user = User.objects.create_user(username, email, password)
+    user.save()
+    grupo = Group.objects.get(name='cliente')
+    user.groups.add(grupo)
+    cliente.usuario = user
+    cliente.save()
+
+    """ Criação de clientes dummy para pedidos de mesas sem clientes cadastrados """
+    for indice in range(1, 11):  # Mesas de 1 a 10. Sim, até 10 e não 11.
+        nome = 'Mesa ' + str(indice)
+        endereco = 'Mesa ' + str(indice)
+        telefone = '11 1010-1010'
+        cliente = Cliente(nome=nome, endereco=endereco, telefone=telefone)
+        username = 'dummy_mesa_' + str(indice)
+        email = ''
+        password = '+h)9eyjmn_72ix%f#*@x*_r16m3'
+        user = User.objects.create_user(username, email, password)
+        user.save()
+        grupo = Group.objects.get(name='cliente')
+        user.groups.add(grupo)
+        cliente.usuario = user
+        cliente.save()
 
 def cria_grupos_usuarios(request):
     for nome_grupo in ('cliente', 'gerente', 'pizzaiolo', 'atendente', 'entregador', 'garçom'):
