@@ -13,7 +13,8 @@ urlpatterns = patterns('',
     (r'^cliente/cria/$', cria_cliente),
     (r'^cliente/edita/(?P<object_id>\d+)/$', edita_cliente),
     (r'^cliente/deleta/(?P<object_id>\d+)/$', deleta_cliente),
-    (r'^clientes/$', lista_clientes)
+    (r'^clientes/$', lista_clientes),
+    (r'^clientes/snippet/$', snippet_lista_clientes)
 
     # Uncomment the admin/doc line below and add 'django.contrib.admindocs'
     # to INSTALLED_APPS to enable admin documentation:

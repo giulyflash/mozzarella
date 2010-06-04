@@ -14,6 +14,7 @@ urlpatterns = patterns('',
     (r'^pedido/deleta/(?P<object_id>\d+)/$', deleta_pedido),
     (r'^pedidos/$', lista_pedidos),
     (r'^pedidos/cliente/$', lista_pedidos_cliente),
+    (r'^pedidos/teste/$', teste),
     (r'^pedido/cancela/(?P<object_id>\d+)/$', cancela_pedido),
 
     (r'^pda/pedido/cria/$', cria_pedido_pda),

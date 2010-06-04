@@ -1,0 +1,9 @@
+	<div class="fieldWrapper">
+        <label for="id_cliente">Cliente:</label>
+        <select name="cliente" id="id_cliente">
+        	<option value="" selected="selected">---------</option>
+        	{% for cliente in clientes %}
+				<option value="{{ cliente.id }}">{{ cliente }}</option>
+			{% endfor %}
+		</select>
+    </div>
