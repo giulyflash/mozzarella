@@ -16,6 +16,7 @@ urlpatterns = patterns('',
     (r'^$', redirect_to, {'url': '/pizzer/'}),
     (r'^pizzer/dev/gera/grupos/$', cria_grupos_usuarios),  # Insere os grupos no banco. Rodar apenas na instalação.
     (r'^pizzer/dev/gera/usuarios/$', cria_usuarios),  # Insere clientes e funcionários com suas contas de usuários correspondentes no banco. Rodar apenas para testes.
+    (r'^pizzer/dev/gera/dummys/$', cria_clientes_dummy),
     (r'^pizzer/dev/gera/tudo/$', cria_tudo),
     #(r'^pizzer/$', direct_to_template, {'template': 'index.html'}),  # Era útil enquanto não havia sistema de permissões
     (r'^pizzer/$', index),

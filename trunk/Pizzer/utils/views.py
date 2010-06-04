@@ -14,6 +14,13 @@ def cria_tudo(request):
     return HttpResponse('Foram criados:<br/>Grupos<br/>Funcionarios<br/>Clientes<br/>Clientes dummy')
 
 def cria_clientes_dummy(request):
+    for username in ('dummy_personalizadas', 'dummy_mesa_1', 'dummy_mesa_2', 'dummy_mesa_3', 'dummy_mesa_4', 'dummy_mesa_5',
+                     'dummy_mesa_6', 'dummy_mesa_7', 'dummy_mesa_8', 'dummy_mesa_9', 'dummy_mesa_10'):
+        try:
+            User.objects.get(username=username).delete()
+        except Exception:
+            pass
+
     """ Criação de um cliente dummy para pizza personalizada """
     nome = 'Personalizadas'
     endereco = 'Personalizadas'
@@ -45,6 +52,8 @@ def cria_clientes_dummy(request):
         cliente.usuario = user
         cliente.save()
 
+    return HttpResponse('Dummys criados com sucesso')
+
 def cria_grupos_usuarios(request):
     for nome_grupo in ('cliente', 'gerente', 'pizzaiolo', 'atendente', 'entregador', 'garçom'):
         try:
@@ -68,7 +77,7 @@ def cria_grupos_usuarios(request):
                            Permission.objects.get(name='Pode criar pedido'),
                            Permission.objects.get(name='Pode criar pizza personalizada'),
                            Permission.objects.get(name='Pode editar pizza personalizada'),
-                           Permission.objects.get(name='Pode deletar pizza personalizada'),]
+                           Permission.objects.get(name='Pode deletar pizza personalizada')]
     gerente.permissions = [Permission.objects.get(name='Pode criar cliente'),
                            Permission.objects.get(name='Pode ver todos os clientes'),
                            Permission.objects.get(name='Pode editar qualquer cliente'),
@@ -93,7 +102,7 @@ def cria_grupos_usuarios(request):
                            Permission.objects.get(name='Pode criar ingrediente'),
                            Permission.objects.get(name='Pode ver ingredientes'),
                            Permission.objects.get(name='Pode editar ingrediente'),
-                           Permission.objects.get(name='Pode deletar ingrediente'),]
+                           Permission.objects.get(name='Pode deletar ingrediente')]
     atendente.permissions = [Permission.objects.get(name='Pode criar cliente'),
                              Permission.objects.get(name='Pode ver todos os clientes'),
                              Permission.objects.get(name='Pode editar qualquer cliente'),
@@ -105,30 +114,31 @@ def cria_grupos_usuarios(request):
                              Permission.objects.get(name='Pode criar pizza personalizada'),
                              Permission.objects.get(name='Pode deletar pizza personalizada telefone'),
                              Permission.objects.get(name='Pode deletar pizza personalizada'),
-                             Permission.objects.get(name='Pode editar pizza personalizada'),]
+                             Permission.objects.get(name='Pode editar pizza personalizada')]
     pizzaiolo.permissions = [Permission.objects.get(name='Pode ver todos os pedidos'),
-                             Permission.objects.get(name='Pode editar pedido'),]
+                             Permission.objects.get(name='Pode editar pedido')]
     entregador.permissions = [Permission.objects.get(name='Pode ver pedidos a serem entregues'),
-                              Permission.objects.get(name='Pode editar pedido'),]
+                              Permission.objects.get(name='Pode editar pedido')]
     garcom.permissions = [Permission.objects.get(name='Pode criar pedido')]
+
     return HttpResponse('Grupos criados com sucesso')
 
 def cria_usuarios(request):
-    for username in ('admin', 'carlos', 'geraldo', 'pedro', 'ana', 'eric', 'garcia'):
+    for username in ('admin', 'carlos', 'vinicius', 'leonardo', 'geraldo', 'pedro', 'ana', 'eric', 'felipe', 'garcia'):
         try:
             User.objects.get(username=username).delete()
         except Exception:
             pass
 
     """ Criação de um superusuário (a princípio, para testes) """
-    nome = 'Testador do sistema'
-    endereco = 'Lugar nenhum'
-    telefone = '11 1234-5678'
-    cpf = '0'
-    rg = '0'
-    salario = '1'
+    nome = 'Administrador'
+    endereco = 'X'
+    telefone = '11 0000-0000'
+    cpf = '000000000-00'
+    rg = '00000000-0'
+    salario = '0.00'
     funcao = 'Gerente'
-    periodo = 'N'
+    periodo = 'T+N'
     funcionario = Funcionario(nome=nome, endereco=endereco, telefone=telefone, cpf=cpf, rg=rg,
                               salario=salario, funcao=funcao, periodo=periodo)
     username = 'admin'
@@ -143,9 +153,9 @@ def cria_usuarios(request):
     funcionario.save()
 
     """ Criação de um cliente """
-    nome = 'Carlos Alves'
-    endereco = 'Av. Los pasos 51'
-    telefone = '11 3951-2380'
+    nome = 'Carlos Alves de Oliveira'
+    endereco = 'Rua Glicério, 194'
+    telefone = '11 3207-4863'
     cliente = Cliente(nome=nome, endereco=endereco, telefone=telefone)
     username = 'carlos'
     email = ''
@@ -157,15 +167,45 @@ def cria_usuarios(request):
     cliente.usuario = user
     cliente.save()
 
+    """ Criação de um cliente """
+    nome = 'Vinícius Martins Lemos'
+    endereco = 'Rua Doutor César Castiglioni Júnior, 186'
+    telefone = '11 3858-8188'
+    cliente = Cliente(nome=nome, endereco=endereco, telefone=telefone)
+    username = 'vinicius'
+    email = ''
+    password = 'vinicius'
+    user = User.objects.create_user(username, email, password)
+    user.save()
+    grupo = Group.objects.get(name='cliente')
+    user.groups.add(grupo)
+    cliente.usuario = user
+    cliente.save()
+
+    """ Criação de um cliente """
+    nome = 'Leonardo Peixoto Barbosa'
+    endereco = 'Avenida Lasar Segall, 390'
+    telefone = '11 3981-2788'
+    cliente = Cliente(nome=nome, endereco=endereco, telefone=telefone)
+    username = 'leonardo'
+    email = ''
+    password = 'leonardo'
+    user = User.objects.create_user(username, email, password)
+    user.save()
+    grupo = Group.objects.get(name='cliente')
+    user.groups.add(grupo)
+    cliente.usuario = user
+    cliente.save()
+
     """ Criação de um gerente """
-    nome = 'Geraldo Gomes'
-    endereco = 'Av. Dr. Arnaldo Malta'
-    telefone = '11 4591-5326'
-    cpf = '1'
-    rg = '1'
-    salario = '1'
+    nome = 'Geraldo Gomes Feltrin'
+    endereco = 'Rua Francisco de Brito, 184'
+    telefone = '11 2203-6454'
+    cpf = '343837568-08'
+    rg = '58943870-7'
+    salario = '3500.00'
     funcao = 'Gerente'
-    periodo = 'T'
+    periodo = 'T+N'
     funcionario = Funcionario(nome=nome, endereco=endereco, telefone=telefone, cpf=cpf, rg=rg,
                               salario=salario, funcao=funcao, periodo=periodo)
     username = 'geraldo'
@@ -180,13 +220,13 @@ def cria_usuarios(request):
 
     """ Criação de um pizzaiolo """
     nome = 'Pedro Almirez'
-    endereco = 'Av. Atlântica 1943'
-    telefone = '11 5165-2603'
-    cpf = '2'
-    rg = '2'
-    salario = '1'
+    endereco = 'Rua Conselheiro Nébias, 887'
+    telefone = '11 3222-5583'
+    cpf = '318167518-04'
+    rg = '368941546-8'
+    salario = '1200.00'
     funcao = 'Pizzaiolo'
-    periodo = 'T'
+    periodo = 'T+N'
     funcionario = Funcionario(nome=nome, endereco=endereco, telefone=telefone, cpf=cpf, rg=rg,
                               salario=salario, funcao=funcao, periodo=periodo)
     username = 'pedro'
@@ -200,14 +240,14 @@ def cria_usuarios(request):
     funcionario.save()
 
     """ Criação de um atendente """
-    nome = 'Ana Luíza'
-    endereco = 'Av. Eng. Tácio Fonseca de Souza'
-    telefone = '11 7233-9158'
-    cpf = '3'
-    rg = '3'
-    salario = '1'
+    nome = 'Ana Luíza Teixeira'
+    endereco = 'Rua Valdemar Martins, 148'
+    telefone = '11 2236-6922'
+    cpf = '373152688-39'
+    rg = '42864159-8'
+    salario = '950.00'
     funcao = 'Atendente'
-    periodo = 'T'
+    periodo = 'T+N'
     funcionario = Funcionario(nome=nome, endereco=endereco, telefone=telefone, cpf=cpf, rg=rg,
                               salario=salario, funcao=funcao, periodo=periodo)
     username = 'ana'
@@ -221,12 +261,12 @@ def cria_usuarios(request):
     funcionario.save()
 
     """ Criação de um entregador """
-    nome = 'Eric Gomes'
-    endereco = 'R. Estados Unidos 5501'
-    telefone = '11 7395-8412'
-    cpf = '4'
-    rg = '4'
-    salario = '1'
+    nome = 'Eric Gomes Machado'
+    endereco = 'Rua Agnaldo Manuel dos Santos, 270'
+    telefone = '11 5084-1790'
+    cpf = '368214668-74'
+    rg = '45771538-8'
+    salario = '700.00'
     funcao = 'Entregador'
     periodo = 'T'
     funcionario = Funcionario(nome=nome, endereco=endereco, telefone=telefone, cpf=cpf, rg=rg,
@@ -241,15 +281,36 @@ def cria_usuarios(request):
     funcionario.usuario = user
     funcionario.save()
 
+    """ Criação de um entregador """
+    nome = 'Felipe Leon Meirelles'
+    endereco = 'Rua Américo Vespucci, 1251'
+    telefone = '11 2915-0040'
+    cpf = '365491288-54'
+    rg = '43248960-5'
+    salario = '700.00'
+    funcao = 'Entregador'
+    periodo = 'T+N'
+    funcionario = Funcionario(nome=nome, endereco=endereco, telefone=telefone, cpf=cpf, rg=rg,
+                              salario=salario, funcao=funcao, periodo=periodo)
+    username = 'felipe'
+    email = ''
+    password = 'felipe'
+    user = User.objects.create_user(username, email, password)
+    user.save()
+    grupo = Group.objects.get(name=funcao.lower())
+    user.groups.add(grupo)
+    funcionario.usuario = user
+    funcionario.save()
+
     """ Criação de um garçom """
-    nome = 'Garcia da Silva Sauro'
-    endereco = 'R. Dr. Aluísio Fonseca Cruz del Aroyo'
-    telefone = '11 5165-2603'
-    cpf = '5'
-    rg = '5'
-    salario = '2'
+    nome = 'Carlos Henrique Garcia'
+    endereco = 'Rua Gomes Cardim, 532'
+    telefone = '11 2618-3436'
+    cpf = '328961028-41'
+    rg = '36781357-8'
+    salario = '1100.00'
     funcao = 'Garçom'
-    periodo = 'T'
+    periodo = 'N'
     funcionario = Funcionario(nome=nome, endereco=endereco, telefone=telefone, cpf=cpf, rg=rg,
                               salario=salario, funcao=funcao, periodo=periodo)
     username = 'garcia'
@@ -261,7 +322,6 @@ def cria_usuarios(request):
     user.groups.add(grupo)
     funcionario.usuario = user
     funcionario.save()
-
 
     return HttpResponse('Clientes e funcionarios criados com sucesso')
 
