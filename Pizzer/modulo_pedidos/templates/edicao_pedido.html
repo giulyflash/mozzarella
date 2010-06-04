@@ -49,6 +49,10 @@ Edição de pedido
 
     <p> <b>Troco a ser Entregue:</b> R${{ troco|floatformat:2 }}</p><br/><br/>
 
+	{% if pedido.observacoes %}
+    <p> <b>Observações:</b> {{ pedido.observacoes }}</p><br/><br/>
+    {% endif %}
+
 	<input type="submit" value="Confirmar alterações">
 	<input type="button" value="Cancelar pedido" onClick="location.href='/pizzer/pedido/cancela/{{ pedido.id }}/'"/>
 	<input type="button" value="Finalizar pedido" onClick="location.href='/pizzer/pedido/deleta/{{ pedido.id }}/'"/>

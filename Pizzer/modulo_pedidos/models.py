@@ -24,6 +24,7 @@ class Pedido(models.Model):
     entregador = models.ForeignKey(Funcionario, blank=True, null=True)
     data_horario = models.DateTimeField(auto_now_add=True)
     pagamento = models.DecimalField(max_digits=5, decimal_places=2)
+    observacoes = models.TextField(blank=True, null=True)
 
     class Meta:
         permissions = (
@@ -64,6 +65,9 @@ class Pedido(models.Model):
             preco += item_pedido.item_cardapio.preco * item_pedido.quantidade
         return preco
 
+    def get_troco(self):
+        return (self.pagamento - self.get_preco())
+
     def __str__(self):
         return 'Pedido' + str(self.id)
 
@@ -81,7 +85,7 @@ class PedidoForm(ModelForm):
 class PedidoFormPDA(ModelForm):
     class Meta:
         model = Pedido
-        exclude = ['itens_cardapio', 'status', 'entregador', 'pagamento']
+        exclude = ['itens_cardapio', 'status', 'entregador', 'pagamento', 'observacoes']
 
 class PedidoFormParaCliente(ModelForm):
     cliente = forms.ComboField(required=False)
@@ -94,5 +98,5 @@ class EditaPedidoForm(ModelForm):
 
     class Meta:
         model = Pedido
-        exclude = ['cliente', 'itens_cardapio', 'pagamento']
+        exclude = ['cliente', 'itens_cardapio', 'pagamento', 'observacoes']
 
