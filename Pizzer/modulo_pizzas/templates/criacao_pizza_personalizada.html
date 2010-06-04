@@ -13,6 +13,17 @@
 			{% endfor %}
   			document.pizzaForm.total.value = y.toFixed(2);
 		}
+
+		function validateForm() {
+			{% for ingrediente in ingredientes %}
+				x = document.getElementById('{{ ingrediente.nome }}');
+				if (x.checked == true) {
+					return true;
+				}
+			{% endfor %}
+			alert("A pizza personalizada deve ter ao menos um ingrediente.");
+			return false;
+		}
     </script>
 {% endblock %}
 
@@ -22,7 +33,7 @@ Cadastro de pizza personalizada
 
 {% block conteudo %}
 <br/>
-<form name="pizzaForm" action="" method="post">
+<form name="pizzaForm" action="" onsubmit="return validateForm();" method="post">
     <div class="fieldWrapper">
         {{ form.nome.errors }}
         <label for="id_nome">Nome da pizza:</label>

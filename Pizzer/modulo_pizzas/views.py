@@ -8,7 +8,7 @@ from django.views.generic.create_update import create_object, update_object, del
 from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
 
-from models import Pizza, PizzaPersonalizadaForm, PizzaPersonalizadaFormParaAtendente, Ingrediente, Cliente
+from models import Pizza, PizzaPersonalizadaForm, Ingrediente, Cliente
 from utils.views import lista_objetos
 from views import *
 
@@ -47,13 +47,11 @@ def cria_pizza_personalizada(request):
     cliente_criando_pessoalmente = len(request.user.cliente_set.all()) != 0
     if cliente_criando_pessoalmente:
         cliente = request.user.cliente_set.all()[0]
-        Formulario = PizzaPersonalizadaForm
     else:
         cliente = Cliente.objects.get(nome='Personalizadas')
-        Formulario = PizzaPersonalizadaFormParaAtendente
     ingredientes = Ingrediente.objects.all()
     if request.method == 'POST':
-        form = Formulario(request.POST)
+        form = PizzaPersonalizadaForm(request.POST)
         if form.is_valid():
             nome = form.cleaned_data['nome']
             preco = 15
@@ -64,9 +62,11 @@ def cria_pizza_personalizada(request):
                     pizza.ingredientes.add(ingrediente)
                     pizza.preco += ingrediente.preco
             pizza.save()
-            return HttpResponseRedirect('/pizzer/')
+            if cliente_criando_pessoalmente:
+                return HttpResponseRedirect('/pizzer/pizzas/personalizadas')
+            return HttpResponseRedirect('/pizzer/pizzas/personalizadas/telefone')
     else:
-        form = Formulario()
+        form = PizzaPersonalizadaForm()
     return render_to_response('criacao_pizza_personalizada.html', {'form': form, 'ingredientes': ingredientes},
                               context_instance=RequestContext(request))
 

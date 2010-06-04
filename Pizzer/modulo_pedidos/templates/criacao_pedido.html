@@ -22,7 +22,6 @@
 		}
 
 		function validateForm() {
-  			var w = document.pedidoForm.id_cliente.value
   			var x = 0;
   			var y = parseFloat(document.pedidoForm.id_pagamento.value);
   			var z = parseFloat(document.pedidoForm.total.value);
@@ -30,10 +29,15 @@
 				x += document.getElementById('{{ pizza.nome }}_qtde').value;
 			{% endfor %}
 
+			{% ifnotequal group "cliente" %}
+  			var w = document.pedidoForm.id_cliente.value
 			if (w == "") {
 				alert("O campo de cliente não pode ser deixado em branco.");
 				return false;
-			} else if (x == 0) {
+			}
+			{% endifnotequal %}
+
+			if (x == 0) {
 				alert("Não é permitido o cadastro de pedidos sem pizza.");
 				return false;
 			} else if (y < z) {
@@ -107,7 +111,7 @@ Cadastro de novo pedido
 	<p><i>(Adições de ingredientes e mudanças drásticas nas pizzas não serão aceitas. Para isso utilize nossa funcionalidade de pizza personalizada.)</i></p>
     <div class="fieldWrapper">
         {{ form.observacoes.errors }}
-        <label for="id_pagamento"></label>
+        <label for="id_observacoes"></label>
         {{ form.observacoes }}
     </div><br/><br/>
 
