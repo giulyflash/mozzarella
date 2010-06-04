@@ -143,9 +143,6 @@
 				{% if perms.modulo_pedidos.pode_ver_todos_os_pedidos %}
 				<li><a href="/pizzer/pedidos/">Lista de pedidos</a></li>
 				{% endif %}
-				{% if perms.modulo_pedidos.pode_ver_pedidos_a_serem_entregues %}
-				<li><a href="/pizzer/smartphone/pedidos/">Lista de pedidos a serem entregues</a></li>
-				{% endif %}
 				{% ifequal group "cliente" %}
 				<li><a href="/pizzer/pedidos/cliente/">Seus pedidos</a></li>
 				{% endifequal %}
@@ -200,7 +197,7 @@
 			{% if user.is_superuser %}
             <h3>Usuários</h3>
 				<li><a href="/pizzer/usuario/cria/">Cadastrar usuario</a></li>
-				<li><a href="/pizzer/usuarios/">Listar usuarios</a></li>
+				<li><a href="/pizzer/usuarios/">Lista de usuários</a></li>
 			{% endif %}
 		    </ul>
         {% endblock %}

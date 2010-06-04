@@ -1,12 +1,27 @@
 {% extends "base.html" %}
 
 {% block titulo %}
-Dados da Pizza {{ object.id }}
+Dados da pizza {{ object.nome }}
 {% endblock %}
 {% block conteudo %}
 <form action="" method="post">
-{{ form.as_p }}
+    <div class="fieldWrapper">
+        {{ form.nome.errors }}
+        <label for="id_nome">Nome da pizza:</label>
+        {{ form.nome }}
+    </div><br>
+    <div class="fieldWrapper">
+        {{ form.ingredientes.errors }}
+        <label for="id_ingredientes">Ingredientes:</label>
+        {{ form.ingredientes }} <br><br>Com a tecla CTRL (ou "Command" no Mac) pressionada, selecione os ingredientes desejados.
+    </div><br><br>
+    <div class="fieldWrapper">
+        {{ form.preco.errors }}
+        <label for="id_preco">Preço:</label>
+        {{ form.preco }} <i>R$ NN.DD</i>
+    </div><br><br>
+<input type="submit" value="Confirmar registro">
 <input type="submit" value="Salvar alterações">
-<input type="button" value="Deletar" onClick="location.href='/pizzer/pizza/deleta/{{ object.id }}/'"/>
+<input type="button" value="Cancelar" onClick="location.href='/pizzer/pizzas/'"/>
 </form>
 {% endblock %}
