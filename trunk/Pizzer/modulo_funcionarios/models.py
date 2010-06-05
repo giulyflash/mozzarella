@@ -15,7 +15,7 @@ FUNCAO_CHOICES = (
 PERIODO_CHOICES = (
     ('T', 'Tarde'),
     ('N', 'Noite'),
-    ('N+T', 'Tarde+Noite'),
+    ('T+N', 'Tarde+Noite'),
 )
 
 class Pessoa(models.Model):
@@ -53,6 +53,9 @@ class Funcionario(Pessoa):
 
     def get_absolute_url(self): #retorna o URL absoluto da instancia de Funcionario
         return "/pizzer/"
+
+    def periodo_display(self):
+        return Funcionario.get_periodo_display(self)
 
 class FuncionarioForm(forms.ModelForm):
     nome = forms.RegexField(u'^([a-zA-Záéíóúãeõäëïöüç]+ )+[a-zA-Záéíóúãeõäëïöüç]+$', error_message='Nome com caracteres inválidos ou incompleto.')
