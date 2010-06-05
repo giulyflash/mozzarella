@@ -337,7 +337,7 @@ def cria_usuarios(request):
 
     return HttpResponse('Clientes e funcionarios criados com sucesso')
 
-def lista_objetos(request, parametros, model, template_name, template_object_name, consulta, universo=None):
+def lista_objetos(request, parametros, model, template_name, template_object_name, consulta, universo=None, msg_universo=''):
     mensagem = ''
     nenhum_param_enviado = True
     if request.method == 'POST':
@@ -352,7 +352,10 @@ def lista_objetos(request, parametros, model, template_name, template_object_nam
         else:
             queryset = model.objects.all();
         if queryset:
-            mensagem = 'Exibindo todos os registros.'
+            if msg_universo:
+                mensagem = msg_universo
+            else:
+                mensagem = 'Exibindo todos os registros.'
         else:
             mensagem = 'Não há registros a serem exibidos.'
     else:
