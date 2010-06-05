@@ -6,12 +6,24 @@ from django.http import HttpResponse
 from django.contrib.auth.models import User, Permission, Group
 from modulo_funcionarios.models import Funcionario
 from modulo_clientes.models import Cliente
+from modulo_reclamacoes.models import Reclamacao
 
 def cria_tudo(request):
     cria_grupos_usuarios(request)
     cria_usuarios(request)
     cria_clientes_dummy(request)
-    return HttpResponse('Foram criados:<br/>Grupos<br/>Funcionarios<br/>Clientes<br/>Clientes dummy')
+    cria_reclamacoes(request)
+    return HttpResponse('Foram criados:<br/>Grupos<br/>Funcionarios<br/>Clientes<br/>Clientes dummy<br/>Reclamacoes<br/>')
+
+def cria_reclamacoes(request):
+    reclamacoes = Reclamacao.objects.all()
+    for reclamacao in reclamacoes:
+        reclamacao.delete()
+    cliente = Cliente.objects.get(nome='Carlos Alves de Oliveira')
+    Reclamacao(cliente=cliente, assunto='Pizza chegou fria', texto='Esperamos o entregador por de 1 hora!', status='A').save()
+    cliente = Cliente.objects.get(nome='Leonardo Peixoto Barbosa')
+    Reclamacao(cliente=cliente, assunto='Erraram meu pedido', texto='Eu pedi a calabresa sem cebola e veio com!', status='A').save()
+    return HttpResponse('Reclamacoes criadas com sucesso')
 
 def cria_clientes_dummy(request):
     for username in ('dummy_personalizadas', 'dummy_mesa_1', 'dummy_mesa_2', 'dummy_mesa_3', 'dummy_mesa_4', 'dummy_mesa_5',
