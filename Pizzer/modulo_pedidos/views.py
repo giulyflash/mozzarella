@@ -19,6 +19,7 @@ def teste(request):
 @permission_required('modulo_pedidos.pode_criar_pedido')
 @login_required
 def cria_pedido(request):
+    redirect_url = '/pizzer/'
     user = request.user
     if user.groups.all():
         grupo = user.groups.all()[0].name
@@ -26,6 +27,7 @@ def cria_pedido(request):
             cliente = user.cliente_set.all()[0]
             pizzas = Pizza.objects.filter(Q(personalizada=False) | Q(inventor=cliente))
         else:
+            redirect_url = '/pizzer/pedidos/'
             pizzas = Pizza.objects.filter(Q(personalizada=False) | Q(inventor__nome='Personalizadas'))
     elif user.is_authenticated():
         grupo = 'admin'
@@ -73,7 +75,7 @@ def cria_pedido(request):
                         total += s.item_cardapio.preco * s.quantidade
             if vazio or (pagamento < total):
                 pedido.delete()
-            return HttpResponseRedirect('/pizzer/') # Redirect after POST
+            return HttpResponseRedirect(redirect_url)
     else:
         if grupo == 'cliente':
             form = PedidoFormParaCliente(initial={'pagamento': '0.00'})
@@ -123,7 +125,7 @@ def cancela_pedido(request, object_id):
     pedido = Pedido.objects.get(pk=object_id)
     itens_pedidos = StatusItemPedido.objects.filter(pedido=pedido)
     bebidas = Bebida.objects.all()
-    if request.method == 'POST': # If the form has been submitted...
+    if request.method == 'POST':
         for item_pedido in itens_pedidos:
             if item_pedido.tipo_de_item == 2:
                 for bebida in bebidas:
@@ -132,7 +134,7 @@ def cancela_pedido(request, object_id):
                         bebida.save()
                         break
         pedido.delete()
-        return HttpResponseRedirect('/pizzer/pedidos/') # Redirect after POST
+        return HttpResponseRedirect('/pizzer/pedidos/')
     return render_to_response('cancelamento_pedido.html', {'pedido': pedido})
 
 @permission_required('modulo_pedidos.pode_deletar_pedido')
