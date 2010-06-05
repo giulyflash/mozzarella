@@ -15,10 +15,26 @@ from views import *
 @permission_required('modulo_reclamacoes.pode_ver_reclamacoes')
 @login_required
 def lista_reclamacoes(request):
-    assunto = request.GET.get('assunto')  # Obtenção dos parâmetros do request
+    status_dict = {
+    'A': 'Não Lidas',
+    'B': 'Em Investigação',
+    'C': 'Incoerentes',
+    'D': 'Plausíveis',
+    'E': 'Resolvidas',
+    'F': ''
+    }
+    status = request.GET.get('status')
+    assunto = request.GET.get('assunto')
     texto = request.GET.get('texto')
     consulta = Q(assunto__icontains=assunto) & Q(texto__icontains=texto)  # Busca pelo assunto especificado e/ou um trecho dentro do texto
-    return lista_objetos(request, [assunto, texto], Reclamacao, 'listagem_reclamacoes.html', 'reclamacoes', consulta)
+    if not status:
+        status = 'A'
+    if status == 'F':
+        universo = None
+    else:
+        universo = Q(status=status)
+    return lista_objetos(request, [assunto, texto], Reclamacao, 'listagem_reclamacoes.html', 'reclamacoes', consulta,
+                         universo, 'Exibindo todas as reclamações ' + status_dict[status].upper())
 
 @permission_required('modulo_reclamacoes.pode_resolver_reclamacao')
 @login_required
