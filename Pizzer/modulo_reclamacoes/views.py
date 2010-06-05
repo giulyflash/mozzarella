@@ -30,7 +30,7 @@ def resolve_reclamacao(request, object_id):
             status = form.cleaned_data['status']
             reclamacao.status = status
             reclamacao.save()
-            return HttpResponseRedirect('/pizzer/')
+            return HttpResponseRedirect('/pizzer/reclamacoes/')
     form = ReclamacaoFormGerente(instance=reclamacao)
     return render_to_response('resolucao_reclamacao.html', {'form': form, 'reclamacao': reclamacao},
                               context_instance=RequestContext(request))
