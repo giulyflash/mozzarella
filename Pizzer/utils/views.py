@@ -7,13 +7,43 @@ from django.contrib.auth.models import User, Permission, Group
 from modulo_funcionarios.models import Funcionario
 from modulo_clientes.models import Cliente
 from modulo_reclamacoes.models import Reclamacao
+from modulo_pedidos.models import Pedido, StatusItemPedido
+from modulo_pizzas.models import Pizza
+from modulo_bebidas.models import Bebida
 
 def cria_tudo(request):
     cria_grupos_usuarios(request)
     cria_usuarios(request)
     cria_clientes_dummy(request)
     cria_reclamacoes(request)
-    return HttpResponse('Foram criados:<br/>Grupos<br/>Funcionarios<br/>Clientes<br/>Clientes dummy<br/>Reclamacoes<br/>')
+    cria_pedidos(request)
+    return HttpResponse('Foram criados:<br/>Grupos<br/>Funcionarios<br/>Clientes<br/>Clientes dummy<br/>Reclamacoes<br/>Pedidos<br/>')
+
+def cria_pedidos(request):
+    pedidos = Pedido.objects.all()
+    for pedido in pedidos:
+        pedido.delete()
+    sips = StatusItemPedido.objects.all()
+    for sip in sips:
+        sip.delete()
+    pizza1 = Pizza.objects.get(nome='Alho')
+    pizza2 = Pizza.objects.get(nome='Bacon')
+    pizza3 = Pizza.objects.get(nome='Atum')
+    bebida1 = Bebida.objects.get(nome='Coca-Cola 1,5L')
+    bebida2 = Bebida.objects.get(nome='Guaraná Zero Lata'    )
+    cliente1 = Cliente.objects.get(nome='Vinícius Martins Lemos')
+    cliente2 = Cliente.objects.get(nome='Mesa 7')
+    entregador = Funcionario.objects.get(nome='Eric Gomes Machado')
+    pedido1 = Pedido(cliente=cliente1, status='D', entregador=entregador, pagamento='50.0')
+    pedido1.save()
+    StatusItemPedido(pedido=pedido1, item_cardapio=pizza1, quantidade=1, tipo_de_item=1).save()
+    StatusItemPedido(pedido=pedido1, item_cardapio=pizza2, quantidade=1, tipo_de_item=1).save()
+    StatusItemPedido(pedido=pedido1, item_cardapio=bebida1, quantidade=1, tipo_de_item=2).save()
+    pedido2 = Pedido(cliente=cliente2, status='A', pagamento='30.0', observacoes='Sem cebola')
+    pedido2.save()
+    StatusItemPedido(pedido=pedido2, item_cardapio=pizza3, quantidade=1, tipo_de_item=1).save()
+    StatusItemPedido(pedido=pedido2, item_cardapio=bebida2, quantidade=2, tipo_de_item=2).save()
+    return HttpResponse('Reclamacoes criadas com sucesso')
 
 def cria_reclamacoes(request):
     reclamacoes = Reclamacao.objects.all()
