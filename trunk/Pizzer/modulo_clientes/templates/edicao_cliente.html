@@ -1,4 +1,4 @@
-﻿{% extends "base.html" %}
+{% extends "base.html" %}
 
 {% block titulo %}
 Dados de {{ object.nome }}
@@ -7,12 +7,25 @@ Dados de {{ object.nome }}
 <a href="/pizzer/usuario/senha/cliente/{{ object.usuario.id }}/">Alterar senha</a>
 <br/><br/>
 <form action="" method="post">
-{{ form.as_p }}
-<br/>
-<input type="submit" value="Salvar alterações">
-{% ifequal group "gerente" %}
-	<input type="button" value="Deletar" onClick="location.href='/pizzer/cliente/deleta/{{ object.id }}/'"/>
-{% endifequal %}
-<input type="button" value="Cancelar" onClick="location.href='/pizzer/clientes/'">
+	<div class="fieldWrapper">
+    	{{ form.nome.errors }}
+        <label for="id_nome">Nome completo:</label><br>
+        {{ form.nome }}
+    </div><br>
+    <div class="fieldWrapper">
+        {{ form.endereco.errors }}
+        <label for="id_endereco">Endereço:</label><br>
+        {{ form.endereco }}
+    </div><br>
+    <div class="fieldWrapper">
+        {{ form.telefone.errors }}
+        <label for="id_telefone">Telefone:</label><br>
+        {{ form.telefone }}
+    </div><br>
+	<input type="submit" value="Salvar alterações"/>
+	{% ifequal group "gerente" %}
+		<input type="button" value="Deletar" onClick="location.href='/pizzer/cliente/deleta/{{ object.id }}/'"/>
+	{% endifequal %}
+	<input type="button" value="Cancelar" onClick="location.href='/pizzer/clientes/'"/>
 </form>
 {% endblock %}
