@@ -7,10 +7,10 @@ Cancelar Pedido
 {% block conteudo %}
 <h3>Você tem certeza que deseja cancelar o pedido?</h3><br/>
 
-<p> Caso você confirme o cancelamento o pedido será removido da lista e seus itens serão repostos no estoque. </p><br/
+<p> Caso você confirme o cancelamento o pedido será removido da lista e seus itens serão repostos no estoque. </p><br/>
 
 <form action="" method="post">
-	<input type="button" onClick="window.location.href='/pizzer/pedido/edita/{{ pedido.id }}'" value="Voltar">
-	<input type="submit" name="reponse" value="Confirmar">
+	<input type="submit" value="Confirmar">
+	<input type="button" onClick="window.location.href='/pizzer/pedido/edita/{{ pedido.id }}'" value="Voltar"/>
 </form>
 {% endblock %}
