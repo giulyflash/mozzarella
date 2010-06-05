@@ -120,6 +120,7 @@ def cria_grupos_usuarios(request):
                              Permission.objects.get(name='Pode editar qualquer cliente'),
                              Permission.objects.get(name='Pode criar pedido'),
                              Permission.objects.get(name='Pode editar pedido'),
+                             Permission.objects.get(name='Pode deletar pedido'),
                              Permission.objects.get(name='Pode ver todos os pedidos'),
                              Permission.objects.get(name='Pode ver pizzas personalizadas telefone'),
                              Permission.objects.get(name='Pode ver bebidas'),

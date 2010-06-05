@@ -121,6 +121,8 @@ def lista_pedidos(request):
     consulta = Q(cliente__nome__icontains=cliente)
     return lista_objetos(request, [cliente], Pedido, 'listagem_pedidos.html', 'pedidos', consulta)
 
+@permission_required('modulo_pedidos.pode_deletar_pedido')
+@login_required
 def cancela_pedido(request, object_id):
     pedido = Pedido.objects.get(pk=object_id)
     itens_pedidos = StatusItemPedido.objects.filter(pedido=pedido)

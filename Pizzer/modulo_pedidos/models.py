@@ -69,7 +69,7 @@ class Pedido(models.Model):
         return (self.pagamento - self.get_preco())
 
     def __str__(self):
-        return 'Pedido' + str(self.id)
+        return 'Pedido de ' + self.cliente.nome
 
 class StatusItemPedido(models.Model):
     pedido = models.ForeignKey(Pedido)
