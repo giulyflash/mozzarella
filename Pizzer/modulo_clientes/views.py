@@ -86,7 +86,7 @@ def edita_cliente(request, object_id):
         cliente = user.cliente_set.all()[0]
         if not user.has_perm('modulo_funcionarios.pode_editar_qualquer_cliente') and cliente.id != int(object_id):
             return HttpResponseRedirect('/pizzer/usuario/login/')
-    return update_object(request, None, object_id, template_name='edicao_cliente.html', form_class=ClienteForm)
+    return update_object(request, object_id=object_id, template_name='edicao_cliente.html', form_class=ClienteForm)
 
 @permission_required('modulo_clientes.pode_deletar_cliente')
 @login_required
