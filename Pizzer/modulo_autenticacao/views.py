@@ -104,7 +104,7 @@ def muda_senha_funcionario(request, object_id):
             password = form.cleaned_data['password']
             user.set_password(password)
             user.save()
-            return HttpResponseRedirect('/pizzer/funcionario/edita/%s/' % funcionario.id)
+            return HttpResponseRedirect('/pizzer/funcionario/edita/dadospessoais/%s/' % funcionario.id)
     else:
         form = UserChangePassForm()
     return render_to_response('mudanca_senha.html', {'form': form, 'funcionario': funcionario, 'pessoa': 'funcionario'}, context_instance=RequestContext(request))
