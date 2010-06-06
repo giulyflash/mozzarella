@@ -144,7 +144,9 @@ def cria_grupos_usuarios(request):
                            Permission.objects.get(name='Pode criar ingrediente'),
                            Permission.objects.get(name='Pode ver ingredientes'),
                            Permission.objects.get(name='Pode editar ingrediente'),
-                           Permission.objects.get(name='Pode deletar ingrediente')]
+                           Permission.objects.get(name='Pode deletar ingrediente'),
+                           Permission.objects.get(name='Pode editar pedido'),
+                           Permission.objects.get(name='Pode deletar pedido'),]
     atendente.permissions = [Permission.objects.get(name='Pode criar cliente'),
                              Permission.objects.get(name='Pode ver todos os clientes'),
                              Permission.objects.get(name='Pode editar qualquer cliente'),
