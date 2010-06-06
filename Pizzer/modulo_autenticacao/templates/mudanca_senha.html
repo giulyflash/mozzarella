@@ -20,7 +20,7 @@ Mudança de senha
 {% ifequal pessoa "cliente" %}
 <input type="button" value="Cancelar" onClick="location.href='/pizzer/cliente/edita/{{ cliente.id }}/'"/>
 {% else %}
-<input type="button" value="Cancelar" onClick="location.href='/pizzer/funcionario/edita/{{ funcionario.id }}/'"/>
+<input type="button" value="Cancelar" onClick="location.href='/pizzer/funcionario/edita/dadospessoais/{{ funcionario.id }}/'"/>
 {% endifequal %}
 </form>
 {% endblock %}
