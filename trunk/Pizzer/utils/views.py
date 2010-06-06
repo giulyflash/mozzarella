@@ -32,6 +32,7 @@ def cria_pedidos(request):
     bebida1 = Bebida.objects.get(nome='Coca-Cola 1,5L')
     bebida2 = Bebida.objects.get(nome='Guaraná Zero Lata'    )
     cliente1 = Cliente.objects.get(nome='Vinícius Martins Lemos')
+    cliente3 = Cliente.objects.get(nome='Marcelo Andrade')
     cliente2 = Cliente.objects.get(nome='Mesa 7')
     entregador = Funcionario.objects.get(nome='Eric Gomes Machado')
     pedido1 = Pedido(cliente=cliente1, status='D', entregador=entregador, pagamento='50.0')
@@ -39,6 +40,10 @@ def cria_pedidos(request):
     StatusItemPedido(pedido=pedido1, item_cardapio=pizza1, quantidade=1, tipo_de_item=1).save()
     StatusItemPedido(pedido=pedido1, item_cardapio=pizza2, quantidade=1, tipo_de_item=1).save()
     StatusItemPedido(pedido=pedido1, item_cardapio=bebida1, quantidade=1, tipo_de_item=2).save()
+    pedido3 = Pedido(cliente=cliente3, status='D', entregador=entregador, pagamento='50.0')
+    pedido3.save()
+    StatusItemPedido(pedido=pedido3, item_cardapio=pizza3, quantidade=1, tipo_de_item=1).save()
+    StatusItemPedido(pedido=pedido3, item_cardapio=bebida1, quantidade=1, tipo_de_item=1).save()
     pedido2 = Pedido(cliente=cliente2, status='A', pagamento='30.0', observacoes='Sem cebola')
     pedido2.save()
     StatusItemPedido(pedido=pedido2, item_cardapio=pizza3, quantidade=1, tipo_de_item=1).save()
@@ -235,6 +240,21 @@ def cria_usuarios(request):
     username = 'leonardo'
     email = ''
     password = 'leonardo'
+    user = User.objects.create_user(username, email, password)
+    user.save()
+    grupo = Group.objects.get(name='cliente')
+    user.groups.add(grupo)
+    cliente.usuario = user
+    cliente.save()
+
+    """ Criação de um cliente """
+    nome = 'Marcelo Andrade'
+    endereco = 'Avenida Lancaster, 1228'
+    telefone = '11 4571-2254'
+    cliente = Cliente(nome=nome, endereco=endereco, telefone=telefone)
+    username = 'marcelo'
+    email = ''
+    password = 'marcelo'
     user = User.objects.create_user(username, email, password)
     user.save()
     grupo = Group.objects.get(name='cliente')
