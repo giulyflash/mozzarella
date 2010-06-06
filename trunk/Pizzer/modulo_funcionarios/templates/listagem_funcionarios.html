@@ -5,8 +5,9 @@ Funcionários
 {% endblock %}
 {% block conteudo %}
 <form method="GET">
+	<label>Nome: </label>
 	<input name="nome" type="text">
-	<input type="submit" value="filtrar"/>
+	<input type="submit" value="Filtrar"/>
 </form>
 <h4>{{ mensagem }}</h4>
 {% if funcionarios_list %}

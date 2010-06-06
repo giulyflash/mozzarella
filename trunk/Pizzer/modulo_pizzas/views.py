@@ -23,7 +23,7 @@ def lista_pizzas(request):
 @permission_required('modulo_pizzas.pode_criar_pizza')
 @login_required
 def cria_pizza(request):
-    return create_object(request, Pizza, 'criacao_pizza.html')
+    return create_object(request, Pizza, 'criacao_pizza.html', post_save_redirect='/pizzer/pizzas/')
 
 @user_passes_test(lambda u: u.has_perm('modulo_pizzas.pode_editar_pizza') or len(u.cliente_set.all()) != 0)
 @login_required
