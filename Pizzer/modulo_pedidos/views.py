@@ -246,7 +246,7 @@ def edita_pedido_pda(request, object_id):
     if request.method == 'POST': # If the form has been submitted...
         input_status = request.POST.get('status')
         status = 'A'
-        if input_status == 'Pedido sendo Preparado':
+        if input_status == 'Pedido Sendo Preparado':
             status = 'B'
         else:
             if input_status == 'Pedido Pronto':

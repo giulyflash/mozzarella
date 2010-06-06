@@ -40,14 +40,16 @@ Atualização de Status
 
 {% if pedido.observacoes %}
 <p><b>Observações</b></p>
-{{ pedido.observacoes }}
+	<div style="color: red;">
+		{{ pedido.observacoes }}
+	</div>
 <br/><br/>
 {% endif %}
 
 <h3> Alterar Status do Pedido </h3><br/>
 <form action="" method="post">
-	<input type="submit" name="status" value="Pedido sendo Preparado"><br/>
+	<input type="submit" name="status" value="Pedido Sendo Preparado"><br/>
 	<input type="submit" name="status" value="Pedido Pronto"><br/>
-	<input type="button" value="Cancelar" onClick="window.location.href='/pizzer/pda/pedidos/'"/>
+	<input type="button" value="Voltar à lista de pedidos" onClick="window.location.href='/pizzer/pda/pedidos/'"/>
 </form>
 {% endblock %}
