@@ -15,6 +15,11 @@
 		}
 
 		function validateForm() {
+			y = document.getElementById('id_nome').value;
+				if (y == "") {
+					alert("A pizza personalizada deve ter um nome.");
+					return false;
+				}
 			{% for ingrediente in ingredientes %}
 				x = document.getElementById('{{ ingrediente.nome }}');
 				if (x.checked == true) {
