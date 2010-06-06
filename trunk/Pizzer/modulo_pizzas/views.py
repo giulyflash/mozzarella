@@ -34,12 +34,12 @@ def edita_pizza(request, object_id):
        pizza = Pizza.objects.get(id=object_id)
        if pizza.inventor != cliente:
            return HttpResponseRedirect('/pizzer/usuario/login/')
-    return update_object(request, Pizza, object_id, template_name='edicao_pizza.html')
+    return update_object(request, Pizza, object_id, template_name='edicao_pizza.html', post_save_redirect='/pizzer/pizzas/')
 
 @permission_required('modulo_pizzas.pode_deletar_pizza')
 @login_required
 def deleta_pizza(request, object_id):
-    return delete_object(request, Pizza, '/pizzer/pizzas/', object_id, template_name='confirmacao_delecao.html', extra_context={'model': Pizza})
+    return delete_object(request, Pizza, '/pizzer/pizzas/', object_id, template_name='confirmacao_delecao.html', extra_context={'model': Pizza}, post_delete_redirect='/pizzer/pizzas/')
 
 @user_passes_test(lambda u: len(u.groups.filter(name='cliente')) != 0 or len(u.groups.filter(name='atendente')) != 0)
 @login_required
