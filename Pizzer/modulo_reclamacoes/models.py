@@ -9,8 +9,7 @@ STATUS_PEDIDO_CHOICES = (
     ('A', 'Não Lida'),
     ('B', 'Em Investigação'),
     ('C', 'Incoerente'),
-    ('D', 'Plausível'),
-    ('E', 'Resolvida'),
+    ('D', 'Resolvida'),
 )
 
 class Reclamacao(models.Model):  # Note que Pessoa herda da classe Model, que está dentro do módulo models
