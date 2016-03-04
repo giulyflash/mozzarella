@@ -1,0 +1,1 @@
+Si tratta di un sistema per pizzerie. E 'pensato per migliorare il controllo della preparazione e di consegna della pizza e arricchire l'esperienza del cliente attraverso la richiesta di pizza via Internet.
